@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{e754d6ec-7a47-4b38-9aa1-35c42f77c117}">
+		<property name="name">
+			<value>BACKTURBIN</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{05111547-8b75-44f3-a912-e90ed7b3be27}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{05111547-8b75-44f3-a912-e90ed7b3be27}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

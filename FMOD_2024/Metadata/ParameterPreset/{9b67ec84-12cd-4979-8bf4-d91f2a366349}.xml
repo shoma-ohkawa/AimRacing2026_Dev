@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{9b67ec84-12cd-4979-8bf4-d91f2a366349}">
+		<property name="name">
+			<value>MUTE</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{37c3a409-9be2-427a-b552-2d696ad0da5b}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{37c3a409-9be2-427a-b552-2d696ad0da5b}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

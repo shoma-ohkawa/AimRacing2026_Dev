@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EncodableAsset" id="{70f033a2-d761-4e7e-a888-eae5a766c073}">
+		<property name="assetPath">
+			<value>Engine/EngineSound_yaris_4Cylinder/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{91fc85e5-cd8c-450c-baa4-736099ee1b54}</destination>
+		</relationship>
+	</object>
+</objects>

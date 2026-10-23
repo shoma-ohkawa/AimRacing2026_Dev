@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{b2a4898e-71ca-4cf3-a167-9dd386090075}">
+		<property name="assetPath">
+			<value>5000RPM_100throttle_4cyl_loop5s_v7.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>5.0265416666666667</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{91fc85e5-cd8c-450c-baa4-736099ee1b54}</destination>
+		</relationship>
+	</object>
+</objects>

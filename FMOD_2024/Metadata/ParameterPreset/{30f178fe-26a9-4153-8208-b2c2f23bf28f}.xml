@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{30f178fe-26a9-4153-8208-b2c2f23bf28f}">
+		<property name="name">
+			<value>ENGINEVOL</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{48026eb3-f413-49a5-a68e-c32273f331a0}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{48026eb3-f413-49a5-a68e-c32273f331a0}">
+		<property name="initialValue">
+			<value>1</value>
+		</property>
+	</object>
+</objects>

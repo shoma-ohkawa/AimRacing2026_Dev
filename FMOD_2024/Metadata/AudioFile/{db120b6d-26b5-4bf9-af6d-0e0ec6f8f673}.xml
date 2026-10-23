@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{db120b6d-26b5-4bf9-af6d-0e0ec6f8f673}">
+        <property name="assetPath">
+            <value>NSX/Lister_idle.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>5.4207709750566897</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{91fc85e5-cd8c-450c-baa4-736099ee1b54}</destination>
+        </relationship>
+    </object>
+</objects>

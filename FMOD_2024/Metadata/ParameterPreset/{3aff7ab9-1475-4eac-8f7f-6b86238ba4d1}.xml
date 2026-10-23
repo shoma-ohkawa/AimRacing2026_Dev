@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{3aff7ab9-1475-4eac-8f7f-6b86238ba4d1}">
+		<property name="name">
+			<value>GEARCHANGE</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{0a0c55bb-396b-470a-a981-920e7b099cca}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{0a0c55bb-396b-470a-a981-920e7b099cca}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="EncodableAsset" id="{f2b7cd4a-77be-4a42-b220-449e72f8b018}">
+        <property name="assetPath">
+            <value>NSX/</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{91fc85e5-cd8c-450c-baa4-736099ee1b54}</destination>
+        </relationship>
+    </object>
+</objects>

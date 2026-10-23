@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{4c0587be-474f-4df3-aa7d-f12dbd7f0a7d}">
+		<property name="name">
+			<value>GAS</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{7e30e313-81c8-41c9-919e-7e611689ee03}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{7e30e313-81c8-41c9-919e-7e611689ee03}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

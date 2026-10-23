@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="EncodableAsset" id="{03bec802-d93c-4c53-b93b-4527f7996700}">
+        <property name="assetPath">
+            <value>Klaxon/</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{91fc85e5-cd8c-450c-baa4-736099ee1b54}</destination>
+        </relationship>
+    </object>
+</objects>

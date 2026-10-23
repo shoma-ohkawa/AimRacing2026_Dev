@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="EncodableAsset" id="{da64b08f-8c8a-4c20-b67a-3663d5874e33}">
+        <property name="assetPath">
+            <value>Squile/</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{91fc85e5-cd8c-450c-baa4-736099ee1b54}</destination>
+        </relationship>
+    </object>
+</objects>

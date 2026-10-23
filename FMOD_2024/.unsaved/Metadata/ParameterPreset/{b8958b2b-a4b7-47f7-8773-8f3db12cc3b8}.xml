@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{b8958b2b-a4b7-47f7-8773-8f3db12cc3b8}">
+		<property name="name">
+			<value>GEARDOWNVOL</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{c15770ce-ef12-4070-90f5-b297d8b972de}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{c15770ce-ef12-4070-90f5-b297d8b972de}">
+		<property name="initialValue">
+			<value>1</value>
+		</property>
+	</object>
+</objects>

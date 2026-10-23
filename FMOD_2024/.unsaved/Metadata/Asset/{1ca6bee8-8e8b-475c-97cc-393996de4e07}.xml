@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EncodableAsset" id="{1ca6bee8-8e8b-475c-97cc-393996de4e07}">
+		<property name="assetPath">
+			<value>Engine/rw_toyota_yaris_2017_wrc/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{91fc85e5-cd8c-450c-baa4-736099ee1b54}</destination>
+		</relationship>
+	</object>
+</objects>

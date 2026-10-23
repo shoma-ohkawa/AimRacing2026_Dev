@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{263db3e5-ad91-47fc-8677-dbffdae3dfa3}">
+		<property name="assetPath">
+			<value>Engine/EngineSound_yaris_4Cylinder/7000RPM_100throttle_4cyl.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>7.2518541666666669</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{91fc85e5-cd8c-450c-baa4-736099ee1b54}</destination>
+		</relationship>
+	</object>
+</objects>

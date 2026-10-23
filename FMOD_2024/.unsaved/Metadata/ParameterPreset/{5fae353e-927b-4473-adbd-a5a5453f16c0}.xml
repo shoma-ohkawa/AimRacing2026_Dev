@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{5fae353e-927b-4473-adbd-a5a5453f16c0}">
+		<property name="name">
+			<value>SHIFTDOWN</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{67e5c896-53fd-46d9-af8f-404db9132d4c}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{67e5c896-53fd-46d9-af8f-404db9132d4c}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

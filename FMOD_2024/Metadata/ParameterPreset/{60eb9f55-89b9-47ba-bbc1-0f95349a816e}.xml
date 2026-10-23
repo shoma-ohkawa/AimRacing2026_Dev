@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{60eb9f55-89b9-47ba-bbc1-0f95349a816e}">
+		<property name="name">
+			<value>SLIP_VOL</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{b3e2101e-ec09-4640-bf13-3d0ce3f884ed}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{b3e2101e-ec09-4640-bf13-3d0ce3f884ed}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

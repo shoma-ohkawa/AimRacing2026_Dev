@@ -1,0 +1,1405 @@
+{
+    "version": 1,
+    "name": "Aim2024Input",
+    "maps": [
+        {
+            "name": "Setup",
+            "id": "6c67f049-661c-4964-bc98-c57a205017d1",
+            "actions": [
+                {
+                    "name": "Exit",
+                    "type": "Button",
+                    "id": "2bcca1d2-e295-48d5-b84c-ed3ae6582f63",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f8c19949-e07a-4e72-a016-f66c3d69d8ef",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c58b879c-505e-4ebf-a8c9-ec19caa82a7a",
+                    "path": "<HID::44F B66E>/button5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "MainSystem",
+            "id": "92f605ee-7f2c-4b03-8d6b-d28d204ce77c",
+            "actions": [
+                {
+                    "name": "AccelPedal",
+                    "type": "PassThrough",
+                    "id": "ba775463-b93c-4a28-b100-6c281fbc5957",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "AccelTriger",
+                    "type": "Button",
+                    "id": "c52eae11-8fe1-4f9b-a123-3b13b36f9e25",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Steering",
+                    "type": "Value",
+                    "id": "a9d42d3f-1e28-47b4-be7b-3bd2ee59a8b3",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "SteeringKeyboard",
+                    "type": "Value",
+                    "id": "b6e29d47-1a83-4f56-9c72-5e8a3d1b6f94",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "BrakeTriger",
+                    "type": "Button",
+                    "id": "d4f2a8c1-6b3e-4f91-9a7d-2c5e8b1f4a6d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "ResumeFromG923Disconnect",
+                    "type": "Button",
+                    "id": "bda5e0d9-6dc8-40ee-8308-ca430388ea86",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "BrakePedal",
+                    "type": "PassThrough",
+                    "id": "f1a6c9d3-8e42-4b7a-9c15-5d8f2a4e7b91",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2dc8fb85-434a-45f1-8456-853bf7cf261b",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AccelPedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7cef499-526a-48e7-87c3-27f744efb33f",
+                    "path": "<HID::Logitech G923 Racing Wheel for PlayStation and PC>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AccelPedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6385d50a-710e-4b9b-af77-1484ac5bba34",
+                    "path": "<HID::44F B66E>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AccelPedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "01a48acf-06f4-4c3e-97c4-9d1acf647884",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Steering",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5ce4ef6-2252-424b-a60b-198cac416f0a",
+                    "path": "<HID::Logitech G923 Racing Wheel for PlayStation and PC>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Steering",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5b8b5b9c-5618-40fa-84d6-6b86433f9cae",
+                    "path": "<Gamepad>/leftStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SteeringKeyboard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "2cb10d06-f46c-4a56-9587-5ca9ba4966b8",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SteeringKeyboard",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Negative",
+                    "id": "b72c50cb-c43c-4c4b-9394-9bb3f3471a0a",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SteeringKeyboard",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "5a9b1946-9822-4900-bfd2-023a5325221a",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SteeringKeyboard",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "84e39fac-b234-4ed9-9b4e-ec0976cdc214",
+                    "path": "<HID::44F B66E>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Steering",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "86847596-a976-49d5-95d1-bb004a8d547e",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AccelTriger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "69256c10-aa61-423b-8815-afd022f723bb",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AccelTriger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4c913130-0150-48ee-9071-bcb5b3ab3e14",
+                    "path": "<Keyboard>/f5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResumeFromG923Disconnect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e9c7b4a-3f28-4d61-8a95-6c2b7e4f9a1d",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BrakeTriger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7a3f9c2e-5b81-4e6d-9f24-8c1a6b3e5d7f",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BrakeTriger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c9e7a24-1b5d-4f83-a962-7e8c4d1a6f52",
+                    "path": "<HID::Logitech G923 Racing Wheel for PlayStation and PC>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BrakePedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9d4b8f61-2e73-45ca-b81f-6a3c9e2d7b48",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BrakePedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "InGame",
+            "id": "7f1a7ff5-dfeb-4cf4-8bc8-abc347f59747",
+            "actions": [
+                {
+                    "name": "Handle",
+                    "type": "Value",
+                    "id": "93ce5c9b-837e-4bde-a22d-56a005033a95",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "HandleKeyboard",
+                    "type": "Value",
+                    "id": "d3f7a1c8-6b92-4e05-a184-9c2f8e6b7a15",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "Accel",
+                    "type": "PassThrough",
+                    "id": "84868b81-f1bc-4605-8d79-9a47fcc6aac2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "AccelPedal",
+                    "type": "PassThrough",
+                    "id": "38889456-367a-4970-9245-72ad2d75208e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Brake",
+                    "type": "PassThrough",
+                    "id": "8e7a5f4d-ce78-4dce-a207-a2ab7fabe890",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "BrakePedal",
+                    "type": "PassThrough",
+                    "id": "c079cf5c-9d1f-4665-a602-6b2d9da0032d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "ClutchPedal",
+                    "type": "PassThrough",
+                    "id": "a0cee866-a7e9-46fc-9c7f-4846b20cc1e1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "ShiftUp",
+                    "type": "Button",
+                    "id": "52791e15-2039-4367-955a-17ab5f7d63e9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "ShiftDown",
+                    "type": "Button",
+                    "id": "c8fb4adb-8e12-405e-b336-716cdb1ac71c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Horn",
+                    "type": "PassThrough",
+                    "id": "fcbd10fe-4122-4743-b1c4-40c03e8917cc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Reset",
+                    "type": "Button",
+                    "id": "8e344690-7524-40d1-9243-135fa039c70a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "60c066db-2419-412e-b4cc-e868a567f717",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Handle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "04582863-b9a3-4e10-ac8f-33448837e404",
+                    "path": "<HID::Logitech G923 Racing Wheel for PlayStation and PC>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Handle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5f7c72a-11aa-42cf-b3cc-129fe97a3b17",
+                    "path": "<HID::Logitech Logitech Driving Force Pro>/stick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Handle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6ca620f4-4241-4611-b0c7-512fb76a1ee1",
+                    "path": "<HID::Logitech Logitech Driving Force Pro>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Handle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "80494a4a-12ce-463a-84fd-5c2f1f86f21f",
+                    "path": "<HID::44F B66E>/stick/x",
+                    "interactions": "",
+                    "processors": "Scale(factor=2)",
+                    "groups": "",
+                    "action": "Handle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e54da69f-7b65-413f-a7ed-b67bf6df5e66",
+                    "path": "<HID::WiseGroup.,Ltd JC-PS102U>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Handle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6b551dce-d2e2-4e1e-ad3d-d926e79986f3",
+                    "path": "<Gamepad>/leftStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HandleKeyboard",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "ddf31d4d-3bb0-4bf8-9259-e5d67357edaa",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HandleKeyboard",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Positive",
+                    "id": "19f47cd6-2e0c-4fbe-a46d-52adf721182e",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HandleKeyboard",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Negative",
+                    "id": "b839a63e-5795-4184-b1e8-108c410cf647",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HandleKeyboard",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ff5e0804-d779-46e5-aecb-3cbefd40f42e",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1bffe7a1-e70a-414c-ac69-a5199d3353b3",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cf44de25-a141-4f6f-b757-10548e5ff2e4",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Brake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d722887c-dce5-450b-b649-f7d5932af7ab",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Brake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b1608a40-aa04-4f09-8ae5-badde663875a",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/stick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClutchPedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b3e0c8b6-f028-4cd1-9832-507ccf75ace9",
+                    "path": "<HID::Logitech G923 Racing Wheel for PlayStation and PC>/stick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClutchPedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7f7db391-dbb7-4719-993b-404995c3703d",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "06a2bc4a-5c2c-4923-8c87-d951e6186e85",
+                    "path": "<HID::Logitech G923 Racing Wheel for PlayStation and PC>/button5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5104b9bd-4042-48df-850d-c24ab74bf151",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d69f2e53-226e-4f39-86bf-597742acfd40",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "49477024-ea82-4b7f-97bd-2f0bf644c21f",
+                    "path": "<HID::LTB-SMG>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48a40f2b-0017-4087-aa7e-e5713c0c3f97",
+                    "path": "<HID::Logitech Logitech Driving Force Pro>/button13",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "631c45df-6572-4dc1-8091-f68077af2715",
+                    "path": "<HID::44F B66E>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f479d44e-84c1-4ead-bd8c-84b25dda4813",
+                    "path": "<HID::WiseGroup.,Ltd JC-PS102U>/hat/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a129450-65a8-45a7-be7c-5c2b2cdda589",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "11ecf621-46a8-49db-987d-8d2a95c93aa6",
+                    "path": "<HID::Logitech G923 Racing Wheel for PlayStation and PC>/button6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "edf91f05-5377-434b-89df-22fff3a15028",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3291b85e-28c3-4e4f-b4af-be65d9f26930",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "79dfaa30-dc57-4e21-9b7a-8a311e7ba9dc",
+                    "path": "<HID::LTB-SMG>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6f5914d1-6044-46c7-a18a-5a30865e3d2c",
+                    "path": "<HID::Logitech Logitech Driving Force Pro>/button14",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "345d57ae-467e-4b99-b442-c0bbb8d2b209",
+                    "path": "<HID::44F B66E>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17e2551e-af22-41d2-bb9c-58a5017764d6",
+                    "path": "<HID::WiseGroup.,Ltd JC-PS102U>/hat/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShiftDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13a04eec-6227-4c36-812d-9d0cc4da6817",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AccelPedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3bac1701-bd58-4a2a-ae3f-65dd7a446d15",
+                    "path": "<HID::Logitech G923 Racing Wheel for PlayStation and PC>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AccelPedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "392b1f87-6c98-46c7-9d59-82b3fa3f1419",
+                    "path": "<HID::Logitech Logitech Driving Force Pro>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AccelPedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "96b1b648-5611-43b3-801b-74bbeee93334",
+                    "path": "<HID::WiseGroup.,Ltd JC-PS102U>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AccelPedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5bb113dc-e1ab-4011-b61b-87b6e527941a",
+                    "path": "<HID::44F B66E>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AccelPedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3340d8fc-9e95-4585-95b8-d78227f1ea83",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BrakePedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5abc8f93-f58d-4eb2-baed-0e9ad8bb6ad5",
+                    "path": "<HID::Logitech G923 Racing Wheel for PlayStation and PC>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BrakePedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "061a6b1d-2ab9-48ec-a092-4fc0dfa29d5b",
+                    "path": "<HID::Logitech Logitech Driving Force Pro>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BrakePedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "65d6a2dd-82d7-402e-b483-32989630a43b",
+                    "path": "<HID::44F B66E>/stick/y",
+                    "interactions": "",
+                    "processors": "Invert",
+                    "groups": "",
+                    "action": "BrakePedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a8a70275-8c19-4c67-89b5-2de1fecfd11c",
+                    "path": "<HID::WiseGroup.,Ltd JC-PS102U>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BrakePedal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ba178ae2-a6d1-4f73-a32d-f78a15afc0c7",
+                    "path": "<HID::Logitech G923 Racing Wheel for PlayStation and PC>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Horn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f4afe2bb-d134-4414-baca-f92bed9e4e04",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reset",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "End",
+            "id": "7a9f59fe-9bff-4411-9997-ef9c864810c1",
+            "actions": [
+                {
+                    "name": "BackToStart",
+                    "type": "Button",
+                    "id": "70bd9fc9-d4c8-4e5a-8776-c8d7a320ee2c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "39113824-7031-4e46-a864-58a72cd277b9",
+                    "path": "<Keyboard>/numpadEnter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BackToStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e51eaf2-23da-40c3-8643-58ef4ca09832",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BackToStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d8a346b-e7f4-4a91-a46d-75d73c15728b",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button25",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BackToStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "60837130-ff95-4c48-969e-e15164db2e33",
+                    "path": "<HID::44F B66E>/button5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BackToStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Debug",
+            "id": "df5235a3-f26b-4fbd-a99e-fc5070d8de27",
+            "actions": [
+                {
+                    "name": "East",
+                    "type": "Button",
+                    "id": "d44288a7-bc73-4b2f-ac48-4c3cbfcc5a9b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "North",
+                    "type": "Button",
+                    "id": "458a6d32-45f9-4f30-8501-46679ba18ee3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "West",
+                    "type": "Button",
+                    "id": "43b874cf-f8cb-495f-82ee-4415a70ba249",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "South",
+                    "type": "Button",
+                    "id": "21e26e07-056e-469c-9f9c-d012c215a294",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Left",
+                    "type": "Button",
+                    "id": "a4bbc02d-8ea2-498b-b677-2bc5cbccda45",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Right",
+                    "type": "Button",
+                    "id": "bfdfc3aa-0b03-484a-92a1-be7bb9c65483",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Up",
+                    "type": "Button",
+                    "id": "12349685-071d-48b0-b73f-f21c010c5cfc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Down",
+                    "type": "Button",
+                    "id": "ac113389-ab69-43a1-9684-962f1e5031bb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Puls",
+                    "type": "Button",
+                    "id": "ea696496-e7e7-409e-9b79-5c6a4a035c1e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Minus",
+                    "type": "Button",
+                    "id": "8793ca20-5223-4323-8f71-334ed73e86ff",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "L2",
+                    "type": "Button",
+                    "id": "9ee37a1b-33d0-48ca-95df-8d4ceeb89c73",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "L3",
+                    "type": "Button",
+                    "id": "ada783ee-d08a-422c-8ba1-5a83a79c06aa",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "R2",
+                    "type": "Button",
+                    "id": "c2906f28-2b5c-4349-a1a0-6301f99a7562",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "R3",
+                    "type": "Button",
+                    "id": "90dc92c8-9410-49ce-8b4f-1dadf3899e25",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Share",
+                    "type": "Button",
+                    "id": "d7f3f8ce-4159-4f86-bb26-efce123a0a1a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Option",
+                    "type": "Button",
+                    "id": "163fa21f-5d60-48f6-b547-42eaad58eb0c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "PS",
+                    "type": "Button",
+                    "id": "13b9b5d8-1730-4698-b416-48c996e66638",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "Dial",
+                    "type": "Value",
+                    "id": "9d581662-e4d9-4f90-94b6-9909ae6fbd3c",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "Enter",
+                    "type": "Button",
+                    "id": "1a6a5c95-d928-4ae1-b429-8046d4f6fcdb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4fec7b18-39ee-4a96-b41f-c53bdab5e0d0",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "East",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "181dac45-b5e3-408a-a88c-184a88a482b3",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "North",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a96c749d-1663-4d90-a89e-e697903c507f",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "West",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b78e084-7a9e-4920-a9f8-bf7c65ce6b09",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/trigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "South",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8bc83718-311f-43aa-8222-7a75b1021fca",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/hat/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fc5cbd64-8c97-4760-b363-6ab7d6d338b6",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/hat/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b71104c-f9f3-4433-871d-92aadcd4d553",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/hat/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb44ef51-e444-414f-b4cb-75451cb2271d",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/hat/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "73ba77cc-84bd-4113-a6bb-9910ebfee0db",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button20",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Puls",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f790fe09-ddda-4e26-b33e-749c4d1b2df6",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button21",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Minus",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3a350ca9-2fea-49c3-8ff4-e5a4cd6a6d27",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "L2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "214f6118-8574-44cb-bae3-ec9abf8efa29",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button12",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "L3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92a08450-904b-4323-aae8-61b4105e0c4f",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "R2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1cfea55e-c4ed-411b-a1c5-5a62e3a74b20",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button11",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "R3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "60ad5816-9824-4d81-9b2a-df2a3ca73cb5",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Share",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4757a7a4-b59a-418f-9b79-f4d0d3a22ba3",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button10",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Option",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cda99092-0d93-46b0-9883-0fbfb6c8311a",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button25",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PS",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "63763842-207d-454f-b172-326acc0d981a",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dial",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "8bcf4913-d94d-4afd-8620-62b93bc16efe",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button23",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dial",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "ce178c0b-98d9-4e0b-8da6-a46b2313933d",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button22",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dial",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "8e728c2e-6cd1-4e4d-b9e5-045acbf5e4cb",
+                    "path": "<HID::Logitech G29 Driving Force Racing Wheel>/button24",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

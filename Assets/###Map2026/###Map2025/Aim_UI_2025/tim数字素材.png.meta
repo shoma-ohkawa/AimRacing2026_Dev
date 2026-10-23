@@ -1,0 +1,544 @@
+fileFormatVersion: 2
+guid: 9215b709b2e0499489fd378043b7a2ee
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_SectionTime"
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 890
+        width: 1055
+        height: 131
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5afec2a2d35c9eb429fe60ffcc41d70e
+      internalID: 2136771946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_SectionTime2"
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 754
+        width: 465
+        height: 131
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5079254b3214af9478b3a5cb3b022a6f
+      internalID: -2072600854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_Sector1"
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 506
+        width: 500
+        height: 175
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c505618eebc1d254eb28a923c37384cf
+      internalID: -2092696968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_0"
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 512
+        width: 80
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1612032dfe924864c9e01d0a5e89f6fa
+      internalID: 1042641579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_1"
+      rect:
+        serializedVersion: 2
+        x: 732
+        y: 512
+        width: 80
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9492ed4b25ffd645b50fa27c7534c2f
+      internalID: 841478442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_2"
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 512
+        width: 80
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6652a526c8f03814a9d30927890f4a76
+      internalID: -496441672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_3"
+      rect:
+        serializedVersion: 2
+        x: 977
+        y: 512
+        width: 80
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25308603ac45f7446b5ef329a5fbef3b
+      internalID: 489469060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_4"
+      rect:
+        serializedVersion: 2
+        x: 1093
+        y: 512
+        width: 80
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f95ab16c11b7164a8a616c8ab0783be
+      internalID: 1449837212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_5"
+      rect:
+        serializedVersion: 2
+        x: 1222
+        y: 512
+        width: 80
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30093be55ee145d4eae5ad4edb0a2260
+      internalID: -69084967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_6"
+      rect:
+        serializedVersion: 2
+        x: 1345
+        y: 512
+        width: 80
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69e164b300818894bbcd1ff645fa6f6d
+      internalID: -117856435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_7"
+      rect:
+        serializedVersion: 2
+        x: 1470
+        y: 512
+        width: 80
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49964632d70de8345bdb9d69ae478ff8
+      internalID: 406425786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_8"
+      rect:
+        serializedVersion: 2
+        x: 1590
+        y: 512
+        width: 80
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 516505a832d77464a9bd19f12177f6ba
+      internalID: -774584254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_9"
+      rect:
+        serializedVersion: 2
+        x: 1714
+        y: 512
+        width: 80
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67913156dc0bf5c4888900089c8e1bc3
+      internalID: 1829317722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_colon"
+      rect:
+        serializedVersion: 2
+        x: 1836
+        y: 512
+        width: 80
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ffe9c5bc96a7b946975d97f6a127d5d
+      internalID: 884766005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_Sector2"
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 293
+        width: 500
+        height: 175
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd57a9748beebb74f953516aac0995af
+      internalID: 347763232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_Sector3"
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 59
+        width: 500
+        height: 175
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58a34cf5ff5a6e140bd576a01f49fea1
+      internalID: -1566088977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "tim\u6570\u5B57\u7D20\u6750_dot"
+      rect:
+        serializedVersion: 2
+        x: 1836
+        y: 512
+        width: 80
+        height: 70
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a73b584c47e6954fb830fe62e3a5c86
+      internalID: 1039869340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 1debe05731b29604f9252218fe93c267
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      "tim\u6570\u5B57\u7D20\u6750_0": 1042641579
+      "tim\u6570\u5B57\u7D20\u6750_1": 841478442
+      "tim\u6570\u5B57\u7D20\u6750_10": -548948655
+      "tim\u6570\u5B57\u7D20\u6750_11": 970056341
+      "tim\u6570\u5B57\u7D20\u6750_12": 1873938581
+      "tim\u6570\u5B57\u7D20\u6750_14": 88521813
+      "tim\u6570\u5B57\u7D20\u6750_15": -749242494
+      "tim\u6570\u5B57\u7D20\u6750_16": 1736443469
+      "tim\u6570\u5B57\u7D20\u6750_17": -753380267
+      "tim\u6570\u5B57\u7D20\u6750_18": -1472972715
+      "tim\u6570\u5B57\u7D20\u6750_2": -496441672
+      "tim\u6570\u5B57\u7D20\u6750_20": 733983927
+      "tim\u6570\u5B57\u7D20\u6750_21": 434506159
+      "tim\u6570\u5B57\u7D20\u6750_3": 489469060
+      "tim\u6570\u5B57\u7D20\u6750_33": 1375875664
+      "tim\u6570\u5B57\u7D20\u6750_34": -1282203976
+      "tim\u6570\u5B57\u7D20\u6750_35": 933663777
+      "tim\u6570\u5B57\u7D20\u6750_36": 108830827
+      "tim\u6570\u5B57\u7D20\u6750_38": -50890525
+      "tim\u6570\u5B57\u7D20\u6750_39": 2000791027
+      "tim\u6570\u5B57\u7D20\u6750_4": 1449837212
+      "tim\u6570\u5B57\u7D20\u6750_40": -1386623486
+      "tim\u6570\u5B57\u7D20\u6750_41": -1361660509
+      "tim\u6570\u5B57\u7D20\u6750_42": 2100535092
+      "tim\u6570\u5B57\u7D20\u6750_44": 1214470133
+      "tim\u6570\u5B57\u7D20\u6750_45": -209322163
+      "tim\u6570\u5B57\u7D20\u6750_46": -2118882970
+      "tim\u6570\u5B57\u7D20\u6750_47": -1066285244
+      "tim\u6570\u5B57\u7D20\u6750_5": -69084967
+      "tim\u6570\u5B57\u7D20\u6750_6": -117856435
+      "tim\u6570\u5B57\u7D20\u6750_7": 406425786
+      "tim\u6570\u5B57\u7D20\u6750_8": -774584254
+      "tim\u6570\u5B57\u7D20\u6750_9": 1829317722
+      "tim\u6570\u5B57\u7D20\u6750_SectionTime": 2136771946
+      "tim\u6570\u5B57\u7D20\u6750_SectionTime2": -2072600854
+      "tim\u6570\u5B57\u7D20\u6750_Sector1": -2092696968
+      "tim\u6570\u5B57\u7D20\u6750_Sector2": 347763232
+      "tim\u6570\u5B57\u7D20\u6750_Sector3": -1566088977
+      "tim\u6570\u5B57\u7D20\u6750_colon": 884766005
+      "tim\u6570\u5B57\u7D20\u6750_dot": -62739413
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

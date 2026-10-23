@@ -1,0 +1,1394 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PerfViewer</title>
+<style>
+:root {
+  --bg: #f6f8fa; --panel: #ffffff; --text: #1f2328; --muted: #656d76; --border: #d0d7de; --grid: #e6e9ed;
+  --accent: #2563eb; --warn: #9a6700; --warn-bg: #fff8c5; --err: #b91c1c; --err-bg: #ffe4e6; --ok: #15803d;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117; --panel: #161b22; --text: #e6edf3; --muted: #8b949e; --border: #30363d; --grid: #262c35;
+    --accent: #58a6ff; --warn: #e3b341; --warn-bg: #3a2f0b; --err: #ff7b72; --err-bg: #3d1618; --ok: #56d364;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); }
+body { font: 14px/1.5 system-ui, "Yu Gothic UI", "Meiryo", sans-serif; font-variant-numeric: tabular-nums; }
+header { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; padding: 8px 16px; background: var(--panel); border-bottom: 1px solid var(--border); }
+header h1 { margin: 0; font-size: 16px; }
+.spacer { flex: 1; }
+.muted { color: var(--muted); }
+.pill { padding: 1px 8px; border-radius: 999px; font-size: 12px; border: 1px solid var(--border); white-space: nowrap; }
+.pill.ok { color: var(--ok); border-color: var(--ok); }
+.pill.err { color: var(--err); border-color: var(--err); background: var(--err-bg); }
+.pill.warn { color: var(--warn); border-color: var(--warn); background: var(--warn-bg); }
+button { font: inherit; white-space: nowrap; padding: 3px 10px; color: var(--text); background: var(--panel); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; }
+button:hover { border-color: var(--accent); }
+select { font: inherit; color: var(--text); background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 2px 6px; }
+.layout { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 16px; padding: 16px; align-items: start; }
+aside section { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; }
+aside h2 { margin: 0 0 8px; font-size: 13px; color: var(--muted); font-weight: 600; }
+.run { display: flex; gap: 8px; align-items: flex-start; padding: 5px 4px; border-radius: 6px; cursor: pointer; }
+.run:hover { background: var(--bg); }
+.run input { margin-top: 4px; }
+.sw { width: 12px; height: 12px; border-radius: 3px; margin-top: 4px; flex: none; }
+.rname { font-weight: 600; word-break: break-all; }
+.rsub { font-size: 12px; color: var(--muted); }
+.live { color: var(--ok); font-weight: 600; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 6px 0; }
+.row label { display: flex; align-items: center; gap: 6px; }
+.hint { font-size: 12px; color: var(--muted); margin: 6px 0 0; }
+.warnitem { font-size: 13px; padding: 3px 0; border-top: 1px solid var(--border); }
+.warnitem:first-child { border-top: 0; }
+.tag { display: inline-block; padding: 0 6px; border-radius: 4px; font-size: 12px; margin-right: 4px; }
+.tag.err { color: var(--err); background: var(--err-bg); }
+.tag.warn { color: var(--warn); background: var(--warn-bg); }
+.tag.info { color: var(--muted); background: var(--bg); border: 1px solid var(--border); }
+table.meta { border-collapse: collapse; width: 100%; font-size: 12px; margin-top: 6px; }
+table.meta th, table.meta td { text-align: left; padding: 2px 6px; border-top: 1px solid var(--border); vertical-align: top; word-break: break-all; }
+table.meta tr.diff td, table.meta tr.diff th { background: var(--warn-bg); }
+details > summary { cursor: pointer; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2px 8px; margin-top: 6px; }
+.cols label { display: flex; gap: 6px; align-items: center; font-size: 12px; }
+main h3 { margin: 18px 0 8px; font-size: 14px; color: var(--muted); }
+main h3:first-child { margin-top: 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 12px; }
+.chart { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px 6px; min-width: 0; }
+.chart.has-err { border-color: var(--err); }
+.chart.has-warn { border-color: var(--warn); }
+.chart-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.ctitle { font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chart-head button { padding: 0 8px; font-size: 12px; }
+.cwrap { position: relative; height: 190px; }
+.cwrap canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cwrap canvas.over { cursor: crosshair; }
+.legend { display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: 12px; min-height: 20px; margin-top: 4px; }
+.lg { white-space: nowrap; }
+.lg i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; }
+.lg em { font-style: normal; color: var(--muted); margin-left: 6px; }
+.empty { padding: 40px 16px; text-align: center; color: var(--muted); background: var(--panel); border: 1px dashed var(--border); border-radius: 8px; }
+.hidden { display: none !important; }
+.content { min-width: 0; }
+.trpanel { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; margin-bottom: 12px; overflow-x: auto; }
+.trpanel > details > summary { font-weight: 600; }
+.trpanel h4 { margin: 14px 0 4px; font-size: 13px; color: var(--muted); font-weight: 600; }
+.trpanel .note { font-size: 12px; color: var(--muted); margin: 4px 0; }
+table.tr { border-collapse: collapse; width: 100%; font-size: 13px; margin-top: 6px; }
+table.tr th, table.tr td { text-align: left; padding: 4px 8px; border-top: 1px solid var(--border); vertical-align: top; }
+table.tr thead th { border-top: 0; font-size: 12px; color: var(--muted); font-weight: 600; }
+table.tr tbody tr.clickable { cursor: pointer; }
+table.tr tbody tr.clickable:hover td, table.tr tbody tr.sel td { background: var(--bg); }
+table.tr td.num { white-space: nowrap; }
+table.tr tr.sum td, table.tr tr.sum th { border-top: 2px solid var(--border); font-weight: 600; }
+.tr-big { font-weight: 700; }
+.tr-sub { font-size: 11px; color: var(--muted); }
+.diff { display: inline-block; margin-left: 6px; padding: 0 6px; border-radius: 4px; font-size: 12px; font-weight: 600; border: 1px solid var(--border); color: var(--muted); }
+.diff.good { color: var(--ok); border-color: var(--ok); }
+.diff.bad { color: var(--err); border-color: var(--err); background: var(--err-bg); }
+.bar { height: 5px; border-radius: 3px; margin-top: 2px; min-width: 1px; }
+.tag.work { color: var(--accent); border: 1px solid var(--accent); }
+.tag.wait { color: var(--muted); border: 1px solid var(--border); }
+.trchart { position: relative; height: 170px; margin-top: 6px; }
+.trchart canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+@media (max-width: 960px) {
+  .layout { grid-template-columns: 1fr; }
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>PerfViewer</h1>
+  <span id="conn" class="pill">接続中…</span>
+  <span id="updated" class="muted"></span>
+  <div class="spacer"></div>
+  <button id="btnPause">更新を止める</button>
+  <button id="btnReload">一覧を更新</button>
+</header>
+<div class="layout">
+  <aside>
+    <section>
+      <h2>起動(計測 1 回分)</h2>
+      <div id="runs"></div>
+      <div class="row"><button id="selAll">すべて選択</button><button id="selNone">すべて解除</button></div>
+      <p class="hint">チェックした起動が、色分けして重ねて描かれます。横軸の 0 は、各起動の記録開始です。</p>
+    </section>
+    <section>
+      <h2>表示</h2>
+      <div class="row"><span>横軸</span>
+        <select id="xmode">
+          <option value="uptime">経過時間(0 秒を揃えて重ねる)</option>
+          <option value="wall">日時</option>
+        </select>
+      </div>
+      <div class="row"><span>範囲</span>
+        <select id="range">
+          <option value="0">全体</option>
+          <option value="60">直近 1 分</option>
+          <option value="300">直近 5 分</option>
+          <option value="900">直近 15 分</option>
+          <option value="3600">直近 1 時間</option>
+          <option value="21600">直近 6 時間</option>
+          <option value="86400">直近 24 時間</option>
+          <option value="custom" hidden>拡大中</option>
+        </select>
+      </div>
+      <div class="row"><label><input type="checkbox" id="follow" checked>最新を追う</label></div>
+      <div class="row"><label><input type="checkbox" id="zerobase">縦軸を 0 から始める</label></div>
+      <p class="hint">グラフ上: ホイールで拡大・縮小、ドラッグで移動、ダブルクリックで全体に戻す。</p>
+      <details id="colPicker"><summary>表示するグラフ</summary><div id="colList" class="cols"></div></details>
+    </section>
+    <section>
+      <h2>確認(取得できなかった列)</h2>
+      <div id="warnings" class="muted">データを読み込むと表示されます。</div>
+    </section>
+    <section>
+      <details>
+        <summary>起動ごとの条件の比較</summary>
+        <div id="metaCompare"><span class="muted">起動を 2 つ以上選ぶと、違う項目が強調されます。</span></div>
+      </details>
+    </section>
+  </aside>
+  <div class="content">
+    <section id="trPanel" class="trpanel hidden">
+      <details id="trDetails" open>
+        <summary>遷移・ロード時間の比較</summary>
+        <div class="row">
+          <label>基準の起動 <select id="trBase"></select></label>
+          <span class="note">エンジンの速さは「作業(work)」の合計で比べます。「待ち(wait)」は Inspector の秒数などの設定で決まります。</span>
+        </div>
+        <div id="trBody"></div>
+      </details>
+    </section>
+    <main id="charts">
+      <div class="empty" id="emptyMsg">読み込み中…</div>
+    </main>
+  </div>
+</div>
+
+<script>
+(() => {
+'use strict';
+
+// ------------------------------------------------------------------ 定数
+
+const POLL_MS = 1000; // 新しい行を取りに行く間隔
+const RUNLIST_MS = 5000; // 起動の一覧を取り直す間隔
+const PAGE_LIMIT = 50000; // 1 回に取る行数
+const MIN_GAP_SECONDS = 3.5; // これより離れた 2 点は、線をつなげない(記録が途切れた)
+const MIN_SPAN_SECONDS = 10; // 拡大の限界
+const MIN_ZERO_ROWS = 30; // 「ずっと 0」と判定するのに必要な行数
+const MIN_MISSING_ROWS = 3; // 「取得できず」と判定するのに必要な行数
+const SLOPE_MAX_POINTS = 4000; // 傾きの計算に使う点の上限
+const SLOPE_MIN_SECONDS = 300; // 傾き(1 時間あたり)を出すのに必要な範囲の長さ。短いと、換算した値がぶれる
+const PALETTE = ['#4c9be8', '#f28e2b', '#59a14f', '#e15759', '#b07aa1', '#76b7b2', '#edc948', '#9c755f'];
+const GROUPS = ['FPS', 'CPU', 'GPU', 'メモリ', 'GC', 'その他'];
+const TIME_STEPS = [1, 2, 5, 10, 15, 30, 60, 120, 300, 600, 900, 1800, 3600, 7200, 10800, 21600, 43200, 86400, 172800, 432000];
+const STORAGE_KEY = 'perfviewer.v1';
+
+const COLUMN_META = {
+  fps: { label: 'FPS', unit: 'fps', group: 'FPS', dec: 1 },
+  frame_ms_avg: { label: 'フレーム時間(平均)', unit: 'ms', group: 'FPS', dec: 2 },
+  frame_ms_max: { label: 'フレーム時間(最大)', unit: 'ms', group: 'FPS', dec: 1 },
+  cpu_main_ms: { label: 'CPU メインスレッド時間', unit: 'ms', group: 'CPU', dec: 2 },
+  cpu_render_ms: { label: 'CPU レンダースレッド時間', unit: 'ms', group: 'CPU', dec: 2 },
+  cpu_process_pct: { label: 'CPU 使用率(本アプリ)', unit: '%', group: 'CPU', dec: 1 },
+  gpu_ms: { label: 'GPU 時間', unit: 'ms', group: 'GPU', dec: 2 },
+  gpu_pct: { label: 'GPU 使用率', unit: '%', group: 'GPU', dec: 1 },
+  vram_mb: { label: 'VRAM 使用量', unit: 'MB', group: 'GPU', dec: 0 },
+  gpu_temp_c: { label: 'GPU 温度', unit: '℃', group: 'GPU', dec: 0 },
+  ws_mb: { label: '物理メモリ(ワーキングセット)', unit: 'MB', group: 'メモリ', dec: 1 },
+  private_mb: { label: 'プライベートメモリ', unit: 'MB', group: 'メモリ', dec: 1 },
+  unity_alloc_mb: { label: 'Unity 確保量(使用中)', unit: 'MB', group: 'メモリ', dec: 1 },
+  unity_reserved_mb: { label: 'Unity 予約量', unit: 'MB', group: 'メモリ', dec: 1 },
+  gc0: { label: 'GC 回数(世代 0・累計)', unit: '回', group: 'GC', dec: 0 },
+  mono_used_mb: { label: 'マネージドヒープ 使用量', unit: 'MB', group: 'GC', dec: 1 },
+  mono_heap_mb: { label: 'マネージドヒープ 確保量', unit: 'MB', group: 'GC', dec: 1 },
+  state: { label: 'State(GameStateId の番号。-1 = まだ不明)', unit: '', group: 'その他', dec: 0 },
+  lap: { label: '周回の番号(0 = 周回中ではない)', unit: '周', group: 'その他', dec: 0 },
+  trans: { label: '遷移などの処理中(1 = 処理中)', unit: '', group: 'その他', dec: 0 },
+};
+const META_HIDE = new Set(['columns', 'schema']);
+
+// ------------------------------------------------------------------ 状態
+
+const state = {
+  runs: new Map(), // フォルダ名 -> 起動
+  colorCount: 0,
+  xMode: 'uptime',
+  rangeSec: 0, // 0 なら全体
+  custom: null, // 拡大中の範囲 {x0, x1}(秒)
+  follow: true,
+  zeroBase: false,
+  paused: false,
+  hoverX: null,
+  view: { x0: 0, x1: 1 },
+  columns: [], // 表示候補の列(順序つき)
+  colHidden: new Set(),
+  charts: new Map(), // 列名 -> グラフ
+  dirtyData: true,
+  slopes: new Map(),
+  root: '',
+  trDirty: false, // 遷移・ロード時間の表示を作り直す必要があるか
+  trBase: '', // 差の基準にする起動(フォルダ名)
+  trBaseUser: false, // 基準を手で選んだか。選ぶまでは、選んだ起動のうち最も古いもの(変更の「前」)が基準になる
+  trKey: '', // 詳細を表示している遷移(キー)
+  serverOk: false,
+  lastUpdate: 0,
+  firstListDone: false,
+};
+window.__pv = state; // 動作確認用
+
+function loadPrefs() {
+  try {
+    const p = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    if (p.xMode === 'uptime' || p.xMode === 'wall') state.xMode = p.xMode;
+    if (typeof p.rangeSec === 'number') state.rangeSec = p.rangeSec;
+    if (typeof p.follow === 'boolean') state.follow = p.follow;
+    if (typeof p.zeroBase === 'boolean') state.zeroBase = p.zeroBase;
+    if (Array.isArray(p.colHidden)) state.colHidden = new Set(p.colHidden);
+  } catch (e) { /* 保存できない環境でも動く */ }
+}
+function savePrefs() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      xMode: state.xMode, rangeSec: state.rangeSec, follow: state.follow, zeroBase: state.zeroBase, colHidden: [...state.colHidden],
+    }));
+  } catch (e) { /* 保存できない環境でも動く */ }
+}
+
+// ------------------------------------------------------------------ 小さな道具
+
+const $ = (id) => document.getElementById(id);
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const pad2 = (n) => String(n).padStart(2, '0');
+
+function fmtFixed(v, d) {
+  return v.toLocaleString('ja-JP', { minimumFractionDigits: d, maximumFractionDigits: d });
+}
+function fmtSlope(v) {
+  const a = Math.abs(v);
+  const d = a >= 100 ? 0 : a >= 10 ? 1 : 2;
+  return (v >= 0 ? '+' : '−') + fmtFixed(a, d);
+}
+function fmtDuration(sec) {
+  sec = Math.max(0, Math.round(sec));
+  const d = Math.floor(sec / 86400), h = Math.floor((sec % 86400) / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+  if (d > 0) return d + '日 ' + h + ':' + pad2(m) + ':' + pad2(s);
+  if (h > 0) return h + ':' + pad2(m) + ':' + pad2(s);
+  return m + ':' + pad2(s);
+}
+function fmtWall(sec, withDate, withSeconds) {
+  const t = new Date(sec * 1000);
+  const hm = pad2(t.getHours()) + ':' + pad2(t.getMinutes()) + (withSeconds ? ':' + pad2(t.getSeconds()) : '');
+  return withDate ? (t.getMonth() + 1) + '/' + t.getDate() + ' ' + hm : hm;
+}
+function niceStep(range, count) {
+  const raw = range / count;
+  const p = Math.pow(10, Math.floor(Math.log10(raw)));
+  const f = raw / p;
+  return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p;
+}
+function niceTimeStep(span, count) {
+  const raw = span / count;
+  for (const s of TIME_STEPS) if (s >= raw) return s;
+  return TIME_STEPS[TIME_STEPS.length - 1];
+}
+function lowerBound(arr, n, x) { // arr[0..n) が昇順のとき、x 以上の最初の位置
+  let lo = 0, hi = n;
+  while (lo < hi) {
+    const mid = (lo + hi) >>> 1;
+    if (arr[mid] < x) lo = mid + 1; else hi = mid;
+  }
+  return lo;
+}
+function colMeta(col) {
+  return COLUMN_META[col] || { label: col, unit: '', group: 'その他', dec: 2 };
+}
+function theme() {
+  const cs = getComputedStyle(document.documentElement);
+  const g = (n) => cs.getPropertyValue(n).trim();
+  return { text: g('--text'), muted: g('--muted'), grid: g('--grid'), panel: g('--panel'), border: g('--border') };
+}
+
+// ------------------------------------------------------------------ 起動(Run)とデータ
+
+function newRun(info) {
+  return {
+    name: info.name, label: info.label || info.name, start: info.start || '', meta: info.meta || null,
+    color: PALETTE[state.colorCount++ % PALETTE.length], selected: false, live: !!info.live, total: info.rows || 0,
+    hasTr: (info.transition_rows || 0) > 0, tr: newTr(),
+    since: 0, n: 0, cap: 0, t0: null, loading: false, error: null,
+    colNames: null, ci: new Map(), idxWall: 0, idxUp: 1, xu: null, xw: null, v: [], miss: [], zero: [], files: info.files || [],
+  };
+}
+function newTr() { // 遷移・ロード時間(transitions.csv)の読み込み状態
+  return { since: 0, total: 0, cols: null, rows: [], procs: [], dirty: true, loading: false };
+}
+function resetRun(run) {
+  run.since = 0; run.n = 0; run.cap = 0; run.t0 = null; run.colNames = null; run.ci = new Map(); run.xu = null; run.xw = null;
+  run.v = []; run.miss = []; run.zero = [];
+}
+function ensureCapacity(run, need) {
+  if (need <= run.cap) return;
+  let cap = Math.max(1024, run.cap);
+  while (cap < need) cap *= 2;
+  const grow = (old) => { const a = new Float64Array(cap); if (old) a.set(old.subarray(0, run.n)); return a; };
+  run.xu = grow(run.xu);
+  run.xw = grow(run.xw);
+  run.v = run.v.map(grow);
+  run.cap = cap;
+}
+function appendRows(run, columns, rows) {
+  if (!run.colNames) {
+    run.idxWall = Math.max(0, columns.indexOf('wall'));
+    run.idxUp = columns.indexOf('uptime_s') >= 0 ? columns.indexOf('uptime_s') : 1;
+    run.colNames = [];
+    run.colIdx = [];
+    columns.forEach((c, j) => { if (j !== run.idxWall && j !== run.idxUp) { run.ci.set(c, run.colNames.length); run.colNames.push(c); run.colIdx.push(j); } });
+    run.v = run.colNames.map(() => null);
+    run.miss = run.colNames.map(() => 0);
+    run.zero = run.colNames.map(() => 0);
+    run.cap = 0;
+  }
+  ensureCapacity(run, run.n + rows.length);
+  const nc = run.colNames.length;
+  for (let k = 0; k < rows.length; k++) {
+    const row = rows[k];
+    const up = row[run.idxUp];
+    const wall = Date.parse(row[run.idxWall]);
+    if (up === null || up === undefined || Number.isNaN(wall)) continue; // 時刻が読めない行は捨てる
+    if (run.t0 === null) run.t0 = up;
+    const i = run.n;
+    run.xu[i] = up - run.t0;
+    run.xw[i] = wall / 1000;
+    for (let c = 0; c < nc; c++) {
+      const x = row[run.colIdx[c]];
+      const val = (x === null || x === undefined) ? NaN : x;
+      run.v[c][i] = val;
+      if (!(val >= 0)) run.miss[c]++; else if (val === 0) run.zero[c]++;
+    }
+    run.n++;
+  }
+}
+async function fetchJson(url) {
+  const r = await fetch(url, { cache: 'no-store' });
+  if (!r.ok) throw new Error(url + ' -> ' + r.status);
+  return r.json();
+}
+async function loadRun(run) {
+  if (run.loading) return;
+  run.loading = true;
+  try {
+    for (;;) {
+      const res = await fetchJson('/api/data?run=' + encodeURIComponent(run.name) + '&since=' + run.since + '&limit=' + PAGE_LIMIT);
+      if (res.total < run.since) { resetRun(run); continue; } // ファイルが作り直された
+      run.total = res.total;
+      run.live = res.live;
+      if (res.rows.length === 0) break;
+      appendRows(run, res.columns, res.rows);
+      run.since += res.rows.length;
+      state.dirtyData = true;
+      state.lastUpdate = Date.now();
+      scheduleDraw();
+      if (res.rows.length < PAGE_LIMIT) break;
+    }
+    run.error = null;
+  } catch (e) {
+    run.error = String(e);
+    throw e;
+  } finally {
+    run.loading = false;
+  }
+}
+function selectedRuns() {
+  return [...state.runs.values()].filter((r) => r.selected);
+}
+const xs = (run) => (state.xMode === 'wall' ? run.xw : run.xu);
+
+// ------------------------------------------------------------------ 起動の一覧
+
+async function refreshRunList() {
+  const res = await fetchJson('/api/runs');
+  state.root = res.root;
+  for (const info of res.runs) {
+    let run = state.runs.get(info.name);
+    if (!run) {
+      run = newRun(info);
+      state.runs.set(info.name, run);
+    } else {
+      run.label = info.label || run.label;
+      run.meta = info.meta || run.meta;
+      run.total = info.rows;
+      run.live = info.live;
+      run.files = info.files;
+      run.hasTr = (info.transition_rows || 0) > 0 || run.tr.total > 0;
+    }
+  }
+  if (!state.firstListDone) {
+    state.firstListDone = true;
+    const first = res.runs.find((r) => r.live) || res.runs[0];
+    if (first) state.runs.get(first.name).selected = true;
+  }
+  renderRunList();
+}
+function renderRunList() {
+  const box = $('runs');
+  const list = [...state.runs.values()].sort((a, b) => (a.start < b.start ? 1 : -1));
+  if (box.dataset.sig === list.map((r) => r.name + r.selected).join('|')) {
+    for (const r of list) updateRunSub(r);
+    return;
+  }
+  box.dataset.sig = list.map((r) => r.name + r.selected).join('|');
+  box.textContent = '';
+  if (list.length === 0) {
+    box.append(el('div', 'muted', 'まだ記録がありません。ゲームを -perf で起動してください。'));
+    return;
+  }
+  for (const r of list) {
+    const lab = el('label', 'run');
+    const cb = el('input');
+    cb.type = 'checkbox';
+    cb.checked = r.selected;
+    cb.addEventListener('change', () => { r.selected = cb.checked; onSelectionChanged(); });
+    const sw = el('i', 'sw');
+    sw.style.background = r.color;
+    const body = el('div');
+    body.append(el('div', 'rname', r.label), el('div', 'rsub'));
+    r.subEl = body.lastChild;
+    lab.append(cb, sw, body);
+    box.append(lab);
+    updateRunSub(r);
+  }
+}
+function updateRunSub(r) {
+  if (!r.subEl) return;
+  r.subEl.textContent = '';
+  const when = (r.start || '').replace('T', ' ').slice(0, 16);
+  r.subEl.append(document.createTextNode(when + ' · ' + r.total.toLocaleString('ja-JP') + ' 行'));
+  if (r.live) r.subEl.append(document.createTextNode(' · '), el('span', 'live', '記録中'));
+  if (r.meta && r.meta.clean_exit === false && !r.live) r.subEl.append(document.createTextNode(' · '), el('span', 'tag warn', '異常終了の可能性'));
+  if (r.meta && r.meta.mode) r.subEl.append(document.createTextNode(' · '), el('span', 'tag info', r.meta.mode + (r.meta.stop_reason ? ' / ' + r.meta.stop_reason : '')));
+  if (r.meta && r.meta.editor_running) r.subEl.append(document.createTextNode(' · '), el('span', 'tag warn', 'Editor 起動中'));
+}
+function onSelectionChanged() {
+  state.custom = null;
+  state.dirtyData = true;
+  state.trDirty = true;
+  renderRunList();
+  pollOnce();
+  scheduleDraw();
+}
+
+// ------------------------------------------------------------------ 列と警告
+
+function rebuildColumns() {
+  const present = new Set();
+  for (const r of selectedRuns()) if (r.colNames) r.colNames.forEach((c) => present.add(c));
+  const known = Object.keys(COLUMN_META).filter((c) => present.has(c));
+  const unknown = [...present].filter((c) => !(c in COLUMN_META));
+  const cols = known.concat(unknown);
+  if (cols.join(',') === state.columns.join(',')) return false;
+  state.columns = cols;
+  buildColumnPicker();
+  buildCharts();
+  return true;
+}
+function buildColumnPicker() {
+  const box = $('colList');
+  box.textContent = '';
+  for (const c of state.columns) {
+    const lab = el('label');
+    const cb = el('input');
+    cb.type = 'checkbox';
+    cb.checked = !state.colHidden.has(c);
+    cb.addEventListener('change', () => {
+      if (cb.checked) state.colHidden.delete(c); else state.colHidden.add(c);
+      savePrefs();
+      buildCharts();
+      scheduleDraw();
+    });
+    lab.append(cb, document.createTextNode(colMeta(c).label));
+    box.append(lab);
+  }
+}
+function computeWarnings() {
+  const items = [];
+  for (const r of selectedRuns()) {
+    if (!r.colNames || r.n === 0) continue;
+    r.colNames.forEach((c, k) => {
+      const m = colMeta(c);
+      if (r.n >= MIN_MISSING_ROWS && r.miss[k] === r.n) items.push({ run: r, col: c, kind: 'missing', text: '全行が -1(取得できなかった)' });
+      else if (r.miss[k] > 0) items.push({ run: r, col: c, kind: 'partial', text: r.miss[k].toLocaleString('ja-JP') + ' 行が -1(一部取得できなかった)' });
+      else if (r.n >= MIN_ZERO_ROWS && r.zero[k] === r.n) items.push({ run: r, col: c, kind: 'zero', text: 'ずっと 0(取得できていないか、本当に 0 かを確認)' });
+    });
+  }
+  return items;
+}
+function renderWarnings() {
+  const box = $('warnings');
+  const items = computeWarnings();
+  box.textContent = '';
+  for (const ch of state.charts.values()) { ch.card.classList.remove('has-err', 'has-warn'); ch.badge.classList.add('hidden'); }
+  if (selectedRuns().length === 0) { box.className = 'muted'; box.textContent = '起動を選ぶと表示されます。'; return; }
+  if (items.length === 0) { box.className = 'ok-text'; box.style.color = 'var(--ok)'; box.textContent = 'すべての列が取得できています。'; return; }
+  box.className = ''; box.style.color = '';
+  const order = { missing: 0, zero: 1, partial: 2 };
+  items.sort((a, b) => order[a.kind] - order[b.kind]);
+  for (const it of items) {
+    const d = el('div', 'warnitem');
+    const cls = it.kind === 'missing' ? 'err' : it.kind === 'zero' ? 'warn' : 'info';
+    const tag = it.kind === 'missing' ? '取得できず' : it.kind === 'zero' ? '0 固定' : '一部欠測';
+    d.append(el('span', 'tag ' + cls, tag), document.createTextNode(colMeta(it.col).label + ' — ' + it.run.label + ': ' + it.text));
+    box.append(d);
+    const ch = state.charts.get(it.col);
+    if (ch) {
+      ch.badge.classList.remove('hidden');
+      if (it.kind === 'missing') { ch.card.classList.add('has-err'); ch.badge.className = 'tag err'; ch.badge.textContent = '取得できず'; }
+      else if (it.kind === 'zero' && !ch.card.classList.contains('has-err')) { ch.card.classList.add('has-warn'); ch.badge.className = 'tag warn'; ch.badge.textContent = '0 固定'; }
+      else if (it.kind === 'partial' && !ch.card.classList.contains('has-err') && !ch.card.classList.contains('has-warn')) { ch.badge.className = 'tag info'; ch.badge.textContent = '一部欠測'; }
+    }
+  }
+}
+function renderMetaCompare() {
+  const runs = selectedRuns().filter((r) => r.meta);
+  const box = $('metaCompare');
+  box.textContent = '';
+  if (runs.length < 1) { box.append(el('span', 'muted', '起動を選ぶと表示されます。')); return; }
+  const keys = [];
+  runs.forEach((r) => Object.keys(r.meta).forEach((k) => { if (!META_HIDE.has(k) && !keys.includes(k)) keys.push(k); }));
+  const t = el('table', 'meta');
+  const head = el('tr');
+  head.append(el('th', '', '項目'));
+  runs.forEach((r) => { const th = el('th'); const sw = el('i', 'sw'); sw.style.cssText = 'display:inline-block;margin-right:4px;background:' + r.color; th.append(sw, document.createTextNode(r.label)); head.append(th); });
+  t.append(head);
+  for (const k of keys) {
+    const vals = runs.map((r) => (r.meta[k] === undefined ? '' : String(r.meta[k])));
+    const tr = el('tr');
+    if (runs.length > 1 && new Set(vals).size > 1) tr.className = 'diff';
+    tr.append(el('th', '', k));
+    vals.forEach((v) => tr.append(el('td', '', v)));
+    t.append(tr);
+  }
+  box.append(t);
+}
+
+// ------------------------------------------------------------------ グラフの部品
+
+function buildCharts() {
+  const root = $('charts');
+  root.textContent = '';
+  state.charts.clear();
+  const cols = state.columns.filter((c) => !state.colHidden.has(c));
+  if (cols.length === 0) {
+    root.append(el('div', 'empty', selectedRuns().length ? '表示するグラフがありません。' : '左の「起動」を選ぶと、グラフが表示されます。'));
+    return;
+  }
+  for (const group of GROUPS) {
+    const inGroup = cols.filter((c) => colMeta(c).group === group);
+    if (inGroup.length === 0) continue;
+    root.append(el('h3', '', group));
+    const grid = el('div', 'grid');
+    root.append(grid);
+    for (const c of inGroup) grid.append(createChart(c));
+  }
+}
+function createChart(col) {
+  const m = colMeta(col);
+  const card = el('div', 'chart');
+  const head = el('div', 'chart-head');
+  const title = el('span', 'ctitle', m.label + (m.unit ? ' [' + m.unit + ']' : ''));
+  const badge = el('span', 'tag hidden');
+  const png = el('button', '', 'PNG');
+  png.title = 'このグラフを画像で保存';
+  head.append(title, badge, png);
+  const wrap = el('div', 'cwrap');
+  const base = el('canvas', 'base');
+  const over = el('canvas', 'over');
+  wrap.append(base, over);
+  const legend = el('div', 'legend');
+  card.append(head, wrap, legend);
+  const ch = { col, card, badge, wrap, base, over, legend, ctx: base.getContext('2d'), octx: over.getContext('2d'), w: 0, h: 0, geom: null, drag: null };
+  state.charts.set(col, ch);
+  new ResizeObserver(() => resizeChart(ch)).observe(wrap);
+  png.addEventListener('click', () => exportPng(ch));
+  over.addEventListener('mousemove', (e) => onHover(ch, e));
+  over.addEventListener('mouseleave', () => { if (!ch.drag) { state.hoverX = null; scheduleOverlay(); } });
+  over.addEventListener('wheel', (e) => onWheel(ch, e), { passive: false });
+  over.addEventListener('mousedown', (e) => onDragStart(ch, e));
+  over.addEventListener('dblclick', resetView);
+  return card;
+}
+function resizeChart(ch) {
+  const r = ch.wrap.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  ch.w = Math.max(0, Math.floor(r.width));
+  ch.h = Math.max(0, Math.floor(r.height));
+  for (const cv of [ch.base, ch.over]) { cv.width = ch.w * dpr; cv.height = ch.h * dpr; }
+  ch.dpr = dpr;
+  scheduleDraw();
+}
+
+// ------------------------------------------------------------------ 表示範囲
+
+function dataExtent() {
+  let min = Infinity, max = -Infinity;
+  for (const r of selectedRuns()) {
+    if (r.n === 0) continue;
+    const a = xs(r);
+    if (a[0] < min) min = a[0];
+    if (a[r.n - 1] > max) max = a[r.n - 1];
+  }
+  if (!isFinite(min)) { min = 0; max = 1; }
+  if (max - min < MIN_SPAN_SECONDS) max = min + MIN_SPAN_SECONDS;
+  return { min, max };
+}
+function computeView() {
+  const ext = dataExtent();
+  if (state.custom) return { x0: state.custom.x0, x1: state.custom.x1, ext };
+  if (state.rangeSec > 0) {
+    const x1 = ext.max;
+    return { x0: Math.max(x1 - state.rangeSec, ext.min - 0), x1: Math.max(x1, ext.min + MIN_SPAN_SECONDS), ext, windowed: true };
+  }
+  return { x0: ext.min, x1: ext.max, ext };
+}
+function setRangeSelect() {
+  $('range').value = state.custom ? 'custom' : String(state.rangeSec);
+}
+function resetView() {
+  state.custom = null;
+  state.rangeSec = 0;
+  state.follow = true;
+  $('follow').checked = true;
+  setRangeSelect();
+  savePrefs();
+  scheduleDraw();
+}
+function onWheel(ch, e) {
+  if (!ch.geom) return;
+  e.preventDefault();
+  const v = state.view;
+  const g = ch.geom;
+  const px = e.offsetX;
+  const cx = v.x0 + ((px - g.L) / g.pw) * (v.x1 - v.x0);
+  const f = e.deltaY < 0 ? 0.8 : 1.25;
+  let x0 = cx - (cx - v.x0) * f;
+  let x1 = cx + (v.x1 - cx) * f;
+  if (x1 - x0 < MIN_SPAN_SECONDS) { const mid = (x0 + x1) / 2; x0 = mid - MIN_SPAN_SECONDS / 2; x1 = mid + MIN_SPAN_SECONDS / 2; }
+  const ext = v.ext;
+  if (x1 - x0 >= ext.max - ext.min) { resetView(); return; }
+  state.custom = { x0, x1 };
+  state.follow = false;
+  $('follow').checked = false;
+  setRangeSelect();
+  scheduleDraw();
+}
+function onDragStart(ch, e) {
+  if (e.button !== 0 || !ch.geom) return;
+  const v = state.view;
+  ch.drag = { startX: e.clientX, x0: v.x0, x1: v.x1, moved: false };
+  state.hoverX = null;
+  const move = (ev) => {
+    const d = ch.drag;
+    if (!d) return;
+    const dx = ev.clientX - d.startX;
+    if (Math.abs(dx) > 3) d.moved = true;
+    if (!d.moved) return;
+    const span = d.x1 - d.x0;
+    const shift = (-dx / ch.geom.pw) * span;
+    let x0 = d.x0 + shift, x1 = d.x1 + shift;
+    const ext = state.view.ext;
+    if (x0 < ext.min) { x1 += ext.min - x0; x0 = ext.min; }
+    if (x1 > ext.max) { x0 -= x1 - ext.max; x1 = ext.max; }
+    state.custom = { x0, x1 };
+    state.follow = false;
+    $('follow').checked = false;
+    setRangeSelect();
+    scheduleDraw();
+  };
+  const up = () => {
+    window.removeEventListener('mousemove', move);
+    window.removeEventListener('mouseup', up);
+    ch.drag = null;
+  };
+  window.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', up);
+}
+function onHover(ch, e) {
+  if (ch.drag || !ch.geom) return;
+  const g = ch.geom;
+  const v = state.view;
+  const px = e.offsetX;
+  if (px < g.L || px > g.L + g.pw) { state.hoverX = null; scheduleOverlay(); return; }
+  state.hoverX = v.x0 + ((px - g.L) / g.pw) * (v.x1 - v.x0);
+  scheduleOverlay();
+}
+
+// ------------------------------------------------------------------ 描画
+
+let drawQueued = false, overlayQueued = false;
+function scheduleDraw() {
+  if (drawQueued) return;
+  drawQueued = true;
+  requestAnimationFrame(() => { drawQueued = false; drawAll(); });
+}
+function scheduleOverlay() {
+  if (overlayQueued) return;
+  overlayQueued = true;
+  requestAnimationFrame(() => { overlayQueued = false; drawOverlays(); });
+}
+function drawAll() {
+  if (state.dirtyData) {
+    state.dirtyData = false;
+    const rebuilt = rebuildColumns();
+    renderWarnings();
+    renderMetaCompare();
+    renderRunList();
+    if (rebuilt) { for (const ch of state.charts.values()) resizeChart(ch); }
+  }
+  if (state.trDirty) { state.trDirty = false; renderTransitions(); }
+  updateEmptyMsg();
+  state.view = computeView();
+  state.slopes = computeSlopes(state.view);
+  const th = theme();
+  for (const ch of state.charts.values()) drawChart(ch, state.view, th);
+  drawOverlays();
+  $('updated').textContent = state.lastUpdate ? '最終更新 ' + new Date(state.lastUpdate).toLocaleTimeString('ja-JP') : '';
+}
+function updateEmptyMsg() {
+  const m = $('emptyMsg');
+  if (!m) return;
+  if (!state.firstListDone) { m.textContent = '読み込み中…'; return; }
+  if (state.runs.size === 0) { m.textContent = 'まだ記録がありません。ゲームを -perf で起動すると表示されます。(読み取り先: ' + state.root + ')'; return; }
+  m.textContent = selectedRuns().length === 0 ? '左の「起動」を選ぶと、グラフが表示されます。' : 'データを読み込み中…';
+}
+function visibleRunsFor(col) {
+  return selectedRuns().filter((r) => r.n > 0 && r.ci.has(col));
+}
+function indexRange(run, view) {
+  const a = xs(run);
+  const i0 = Math.max(0, lowerBound(a, run.n, view.x0) - 1);
+  const i1 = Math.min(run.n - 1, lowerBound(a, run.n, view.x1));
+  return [i0, i1];
+}
+function drawChart(ch, view, th) {
+  const { ctx, w, h } = ch;
+  if (!w || !h) return;
+  const dpr = ch.dpr || 1;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  ctx.font = '11px system-ui, "Yu Gothic UI", sans-serif';
+  const L = 56, R = 10, T = 8, B = 22;
+  const pw = w - L - R, ph = h - T - B;
+  const runs = visibleRunsFor(ch.col);
+
+  let lo = Infinity, hi = -Infinity;
+  for (const run of runs) {
+    const arr = run.v[run.ci.get(ch.col)];
+    const [i0, i1] = indexRange(run, view);
+    for (let i = i0; i <= i1; i++) { const val = arr[i]; if (val >= 0) { if (val < lo) lo = val; if (val > hi) hi = val; } }
+  }
+  ch.geom = { L, R, T, B, pw, ph, lo: 0, hi: 1 };
+  if (!isFinite(lo)) {
+    ctx.fillStyle = th.muted;
+    ctx.textAlign = 'center';
+    ctx.fillText(runs.length ? 'この範囲に有効な値がありません(すべて -1)' : '起動を選ぶと表示されます', w / 2, h / 2);
+    return;
+  }
+  if (state.zeroBase) lo = Math.min(lo, 0);
+  if (hi - lo < 1e-9) { const d = Math.max(Math.abs(hi) * 0.05, 1); lo -= d; hi += d; }
+  const pad = (hi - lo) * 0.08;
+  const nonNeg = lo >= 0;
+  lo -= pad; hi += pad;
+  if (nonNeg) lo = Math.max(0, lo);
+  ch.geom.lo = lo; ch.geom.hi = hi;
+  const X = (x) => L + ((x - view.x0) / (view.x1 - view.x0)) * pw;
+  const Y = (y) => T + (1 - (y - lo) / (hi - lo)) * ph;
+
+  // 縦軸の目盛り
+  ctx.textAlign = 'right';
+  ctx.textBaseline = 'middle';
+  const ystep = niceStep(hi - lo, 4);
+  const dec = ystep >= 1 ? 0 : Math.min(4, Math.ceil(-Math.log10(ystep)));
+  ctx.lineWidth = 1;
+  for (let y = Math.ceil(lo / ystep) * ystep; y <= hi + 1e-9; y += ystep) {
+    const py = Math.round(Y(y)) + 0.5;
+    ctx.strokeStyle = th.grid;
+    ctx.beginPath(); ctx.moveTo(L, py); ctx.lineTo(L + pw, py); ctx.stroke();
+    ctx.fillStyle = th.muted;
+    ctx.fillText(fmtFixed(y, dec), L - 6, py);
+  }
+  // 横軸の目盛り
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  const span = view.x1 - view.x0;
+  const tstep = niceTimeStep(span, Math.max(2, Math.floor(pw / 90)));
+  const off = state.xMode === 'wall' ? -new Date(view.x0 * 1000).getTimezoneOffset() * 60 : 0;
+  const crossesDay = state.xMode === 'wall' && (view.x1 - view.x0 > 86400 || new Date(view.x0 * 1000).getDate() !== new Date(view.x1 * 1000).getDate());
+  for (let t = Math.ceil((view.x0 + off) / tstep) * tstep - off; t <= view.x1 + 1e-6; t += tstep) {
+    const px = Math.round(X(t)) + 0.5;
+    ctx.strokeStyle = th.grid;
+    ctx.beginPath(); ctx.moveTo(px, T); ctx.lineTo(px, T + ph); ctx.stroke();
+    ctx.fillStyle = th.muted;
+    ctx.fillText(state.xMode === 'wall' ? fmtWall(t, crossesDay, tstep < 60) : fmtDuration(t), px, T + ph + 4);
+  }
+  ctx.strokeStyle = th.border;
+  ctx.strokeRect(L + 0.5, T + 0.5, pw, ph);
+
+  // 線(縦軸の範囲にクリップ)
+  ctx.save();
+  ctx.beginPath(); ctx.rect(L, T, pw, ph); ctx.clip();
+  ctx.lineWidth = 1.5;
+  ctx.lineJoin = 'round';
+  for (const run of runs) drawSeries(ctx, run, ch.col, view, X, Y, pw, L);
+  ctx.restore();
+}
+function drawSeries(ctx, run, col, view, X, Y, pw, L) {
+  const a = xs(run);
+  const arr = run.v[run.ci.get(col)];
+  const [i0, i1] = indexRange(run, view);
+  const count = i1 - i0 + 1;
+  ctx.strokeStyle = run.color;
+  ctx.beginPath();
+  if (count <= pw * 2) {
+    let pen = false, lastX = 0;
+    for (let i = i0; i <= i1; i++) {
+      const val = arr[i];
+      if (!(val >= 0)) { pen = false; continue; }
+      const x = a[i];
+      const gap = pen && (x - lastX) > MIN_GAP_SECONDS;
+      if (!pen || gap) ctx.moveTo(X(x), Y(val)); else ctx.lineTo(X(x), Y(val));
+      pen = true; lastX = x;
+    }
+  } else {
+    // 点が多いときは、1 ピクセルごとの最小・最大だけを結ぶ(スパイクを落とさない)
+    const span = view.x1 - view.x0;
+    let curPx = -1, mn = 0, mx = 0, minFirst = true, lastPx = -10;
+    const flush = () => {
+      if (curPx < 0) return;
+      const x = L + curPx + 0.5;
+      const first = minFirst ? mn : mx, second = minFirst ? mx : mn;
+      if (curPx - lastPx > 1) ctx.moveTo(x, Y(first)); else ctx.lineTo(x, Y(first));
+      if (second !== first) ctx.lineTo(x, Y(second));
+      lastPx = curPx;
+    };
+    for (let i = i0; i <= i1; i++) {
+      const val = arr[i];
+      if (!(val >= 0)) continue;
+      let px = Math.floor(((a[i] - view.x0) / span) * pw);
+      if (px < 0) px = 0; else if (px >= pw) px = pw - 1;
+      if (px !== curPx) {
+        flush();
+        curPx = px; mn = val; mx = val; minFirst = true;
+      } else {
+        if (val < mn) { mn = val; if (mx === val) minFirst = false; }
+        if (val > mx) { mx = val; minFirst = true; }
+      }
+    }
+    flush();
+  }
+  ctx.stroke();
+}
+
+// ------------------------------------------------------------------ 重ね描き(十字線)と凡例
+
+function nearestIndex(run, x, view, pw) {
+  const a = xs(run);
+  const j = lowerBound(a, run.n, x);
+  let best = -1, bestD = Infinity;
+  for (const i of [j - 1, j]) {
+    if (i < 0 || i >= run.n) continue;
+    const d = Math.abs(a[i] - x);
+    if (d < bestD) { bestD = d; best = i; }
+  }
+  const tol = Math.max(MIN_GAP_SECONDS, ((view.x1 - view.x0) / Math.max(1, pw)) * 3);
+  return bestD <= tol ? best : -1;
+}
+function drawOverlays() {
+  const th = theme();
+  const view = state.view;
+  for (const ch of state.charts.values()) {
+    const { octx, w, h } = ch;
+    if (!w || !h || !ch.geom) continue;
+    const dpr = ch.dpr || 1;
+    octx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    octx.clearRect(0, 0, w, h);
+    const g = ch.geom;
+    const hx = state.hoverX;
+    if (hx !== null && hx >= view.x0 && hx <= view.x1) {
+      const px = Math.round(g.L + ((hx - view.x0) / (view.x1 - view.x0)) * g.pw) + 0.5;
+      octx.strokeStyle = th.muted;
+      octx.setLineDash([3, 3]);
+      octx.beginPath(); octx.moveTo(px, g.T); octx.lineTo(px, g.T + g.ph); octx.stroke();
+      octx.setLineDash([]);
+      for (const run of visibleRunsFor(ch.col)) {
+        const i = nearestIndex(run, hx, view, g.pw);
+        if (i < 0) continue;
+        const val = run.v[run.ci.get(ch.col)][i];
+        if (!(val >= 0)) continue;
+        const y = g.T + (1 - (val - g.lo) / (g.hi - g.lo)) * g.ph;
+        octx.fillStyle = run.color;
+        octx.beginPath(); octx.arc(g.L + ((xs(run)[i] - view.x0) / (view.x1 - view.x0)) * g.pw, y, 3.5, 0, Math.PI * 2); octx.fill();
+      }
+      octx.fillStyle = th.text;
+      octx.textAlign = px > g.L + g.pw / 2 ? 'right' : 'left';
+      octx.textBaseline = 'top';
+      octx.font = '11px system-ui, "Yu Gothic UI", sans-serif';
+      octx.fillText(state.xMode === 'wall' ? new Date(hx * 1000).toLocaleString('ja-JP') : '経過 ' + fmtDuration(hx), px + (px > g.L + g.pw / 2 ? -4 : 4), g.T + 2);
+    }
+    updateLegend(ch, view, g);
+  }
+}
+function computeSlopes(view) {
+  const out = new Map();
+  for (const ch of state.charts.values()) {
+    for (const run of visibleRunsFor(ch.col)) {
+      const a = xs(run), arr = run.v[run.ci.get(ch.col)];
+      const [i0, i1] = indexRange(run, view);
+      const stride = Math.max(1, Math.ceil((i1 - i0 + 1) / SLOPE_MAX_POINTS));
+      let n = 0, sx = 0, sy = 0, sxx = 0, sxy = 0;
+      const xb = a[i0];
+      for (let i = i0; i <= i1; i += stride) {
+        const y = arr[i];
+        if (!(y >= 0)) continue;
+        const x = a[i] - xb;
+        n++; sx += x; sy += y; sxx += x * x; sxy += x * y;
+      }
+      const den = n * sxx - sx * sx;
+      if (n >= 10 && den > 0 && (a[i1] - a[i0]) >= SLOPE_MIN_SECONDS) out.set(ch.col + '|' + run.name, ((n * sxy - sx * sy) / den) * 3600);
+    }
+  }
+  return out;
+}
+function updateLegend(ch, view, g) {
+  const m = colMeta(ch.col);
+  const runs = visibleRunsFor(ch.col);
+  ch.legend.textContent = '';
+  for (const run of runs) {
+    const arr = run.v[run.ci.get(ch.col)];
+    let val = NaN;
+    if (state.hoverX !== null) {
+      const i = nearestIndex(run, state.hoverX, view, g.pw);
+      if (i >= 0) val = arr[i];
+    } else {
+      for (let i = run.n - 1; i >= 0 && i >= run.n - 5; i--) if (arr[i] >= 0) { val = arr[i]; break; }
+    }
+    const item = el('span', 'lg');
+    const sw = el('i');
+    sw.style.background = run.color;
+    item.append(sw, document.createTextNode(run.label + ' '), el('b', '', val >= 0 ? fmtFixed(val, m.dec) + (m.unit ? ' ' + m.unit : '') : '―'));
+    const slope = state.slopes.get(ch.col + '|' + run.name);
+    if (state.hoverX === null && slope !== undefined && m.unit) item.append(el('em', '', fmtSlope(slope) + ' ' + m.unit + '/時間'));
+    ch.legend.append(item);
+  }
+}
+
+// ------------------------------------------------------------------ PNG 保存
+
+function exportPng(ch) {
+  if (!ch.w || !ch.h) return;
+  const th = theme();
+  const m = colMeta(ch.col);
+  const runs = visibleRunsFor(ch.col);
+  const dpr = ch.dpr || 1;
+  const headH = 28, legH = 18 * Math.max(1, runs.length) + 8;
+  const cv = document.createElement('canvas');
+  cv.width = ch.w * dpr; cv.height = (ch.h + headH + legH) * dpr;
+  const c = cv.getContext('2d');
+  c.setTransform(dpr, 0, 0, dpr, 0, 0);
+  c.fillStyle = th.panel; c.fillRect(0, 0, ch.w, ch.h + headH + legH);
+  c.fillStyle = th.text; c.font = 'bold 13px system-ui, "Yu Gothic UI", sans-serif'; c.textBaseline = 'middle'; c.textAlign = 'left';
+  c.fillText(m.label + (m.unit ? ' [' + m.unit + ']' : ''), 8, headH / 2);
+  c.drawImage(ch.base, 0, headH, ch.w, ch.h);
+  c.drawImage(ch.over, 0, headH, ch.w, ch.h);
+  c.font = '12px system-ui, "Yu Gothic UI", sans-serif';
+  runs.forEach((run, k) => {
+    const y = headH + ch.h + 14 + k * 18;
+    c.fillStyle = run.color; c.fillRect(8, y - 5, 10, 10);
+    const arr = run.v[run.ci.get(ch.col)];
+    let last = NaN;
+    for (let i = run.n - 1; i >= 0; i--) if (arr[i] >= 0) { last = arr[i]; break; }
+    const slope = state.slopes.get(ch.col + '|' + run.name);
+    c.fillStyle = th.text;
+    c.fillText(run.label + '  最新 ' + (last >= 0 ? fmtFixed(last, m.dec) : '―') + (slope !== undefined ? '  傾き ' + fmtSlope(slope) + ' ' + m.unit + '/時間' : ''), 24, y);
+  });
+  cv.toBlob((blob) => {
+    if (!blob) return;
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'perf_' + ch.col + '.png';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  });
+}
+
+// ------------------------------------------------------------------ 遷移・ロード時間の比較
+
+const TR_PAGE_LIMIT = 50000; // 1 回に取る行数
+const TR_SIGNIFICANT_PCT = 5; // これ未満の差は「差なし」(灰色)にする
+const TR_SKIP_STEP = 'EngineStartup'; // エンジンの実装と関係ない作業。Boot の work の合計から外す
+const TR_KEY_ORDER = ['Boot', 'Load → Splash', 'Splash → Opening', 'Opening → Menu', 'Menu → Intro', 'Intro → Racing', 'Racing → Result', 'Result → Load', 'Refresh'];
+
+async function loadTransitions(run) {
+  if (!run.hasTr || run.tr.loading) return;
+  run.tr.loading = true;
+  try {
+    for (;;) {
+      const res = await fetchJson('/api/transitions?run=' + encodeURIComponent(run.name) + '&since=' + run.tr.since + '&limit=' + TR_PAGE_LIMIT);
+      if (res.total < run.tr.since) { run.tr = newTr(); run.tr.loading = true; continue; } // ファイルが作り直された
+      run.tr.total = res.total;
+      if (!run.tr.cols && res.columns.length) run.tr.cols = res.columns;
+      if (res.rows.length === 0) break;
+      for (const row of res.rows) run.tr.rows.push(row);
+      run.tr.since += res.rows.length;
+      run.tr.dirty = true;
+      state.trDirty = true;
+      scheduleDraw();
+      if (res.rows.length < TR_PAGE_LIMIT) break;
+    }
+  } finally {
+    run.tr.loading = false;
+  }
+}
+
+function trKey(p) { // 遷移の見分け方(一覧表の行)
+  if (p.kind === 'Transition') return p.from + ' → ' + p.to;
+  if (p.kind === 'Reset') return 'Reset → ' + p.to;
+  return p.kind; // Boot / Refresh
+}
+function parseProcesses(tr) { // 行を、処理(START から TOTAL まで)ごとにまとめる。TOTAL のない処理は、中断された処理
+  const ci = {};
+  tr.cols.forEach((c, i) => { ci[c] = i; });
+  const procs = [];
+  let cur = null;
+  for (const row of tr.rows) {
+    const type = row[ci.type];
+    if (type === 'mark') {
+      cur = { seq: row[ci.seq], kind: row[ci.kind], from: row[ci.from], to: row[ci.to], steps: [], total: null, ws0: row[ci.ws_mb], work: 0, wait: 0 };
+      cur.key = trKey(cur);
+      procs.push(cur);
+    } else if (cur && row[ci.seq] === cur.seq) {
+      if (type === 'total') {
+        cur.total = { ms: row[ci.ms], gc0: row[ci.gc0_d], gc2: row[ci.gc2_d], ws: row[ci.ws_mb] };
+      } else {
+        const ms = row[ci.ms];
+        cur.steps.push({ name: row[ci.step] + (row[ci.detail] ? ' ' + row[ci.detail] : ''), type, ms });
+        if (ms >= 0 && type === 'work' && !(cur.kind === 'Boot' && row[ci.step] === TR_SKIP_STEP)) cur.work += ms;
+        else if (ms >= 0 && type === 'wait') cur.wait += ms;
+      }
+    }
+  }
+  return procs;
+}
+function median(arr) {
+  if (arr.length === 0) return NaN;
+  const a = arr.slice().sort((x, y) => x - y);
+  const m = a.length >> 1;
+  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+}
+function fmtMs(v) { return Number.isFinite(v) ? fmtFixed(v, Math.abs(v) < 100 ? 1 : 0) + ' ms' : '―'; }
+function fmtSigned(v, d, unit) { return Number.isFinite(v) ? (v >= 0 ? '+' : '−') + fmtFixed(Math.abs(v), d) + ' ' + unit : '―'; }
+
+function trSummaries(runs) { // 起動ごと × 遷移ごとの集計。完了した処理だけを使う
+  const out = new Map();
+  for (const run of runs) {
+    const byKey = new Map();
+    for (const p of run.tr.procs) {
+      let e = byKey.get(p.key);
+      if (!e) { e = { done: [], interrupted: 0 }; byKey.set(p.key, e); }
+      if (p.total) e.done.push(p); else e.interrupted++;
+    }
+    out.set(run.name, byKey);
+  }
+  return out;
+}
+function trOrderedKeys(summaries) {
+  const seen = new Set();
+  for (const byKey of summaries.values()) for (const k of byKey.keys()) seen.add(k);
+  const known = TR_KEY_ORDER.filter((k) => seen.has(k));
+  const others = [...seen].filter((k) => !TR_KEY_ORDER.includes(k)).sort();
+  return known.concat(others);
+}
+function diffBadge(value, base) {
+  if (!Number.isFinite(value) || !Number.isFinite(base) || base <= 0) return null;
+  const pct = ((value - base) / base) * 100;
+  const cls = pct <= -TR_SIGNIFICANT_PCT ? 'good' : pct >= TR_SIGNIFICANT_PCT ? 'bad' : '';
+  const b = el('span', 'diff ' + cls, fmtSigned(pct, 1, '%'));
+  b.title = fmtSigned(value - base, 0, 'ms') + '(基準 ' + fmtMs(base) + ')';
+  return b;
+}
+function renderTransitions() {
+  const panel = $('trPanel');
+  const body = $('trBody');
+  const sel = $('trBase');
+  const picked = selectedRuns();
+  panel.classList.toggle('hidden', picked.length === 0);
+  body.textContent = '';
+  if (picked.length === 0) return;
+
+  const withTr = picked.filter((r) => r.hasTr && r.tr.cols);
+  for (const r of withTr) if (r.tr.dirty) { r.tr.procs = parseProcesses(r.tr); r.tr.dirty = false; }
+  const without = picked.filter((r) => !withTr.includes(r));
+  if (without.length) body.append(el('p', 'note', '遷移・ロード時間の記録(transitions.csv)がない起動は、表に出ません: ' + without.map((r) => r.label).join('、')));
+  if (withTr.length === 0) {
+    sel.textContent = '';
+    body.append(el('p', 'note', '選んだ起動には、遷移・ロード時間の記録がありません。ゲームを -perf で起動して、遷移を起こすと記録されます。'));
+    return;
+  }
+
+  // 基準の起動(既定は、最も古いもの = 変更の「前」)
+  const byStart = withTr.slice().sort((a, b) => (a.start < b.start ? -1 : 1));
+  if (!state.trBaseUser || !withTr.some((r) => r.name === state.trBase)) state.trBase = byStart[0].name;
+  sel.textContent = '';
+  for (const r of withTr) { const o = el('option', '', r.label); o.value = r.name; sel.append(o); }
+  sel.value = state.trBase;
+  const baseRun = withTr.find((r) => r.name === state.trBase);
+
+  const summaries = trSummaries(withTr);
+  const keys = trOrderedKeys(summaries);
+  if (!keys.includes(state.trKey)) state.trKey = keys[0] || '';
+
+  body.append(buildSummaryTable(withTr, baseRun, summaries, keys));
+  if (state.trKey) body.append(buildDetail(withTr, baseRun, summaries, state.trKey));
+}
+function buildSummaryTable(runs, baseRun, summaries, keys) {
+  const t = el('table', 'tr');
+  const head = el('tr');
+  head.append(el('th', '', '遷移(作業 work の中央値)'));
+  for (const r of runs) {
+    const th = el('th');
+    const sw = el('i', 'sw'); sw.style.cssText = 'display:inline-block;margin-right:4px;background:' + r.color;
+    th.append(sw, document.createTextNode(r.label + (r === baseRun ? '(基準)' : '')));
+    head.append(th);
+  }
+  const thead = el('thead'); thead.append(head); t.append(thead);
+  const tbody = el('tbody');
+  for (const key of keys) {
+    const tr = el('tr', 'clickable' + (key === state.trKey ? ' sel' : ''));
+    tr.append(el('td', '', key));
+    tr.addEventListener('click', () => { state.trKey = key; state.trDirty = true; scheduleDraw(); });
+    const baseEntry = summaries.get(baseRun.name).get(key);
+    const baseWork = baseEntry && baseEntry.done.length ? median(baseEntry.done.map((p) => p.work)) : NaN;
+    for (const r of runs) {
+      const td = el('td');
+      const e = summaries.get(r.name).get(key);
+      if (!e || e.done.length === 0) {
+        td.append(el('div', 'tr-sub', e && e.interrupted ? '完了なし(中断 ' + e.interrupted + ' 件)' : '―'));
+      } else {
+        const work = median(e.done.map((p) => p.work));
+        const big = el('div', 'tr-big', fmtMs(work));
+        if (r !== baseRun) { const b = diffBadge(work, baseWork); if (b) big.append(b); }
+        const sub = '待ち ' + fmtMs(median(e.done.map((p) => p.wait))) + ' · TOTAL ' + fmtMs(median(e.done.map((p) => p.total.ms)))
+          + ' · 最大 work ' + fmtMs(Math.max(...e.done.map((p) => p.work))) + ' · ' + e.done.length + ' 回' + (e.interrupted ? ' · 中断 ' + e.interrupted + ' 件(除外)' : '');
+        td.append(big, el('div', 'tr-sub', sub));
+      }
+      tr.append(td);
+    }
+    tbody.append(tr);
+  }
+  t.append(tbody);
+  return t;
+}
+function buildDetail(runs, baseRun, summaries, key) {
+  const box = el('div');
+  box.append(el('h4', '', key + ' — ステップ別の中央値'));
+  const entries = runs.map((r) => ({ run: r, e: summaries.get(r.name).get(key) })).filter((x) => x.e && x.e.done.length);
+  if (entries.length === 0) { box.append(el('p', 'note', 'この遷移は、選んだ起動のどれにも、完了した記録がありません。')); return box; }
+
+  // ステップの順序は、先に見つかった処理の順(基準の起動を優先)
+  const order = [];
+  const types = new Map();
+  const sorted = entries.slice().sort((a, b) => (a.run === baseRun ? -1 : b.run === baseRun ? 1 : 0));
+  for (const { e } of sorted) for (const p of e.done) for (const s of p.steps) { if (!types.has(s.name)) { types.set(s.name, s.type); order.push(s.name); } }
+  // 起動ごと × ステップごとの中央値(同じ処理の中で同名のステップが複数あれば合計してから、処理をまたいで中央値)
+  const med = new Map();
+  for (const { run, e } of entries) {
+    const m = new Map();
+    for (const name of order) {
+      const per = [];
+      for (const p of e.done) { let sum = 0, hit = false; for (const s of p.steps) if (s.name === name && s.ms >= 0) { sum += s.ms; hit = true; } if (hit) per.push(sum); }
+      m.set(name, per.length ? median(per) : NaN);
+    }
+    med.set(run.name, m);
+  }
+
+  const t = el('table', 'tr');
+  const head = el('tr');
+  head.append(el('th', '', 'ステップ'), el('th', '', '種類'));
+  for (const { run } of entries) { const th = el('th'); const sw = el('i', 'sw'); sw.style.cssText = 'display:inline-block;margin-right:4px;background:' + run.color; th.append(sw, document.createTextNode(run.label)); head.append(th); }
+  const thead = el('thead'); thead.append(head); t.append(thead);
+  const tbody = el('tbody');
+  for (const name of order) {
+    const tr = el('tr');
+    tr.append(el('td', '', name));
+    const tdType = el('td'); tdType.append(el('span', 'tag ' + types.get(name), types.get(name))); tr.append(tdType);
+    const rowMax = Math.max(1, ...entries.map(({ run }) => med.get(run.name).get(name)).filter(Number.isFinite));
+    const baseVal = med.get(baseRun.name) ? med.get(baseRun.name).get(name) : NaN;
+    for (const { run } of entries) {
+      const v = med.get(run.name).get(name);
+      const td = el('td', 'num', fmtMs(v));
+      if (run !== baseRun && types.get(name) === 'work') { const b = diffBadge(v, baseVal); if (b) td.append(b); }
+      if (Number.isFinite(v)) { const bar = el('div', 'bar'); bar.style.width = Math.max(1, (v / rowMax) * 100) + '%'; bar.style.background = run.color; td.append(bar); }
+      tr.append(td);
+    }
+    tbody.append(tr);
+  }
+  const summary = (label, fn, withDiff) => {
+    const tr = el('tr', 'sum');
+    tr.append(el('th', '', label), el('td'));
+    const baseEntry = entries.find((x) => x.run === baseRun);
+    const baseVal = baseEntry ? fn(baseEntry.e) : NaN;
+    for (const { run, e } of entries) {
+      const v = fn(e);
+      const td = el('td', 'num', typeof v === 'string' ? v : fmtMs(v));
+      if (withDiff && run !== baseRun && typeof v !== 'string') { const b = diffBadge(v, baseVal); if (b) td.append(b); }
+      tr.append(td);
+    }
+    tbody.append(tr);
+  };
+  summary('work の合計', (e) => median(e.done.map((p) => p.work)), true);
+  summary('wait の合計', (e) => median(e.done.map((p) => p.wait)), false);
+  summary('TOTAL', (e) => median(e.done.map((p) => p.total.ms)), false);
+  summary('物理メモリの増減', (e) => { const d = e.done.filter((p) => p.ws0 >= 0 && p.total.ws >= 0).map((p) => p.total.ws - p.ws0); return d.length ? fmtSigned(median(d), 1, 'MB') : '―'; }, false);
+  summary('GC の回数(世代 0 / 世代 2)', (e) => median(e.done.map((p) => p.total.gc0)) + ' / ' + median(e.done.map((p) => p.total.gc2)), false);
+  summary('完了した回数(中断)', (e) => e.done.length + ' 回(' + e.interrupted + ')', false);
+  t.append(tbody);
+  box.append(t);
+
+  box.append(el('h4', '', '推移 — プレイ回数ごとの work の合計(初回は大きな点)'));
+  box.append(buildTrend(entries));
+  return box;
+}
+function buildTrend(entries) {
+  const wrap = el('div', 'trchart');
+  const cv = el('canvas');
+  wrap.append(cv);
+  const draw = () => {
+    const r = wrap.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const w = Math.floor(r.width), h = Math.floor(r.height);
+    if (!w || !h) return;
+    cv.width = w * dpr; cv.height = h * dpr;
+    const c = cv.getContext('2d');
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    c.clearRect(0, 0, w, h);
+    const th = theme();
+    const L = 56, R = 10, T = 8, B = 22;
+    const pw = w - L - R, ph = h - T - B;
+    const series = entries.map(({ run, e }) => ({ run, ys: e.done.map((p) => p.work) }));
+    const n = Math.max(1, ...series.map((s) => s.ys.length));
+    let hi = Math.max(1, ...series.flatMap((s) => s.ys));
+    hi *= 1.1;
+    const X = (i) => L + (n <= 1 ? pw / 2 : (i / (n - 1)) * pw);
+    const Y = (v) => T + (1 - v / hi) * ph;
+    c.font = '11px system-ui, "Yu Gothic UI", sans-serif';
+    c.textBaseline = 'middle'; c.textAlign = 'right';
+    const ystep = niceStep(hi, 4);
+    for (let y = 0; y <= hi; y += ystep) {
+      const py = Math.round(Y(y)) + 0.5;
+      c.strokeStyle = th.grid; c.beginPath(); c.moveTo(L, py); c.lineTo(L + pw, py); c.stroke();
+      c.fillStyle = th.muted; c.fillText(fmtFixed(y, 0), L - 6, py);
+    }
+    c.textAlign = 'center'; c.textBaseline = 'top'; c.fillStyle = th.muted;
+    const xstep = Math.max(1, Math.ceil(n / Math.max(2, Math.floor(pw / 50))));
+    for (let i = 0; i < n; i += xstep) c.fillText(String(i + 1), X(i), T + ph + 4);
+    c.strokeStyle = th.border; c.strokeRect(L + 0.5, T + 0.5, pw, ph);
+    for (const s of series) {
+      c.strokeStyle = s.run.color; c.fillStyle = s.run.color; c.lineWidth = 1.5; c.lineJoin = 'round';
+      c.beginPath();
+      s.ys.forEach((v, i) => { if (i === 0) c.moveTo(X(i), Y(v)); else c.lineTo(X(i), Y(v)); });
+      c.stroke();
+      s.ys.forEach((v, i) => { c.beginPath(); c.arc(X(i), Y(v), i === 0 ? 5 : 2.2, 0, Math.PI * 2); c.fill(); });
+    }
+  };
+  new ResizeObserver(draw).observe(wrap);
+  requestAnimationFrame(draw);
+  return wrap;
+}
+
+// ------------------------------------------------------------------ 更新ループ
+
+function setConn(ok, text) {
+  const c = $('conn');
+  c.className = 'pill ' + (ok ? 'ok' : 'err');
+  c.textContent = text;
+}
+async function pollOnce() {
+  const runs = selectedRuns();
+  try {
+    await Promise.all(runs.map((r) => Promise.all([loadRun(r), loadTransitions(r)])));
+    state.serverOk = true;
+    setConn(true, state.paused ? '一時停止中' : (runs.some((r) => r.live) ? '記録中のデータを表示' : '接続中'));
+  } catch (e) {
+    state.serverOk = false;
+    setConn(false, 'サーバーに接続できません');
+  }
+}
+async function mainLoop() {
+  let sinceList = RUNLIST_MS;
+  for (;;) {
+    if (!state.paused) {
+      try {
+        if (sinceList >= RUNLIST_MS) { await refreshRunList(); sinceList = 0; state.dirtyData = true; scheduleDraw(); }
+        await pollOnce();
+      } catch (e) {
+        state.serverOk = false;
+        setConn(false, 'サーバーに接続できません');
+      }
+    }
+    await sleep(POLL_MS);
+    sinceList += POLL_MS;
+  }
+}
+
+// ------------------------------------------------------------------ 画面の部品
+
+function bindControls() {
+  $('xmode').value = state.xMode;
+  $('range').value = String(state.rangeSec);
+  $('follow').checked = state.follow;
+  $('zerobase').checked = state.zeroBase;
+  $('xmode').addEventListener('change', (e) => { state.xMode = e.target.value; state.custom = null; savePrefs(); scheduleDraw(); });
+  $('range').addEventListener('change', (e) => {
+    state.custom = null;
+    state.rangeSec = e.target.value === 'custom' ? 0 : Number(e.target.value);
+    savePrefs(); scheduleDraw();
+  });
+  $('follow').addEventListener('change', (e) => {
+    state.follow = e.target.checked;
+    // 追うのをやめたら今の範囲で止め、また追うなら最新に戻す
+    state.custom = state.follow ? null : { x0: state.view.x0, x1: state.view.x1 };
+    setRangeSelect();
+    savePrefs();
+    scheduleDraw();
+  });
+  $('zerobase').addEventListener('change', (e) => { state.zeroBase = e.target.checked; savePrefs(); scheduleDraw(); });
+  $('trBase').addEventListener('change', (e) => { state.trBase = e.target.value; state.trBaseUser = true; state.trDirty = true; scheduleDraw(); });
+  $('btnPause').addEventListener('click', () => {
+    state.paused = !state.paused;
+    $('btnPause').textContent = state.paused ? '更新を再開' : '更新を止める';
+    setConn(true, state.paused ? '一時停止中' : '接続中');
+  });
+  $('btnReload').addEventListener('click', async () => { try { await refreshRunList(); } catch (e) { /* 次の周期で再試行 */ } });
+  $('selAll').addEventListener('click', () => { state.runs.forEach((r) => { r.selected = true; }); onSelectionChanged(); });
+  $('selNone').addEventListener('click', () => { state.runs.forEach((r) => { r.selected = false; }); onSelectionChanged(); });
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', scheduleDraw);
+}
+
+loadPrefs();
+bindControls();
+mainLoop();
+})();
+</script>
+</body>
+</html>

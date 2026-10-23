@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerMaster" id="{252f213e-fcad-4777-b821-aa6c6e6f3e66}">
+		<property name="volume">
+			<value>2</value>
+		</property>
+		<property name="name">
+			<value>Master Bus</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{4a5f5706-517b-4a60-bd73-3d0f44919263}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{2f555394-6f1f-443d-a0e4-a5160233a7c1}</destination>
+		</relationship>
+		<relationship name="mixer">
+			<destination>{700bc4de-fc9c-4b99-a009-e5330af1990b}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{4a5f5706-517b-4a60-bd73-3d0f44919263}">
+		<relationship name="effects">
+			<destination>{1bc37e89-f394-448e-990a-3d6e72e77d43}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{2f555394-6f1f-443d-a0e4-a5160233a7c1}">
+		<property name="surroundPanDirection">
+			<value>-2.86240387</value>
+		</property>
+		<property name="surroundPanExtent">
+			<value>173.040131</value>
+		</property>
+		<property name="surroundLFELevel">
+			<value>-9.5</value>
+		</property>
+		<property name="overridingOutputFormat">
+			<value>2</value>
+		</property>
+	</object>
+	<object class="MixerBusFader" id="{1bc37e89-f394-448e-990a-3d6e72e77d43}" />
+</objects>

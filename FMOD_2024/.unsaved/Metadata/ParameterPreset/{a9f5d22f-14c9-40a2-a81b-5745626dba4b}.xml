@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{a9f5d22f-14c9-40a2-a81b-5745626dba4b}">
+		<property name="name">
+			<value>ENGINEBREAK</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{67307497-f5f8-4087-9261-750ece0f2f97}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{67307497-f5f8-4087-9261-750ece0f2f97}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

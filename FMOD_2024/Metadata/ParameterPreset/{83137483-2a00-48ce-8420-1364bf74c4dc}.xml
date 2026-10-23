@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{83137483-2a00-48ce-8420-1364bf74c4dc}">
+		<property name="name">
+			<value>SLIP_PITCH</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{c9aef84b-74f7-4d45-b218-6fcf903b015c}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{c9aef84b-74f7-4d45-b218-6fcf903b015c}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

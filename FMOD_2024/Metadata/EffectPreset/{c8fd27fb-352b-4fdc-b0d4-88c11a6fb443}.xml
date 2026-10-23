@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EffectPreset" id="{c8fd27fb-352b-4fdc-b0d4-88c11a6fb443}">
+		<property name="name">
+			<value>Pitch Shifter</value>
+		</property>
+		<relationship name="folder">
+			<destination>{ea5f36b7-5dce-4ad5-b05b-de07a6fa81d0}</destination>
+		</relationship>
+		<relationship name="effect">
+			<destination>{df484e94-ccc4-4e96-bf0c-e6600288b01e}</destination>
+		</relationship>
+	</object>
+	<object class="PitchShifterEffect" id="{df484e94-ccc4-4e96-bf0c-e6600288b01e}">
+		<property name="pitch">
+			<value>1</value>
+		</property>
+		<property name="fftSize">
+			<value>1000</value>
+		</property>
+		<property name="overlap">
+			<value>1</value>
+		</property>
+		<property name="maxChannels">
+			<value>1</value>
+		</property>
+	</object>
+</objects>

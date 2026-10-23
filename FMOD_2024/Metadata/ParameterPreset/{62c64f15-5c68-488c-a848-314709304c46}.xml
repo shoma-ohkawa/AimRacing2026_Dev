@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{62c64f15-5c68-488c-a848-314709304c46}">
+		<property name="name">
+			<value>BREAKVOL</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{f61573ff-6474-453b-8500-f26552473ed0}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{f61573ff-6474-453b-8500-f26552473ed0}">
+		<property name="initialValue">
+			<value>1</value>
+		</property>
+	</object>
+</objects>

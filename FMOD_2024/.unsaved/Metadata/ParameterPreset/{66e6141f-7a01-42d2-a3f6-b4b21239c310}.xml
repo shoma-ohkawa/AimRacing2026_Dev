@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{66e6141f-7a01-42d2-a3f6-b4b21239c310}">
+		<property name="name">
+			<value>REVLIMIT</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{2b22fb9c-32bf-498a-9b4f-a926aa40bccc}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{2b22fb9c-32bf-498a-9b4f-a926aa40bccc}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

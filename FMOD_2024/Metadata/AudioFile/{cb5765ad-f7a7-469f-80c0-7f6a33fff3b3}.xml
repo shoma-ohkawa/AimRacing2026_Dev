@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="AudioFile" id="{cb5765ad-f7a7-469f-80c0-7f6a33fff3b3}">
+        <property name="assetPath">
+            <value>Squile/Brake_.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>7.4451473922902496</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{91fc85e5-cd8c-450c-baa4-736099ee1b54}</destination>
+        </relationship>
+    </object>
+</objects>

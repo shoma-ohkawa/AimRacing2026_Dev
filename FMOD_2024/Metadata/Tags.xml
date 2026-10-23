@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.10.00">
+    <object class="MasterTagFolder" id="{bc3744fe-78d3-47bb-a870-be515d44f71a}">
+        <property name="name">
+            <value>Master</value>
+        </property>
+        <relationship name="items">
+            <destination>{748a7bfd-aa74-4976-b3cf-44171af5127b}</destination>
+            <destination>{e303ff7e-a4c6-442d-b7e6-059100bf9958}</destination>
+            <destination>{3150a30e-3a63-4523-bca3-32e2fa379dc8}</destination>
+            <destination>{4d0134db-c9ba-46c3-abab-73d503301a2d}</destination>
+            <destination>{95fcef9a-ef49-4f35-94ed-eafea8a02f8f}</destination>
+            <destination>{d09b1600-893e-4257-815e-c0af690d6f73}</destination>
+            <destination>{90f9ab86-6660-4094-b8c2-c9513f9a6d0c}</destination>
+            <destination>{fafc3fdb-45e6-497c-b74e-1e3123d59a05}</destination>
+            <destination>{6b1adfab-2f11-43da-8f6a-d9198fc503c7}</destination>
+            <destination>{b91923e5-188e-424e-824b-083f27c5c967}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{748a7bfd-aa74-4976-b3cf-44171af5127b}">
+        <property name="name">
+            <value>async</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bc3744fe-78d3-47bb-a870-be515d44f71a}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{e303ff7e-a4c6-442d-b7e6-059100bf9958}">
+        <property name="name">
+            <value>automation</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bc3744fe-78d3-47bb-a870-be515d44f71a}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{3150a30e-3a63-4523-bca3-32e2fa379dc8}">
+        <property name="name">
+            <value>autopitch-modulator</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bc3744fe-78d3-47bb-a870-be515d44f71a}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{4d0134db-c9ba-46c3-abab-73d503301a2d}">
+        <property name="name">
+            <value>fade</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bc3744fe-78d3-47bb-a870-be515d44f71a}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{95fcef9a-ef49-4f35-94ed-eafea8a02f8f}">
+        <property name="name">
+            <value>loop-instrument</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bc3744fe-78d3-47bb-a870-be515d44f71a}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{d09b1600-893e-4257-815e-c0af690d6f73}">
+        <property name="name">
+            <value>parameter</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bc3744fe-78d3-47bb-a870-be515d44f71a}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{90f9ab86-6660-4094-b8c2-c9513f9a6d0c}">
+        <property name="name">
+            <value>persistent</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bc3744fe-78d3-47bb-a870-be515d44f71a}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{fafc3fdb-45e6-497c-b74e-1e3123d59a05}">
+        <property name="name">
+            <value>send</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bc3744fe-78d3-47bb-a870-be515d44f71a}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{6b1adfab-2f11-43da-8f6a-d9198fc503c7}">
+        <property name="name">
+            <value>single-instrument</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bc3744fe-78d3-47bb-a870-be515d44f71a}</destination>
+        </relationship>
+    </object>
+    <object class="Tag" id="{b91923e5-188e-424e-824b-083f27c5c967}">
+        <property name="name">
+            <value>spatializer</value>
+        </property>
+        <relationship name="folder">
+            <destination>{bc3744fe-78d3-47bb-a870-be515d44f71a}</destination>
+        </relationship>
+    </object>
+</objects>

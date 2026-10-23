@@ -1,0 +1,285 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8573473099180669105
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 480732893258648395}
+  - component: {fileID: 6345805243890363900}
+  - component: {fileID: 3915672948639583006}
+  m_Layer: 0
+  m_Name: Spline_ProtectiveWallFence2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &480732893258648395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573473099180669105}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -209.3833, y: -0.00001, z: -1680.6865}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6345805243890363900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573473099180669105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Splines::UnityEngine.Splines.SplineContainer
+  m_Spline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Splines:
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: -0.7106323
+        y: 41.87
+        z: 0.708313
+      TangentIn:
+        x: 0
+        y: 0
+        z: -4.50565
+      TangentOut:
+        x: 0
+        y: 0
+        z: 4.50565
+      Rotation:
+        value:
+          x: 0
+          y: -0.2156269
+          z: -0
+          w: 0.97647583
+    - Position:
+        x: -4.490631
+        y: 41.81
+        z: 8.078308
+      TangentIn:
+        x: -0
+        y: -0
+        z: -2.4920967
+      TangentOut:
+        x: 0
+        y: 0
+        z: 2.0611355
+      Rotation:
+        value:
+          x: -0.008925856
+          y: -0.2705841
+          z: 0.0008487493
+          w: 0.96265465
+    - Position:
+        x: -7.7906494
+        y: 42.04
+        z: 12.678314
+      TangentIn:
+        x: -0
+        y: -0
+        z: -2.0875673
+      TangentOut:
+        x: 0
+        y: 0
+        z: 2.609105
+      Rotation:
+        value:
+          x: -0.017129472
+          y: -0.35402307
+          z: -0.0068293307
+          w: 0.93505484
+    - Position:
+        x: -14.290649
+        y: 42.33
+        z: 18.678314
+      TangentIn:
+        x: -0
+        y: -0
+        z: -2.890199
+      TangentOut:
+        x: 0
+        y: 0
+        z: 2.7760623
+      Rotation:
+        value:
+          x: -0.018241381
+          y: -0.40969607
+          z: -0.007795313
+          w: 0.9120064
+    - Position:
+        x: -20.490631
+        y: 42.71
+        z: 23.978302
+      TangentIn:
+        x: -0
+        y: -0
+        z: -2.792333
+      TangentOut:
+        x: 0
+        y: 0
+        z: 2.954283
+      Rotation:
+        value:
+          x: -0.01807079
+          y: -0.38812146
+          z: -0.008331407
+          w: 0.92139333
+    - Position:
+        x: -26.590637
+        y: 43.01
+        z: 30.77832
+      TangentIn:
+        x: -0
+        y: -0
+        z: -3.0217054
+      TangentOut:
+        x: 0
+        y: 0
+        z: 2.9834542
+      Rotation:
+        value:
+          x: -0.015467688
+          y: -0.32897106
+          z: -0.00622956
+          w: 0.9441928
+    - Position:
+        x: -31.690643
+        y: 43.31
+        z: 38.07831
+      TangentIn:
+        x: -0
+        y: -0
+        z: -2.8118882
+      TangentOut:
+        x: 0
+        y: 0
+        z: 2.536465
+      Rotation:
+        value:
+          x: -0.014653632
+          y: -0.27108866
+          z: -0.005845452
+          w: 0.9624252
+    - Position:
+        x: -35.090637
+        y: 43.52
+        z: 44.478302
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.7250102
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.7250102
+      Rotation:
+        value:
+          x: -0.014200334
+          y: -0.24171405
+          z: -0.002915719
+          w: 0.9702392
+    m_MetaData:
+    - Mode: 2
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Knots:
+    m_KnotsLink: []
+--- !u!114 &3915672948639583006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8573473099180669105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b74686beb0670a4ea61325c0acf4411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Splines::UnityEngine.Splines.SplineInstantiate
+  m_Container: {fileID: 6345805243890363900}
+  m_ItemsToInstantiate:
+  - prefab: {fileID: 0}
+    Prefab: {fileID: 2148495545184175652, guid: a4fd05714ef6cd847bc4595ca76a9bfe, type: 3}
+    probability: 0
+    Probability: 0
+  m_Method: 1
+  m_Space: 0
+  m_Spacing: {x: 2, y: 2}
+  m_Up: 1
+  m_Forward: 2
+  m_PositionOffset:
+    setup: 0
+    min: {x: 0, y: 0, z: 0}
+    max: {x: 0, y: 0, z: 0}
+    randomX: 0
+    randomY: 0
+    randomZ: 0
+    space: 0
+  m_RotationOffset:
+    setup: 1
+    min: {x: 0.34, y: -73.8, z: 0}
+    max: {x: 0.98, y: 15.8, z: 0}
+    randomX: 0
+    randomY: 0
+    randomZ: 0
+    space: 0
+  m_ScaleOffset:
+    setup: 1
+    min: {x: -0.12, y: 0, z: 0}
+    max: {x: 0.48, y: 0, z: 0}
+    randomX: 0
+    randomY: 0
+    randomZ: 0
+    space: 0
+  m_DeprecatedInstances: []
+  m_AutoRefresh: 1
+  m_Seed: 1936898833

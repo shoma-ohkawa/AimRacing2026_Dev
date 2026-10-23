@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{a6d01a6c-8788-4406-bc29-c8df593c54e3}">
+		<property name="name">
+			<value>TURBOVOL</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{757e4854-4b08-4554-9d31-96afabcb78f3}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{757e4854-4b08-4554-9d31-96afabcb78f3}">
+		<property name="initialValue">
+			<value>1</value>
+		</property>
+	</object>
+</objects>

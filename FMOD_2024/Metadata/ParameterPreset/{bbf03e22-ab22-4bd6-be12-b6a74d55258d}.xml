@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{bbf03e22-ab22-4bd6-be12-b6a74d55258d}">
+		<property name="name">
+			<value>TURBO</value>
+		</property>
+		<relationship name="folder">
+			<destination>{7db6da7d-8187-4e91-aec5-d267b84ef704}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{d34e353f-8740-4cc9-b132-954b810c826a}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{d34e353f-8740-4cc9-b132-954b810c826a}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
