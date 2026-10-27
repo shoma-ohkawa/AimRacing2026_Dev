@@ -27,6 +27,7 @@
 | `GameManager/Flow/FlowTiming.cs` | 遷移エンジンの各ステップの所要時間を通知するだけ。購読者がいなければ何もしない |
 | `Tools/PerfViewer/run_lap_variants.bat` | 周回を、条件ごとに無人で回す。`Player.log` を保存し、集計まで行う。引数なしならコンソールで設定を聞く |
 | `Tools/PerfViewer/run_idle.bat` | 放置監視を、条件ごとに無人で回す |
+| `Tools/PerfViewer/run_exhibition_data.bat` | 展示用 PC で足りないデータ(`base`・`maponly` の 30 周、放置の `base` 120 分)を、上の 2 本を呼んで続けて取る。`pc:NAME` で、新しい起動フォルダを `PerfRecords` へコピーする |
 | `Tools/PerfViewer/lap_report.py` | 周回(`--idle` で放置)の結果を集計する。PC ごとに分ける |
 | `Tools/PerfViewer/server.py`、`viewer.html` | CSV を折れ線グラフにする(`127.0.0.1` のみ、読み取り専用) |
 | `Tools/PerfViewer/start_viewer.bat` | `server.py --open` を起動してブラウザを開く(`--root`・`--port` はそのまま渡せる) |
@@ -108,6 +109,40 @@ python Tools/PerfViewer/lap_report.py --idle --root "PerfRecords/<PC>/idle"
 ### 回収先
 
 プロジェクト直下の `PerfRecords\<PC>\perf\`(周回)と `...\idle\`(放置)に、起動のフォルダごとコピーする。`5600X_3060Ti`・`13600K_4070Ti`・`Ultra9_5060Ti`(展示用)の3台。
+
+### 展示用 PC のまとめ取り
+
+```
+Tools\PerfViewer\run_exhibition_data.bat [lap] [idle] [pc:NAME] [build:DIR] [test] [check]
+```
+
+VRAM が上限に達した後に FPS が落ち始める周と、来場者がいない間の増え方を、無人で続けて取る。`run_lap_variants.bat` と `run_idle.bat` を呼ぶだけで、ラベル、`Player.log` の保存、集計の出力は変わらない。
+
+| 順 | 内容 | 呼ぶ bat | 時間の目安 |
+|---|---|---|---|
+| 1 | `base` を 30 周(`until` なし) | `run_lap_variants.bat 30 base x1` | 約 2 時間 |
+| 2 | `maponly` を 30 周(`until` なし) | `run_lap_variants.bat 30 maponly x1` | 約 2 時間 |
+| 3 | 放置の `base` を 120 分 | `run_idle.bat 120 base x1` | 2 時間 |
+
+- `until` を付けない。付けると VRAM が総量の 99% に達した時点で止まり、その先で FPS が落ち始める周が見えない。
+- 合計は約 6 時間。FPS が崩れて周が遅くなると延びる(1 周が 900 秒で終わらなければ中止)。
+
+| 引数 | 内容 |
+|---|---|
+| `lap` / `idle` | 順 1・2 だけ / 順 3 だけ。どちらもなければ 3 つとも |
+| `pc:NAME` | 終了後に、今回できた起動フォルダだけを `PerfRecords\NAME\perf\` と `...\idle\` へコピーする。元のフォルダは残す。なければコピーしない。`NAME` は英数字・`_`・`.`・`-` のみ(`..` は不可) |
+| `build:DIR` | ビルドのフォルダ(既定は 2 本と同じ) |
+| `test` | 短い試走(`base`・`maponly` を 1 周ずつ、放置 3 分。約 11 分)。コピーしない |
+| `check` | 計画とゲームの場所だけを表示する。何も起動しない |
+
+- 先に `test` で通す。試走の起動フォルダはゲームの出力先に残るので、同じ場所を `lap_report.py` で集計すると混ざる。
+- 呼ばれる 2 本は最後に `pause` で止まるので、空行を流し込んで進める。
+- 実行前の起動フォルダの一覧と比べて、今回できたフォルダを見分ける。`meta.json` の `stop_reason` と `clean_exit` を表示する。
+- コピーは `robocopy`。起動フォルダごとに、元と先のファイル数が一致するかを確認して表示する。
+- 実行の記録(開始・終了の時刻、呼んだコマンド、新しい起動フォルダ)は `%TEMP%\run_exhibition_data_日時.log`。
+- Unity Editor(`Unity.exe`)が動いていると警告する。中断はしない。
+
+確認: ゲームの代わりのスタブ 2 本で、引数の受け渡し、`pause` を止めないこと、新しい起動フォルダだけのコピー、ファイル数の確認、`pc:` の不正な名前の拒否を確認した(2026/10/27)。**本物のゲームでの実行は未確認。**
 
 ## 起動引数
 

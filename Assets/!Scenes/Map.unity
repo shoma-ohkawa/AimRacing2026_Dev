@@ -16029,6 +16029,7 @@ MonoBehaviour:
   m_absMinimumPressure: 0.38
   m_absReleaseRate: 14
   m_absApplyRate: 8
+  m_absMinimumRecoveryRatio: 0.25
   m_brakeGripCoefficient: 1.1
   m_coastGripCoefficient: 1
   m_coastGripUsage: 0.45
@@ -18375,13 +18376,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b40bab925174aac48b80a02389bc5d6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Differential
-  m_driveMode: 2
-  m_sportFrontTorqueRatio: 0.3
-  m_trackFrontTorqueRatio: 0.5
-  m_modeBlendRate: 0.6
-  m_enableModeKeyboard: 1
-  m_enableG923ModeToggle: 1
-  m_g923ModeButton: button4
   m_differentialGearRatio: 3.941
   m_differentialType: 3
   m_lockRatio: 0
@@ -18389,6 +18383,13 @@ MonoBehaviour:
   m_frontTorqueRatio: 0.6
   m_launchFrontTorqueRatio: 0.5
   m_centerLockRatio: 0.4
+  m_driveMode: 2
+  m_sportFrontTorqueRatio: 0.3
+  m_trackFrontTorqueRatio: 0.5
+  m_modeBlendRate: 0.6
+  m_enableModeKeyboard: 1
+  m_enableG923ModeToggle: 1
+  m_g923ModeButton: button4
 --- !u!1 &1981117304
 GameObject:
   m_ObjectHideFlags: 0
@@ -26799,6 +26800,29 @@ MonoBehaviour:
   m_deviceIndex: 0
   m_steeringOperatingRange: 360
   m_enableFFBInEditor: 1
+  m_backendSelect: 0
+  m_logitechOnlyForLogitechDevices: 1
+  m_directInputSkipLogitechDevices: 1
+  m_xinputUserIndex: -1
+  m_backendSearchInterval: 1
+  m_logitechTuning:
+    springScale: 1
+    damperScale: 1
+    constantScale: 1
+    roadEffectScale: 1
+    invertConstantForce: 0
+  m_directInputTuning:
+    springScale: 1
+    damperScale: 1
+    constantScale: 1
+    roadEffectScale: 1
+    invertConstantForce: 0
+  m_xinputTuning:
+    springScale: 0
+    damperScale: 0
+    constantScale: 1.5
+    roadEffectScale: 1.5
+    invertConstantForce: 0
   m_pauseGameOnDisconnect: 0
   m_resumeGameOnReconnect: 0
   m_requireFunction5ToResume: 1

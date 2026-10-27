@@ -14339,7 +14339,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -54.394, z: 0}
 --- !u!212 &109784568
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -14396,6 +14396,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &125699306
 GameObject:
   m_ObjectHideFlags: 0
@@ -16857,7 +16858,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -64.311, z: 0}
 --- !u!212 &148724388
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -16914,6 +16915,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &153272976
 GameObject:
   m_ObjectHideFlags: 0
@@ -38145,7 +38147,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -64.311, z: 0}
 --- !u!212 &277671648
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -38202,6 +38204,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1001 &293236000
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38483,7 +38486,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -65.684, z: 0}
 --- !u!212 &334268309
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -38540,6 +38543,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &337912992
 GameObject:
   m_ObjectHideFlags: 0
@@ -38664,7 +38668,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -87.893, z: 0}
 --- !u!212 &342834382
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -38721,6 +38725,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1001 &349961267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46192,7 +46197,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -79.261, z: 0}
 --- !u!212 &606389898
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -46249,6 +46254,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &606675429
 GameObject:
   m_ObjectHideFlags: 0
@@ -58348,7 +58354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4577818309995417214, guid: ba08086a72caca84f897be07f3a503ea, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4586898995450934220, guid: ba08086a72caca84f897be07f3a503ea, type: 3}
       propertyPath: m_Layer
@@ -77718,7 +77724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1430584328438630702, guid: a0295abff1395dc49b183db27ac60fe0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1430584328438630702, guid: a0295abff1395dc49b183db27ac60fe0, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -162122,7 +162128,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -64.311, z: 0}
 --- !u!212 &1553824844
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -162179,6 +162185,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &1555419186
 GameObject:
   m_ObjectHideFlags: 0
@@ -175355,7 +175362,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -65.684, z: 0}
 --- !u!212 &1692495825
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -175412,6 +175419,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1 &1706729555
 GameObject:
   m_ObjectHideFlags: 0
@@ -184940,7 +184948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4577818309995417214, guid: ba08086a72caca84f897be07f3a503ea, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4579618065658351625, guid: ba08086a72caca84f897be07f3a503ea, type: 3}
       propertyPath: m_LocalRotation.w
@@ -284223,7 +284231,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -86.966, z: 0}
 --- !u!212 &2002021749
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -284280,6 +284288,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!1001 &2003854805
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -284789,7 +284798,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: -82.367, z: 0}
 --- !u!212 &2074065769
 SpriteRenderer:
-  serializedVersion: 2
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -284846,6 +284855,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
 --- !u!4 &2079493081 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5900517444328069476, guid: 48f63b93fe10fea4ca7356ba1ec8b7e5, type: 3}
