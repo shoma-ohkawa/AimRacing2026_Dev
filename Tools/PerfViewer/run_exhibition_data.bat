@@ -1,10 +1,13 @@
 @echo off
 rem Collects, unattended and in one go, the data still missing for the exhibition PC (decided 2026/10/27):
-rem   1. lap  : 30 laps of base, without "until"      how many plays before the FPS falls (50 FPS is the floor while driving)
-rem   2. lap  : 30 laps of maponly, without "until"   the same, with DLSS kept only on the Map camera
-rem   3. idle : 120 minutes of base                    how fast memory and VRAM grow while nobody plays
-rem "until" is not used on purpose: it would stop each lap run when VRAM reaches 99 percent, before the FPS has a chance to fall.
-rem About 2 hours per step, about 6 hours in total (longer if the FPS collapses and the laps slow down; one lap that takes over 900 seconds is abandoned).
+rem   1. lap  : up to 24 laps of base, with "until"   how many plays before the FPS falls (50 FPS is the floor while driving). It stops by itself once the FPS falls under 80 percent of lap 1.
+rem   2. lap  : 12 laps of maponly, without "until"    how fast memory and VRAM grow with DLSS kept only on the Map camera. The collapse is predicted from the slope, not waited for.
+rem   3. idle : 30 minutes of base                     how fast memory and VRAM grow while nobody plays (about 17 cycles of the PV loop)
+rem Why these numbers (revised after the 24-lap baseline run of 2026/10/27, 1080p): the slope of the first 8 to 10 laps was within 2 percent of the final slope,
+rem   the FPS fell at lap 19 (about 73 minutes), and laps 20 to 24 (about 31 minutes) only repeated the collapse at about 7 FPS.
+rem "until" stops a run when VRAM reaches 99 percent or when the FPS falls under 80 percent of lap 1. In that run the FPS fell (lap 19) before any one-second row reached 99 percent VRAM (lap 21).
+rem   At another resolution or build the VRAM limit can come first: check stop_reason in meta.json.
+rem About 3 hours at most (base usually stops at about 75 minutes). One lap that takes over 900 seconds is abandoned.
 rem   run_exhibition_data.bat [lap] [idle] [pc:NAME] [build:DIR] [test] [check]
 rem   No arguments (for example, a double click): the plan is shown and the start is confirmed on the console.
 rem   lap        : run only steps 1 and 2.       idle : run only step 3.       (neither: all three steps)
@@ -32,8 +35,10 @@ set "DO_LAP="
 set "DO_IDLE="
 set "TEST="
 set "CHECK="
-set "LAPS=30"
-set "IDLEMIN=120"
+set "LAPS_BASE=24"
+set "LAPS_MAPONLY=12"
+set "IDLEMIN=30"
+set "BASE_UNTIL= until"
 rem productName in ProjectSettings. Same value as in run_lap_variants.bat; change both if the product name changes.
 set "PRODUCT=AimRacing2026_Unity6.3"
 
@@ -59,8 +64,10 @@ if not defined DO_LAP if not defined DO_IDLE (
   set "DO_IDLE=1"
 )
 if defined TEST (
-  set "LAPS=1"
+  set "LAPS_BASE=1"
+  set "LAPS_MAPONLY=1"
   set "IDLEMIN=3"
+  set "BASE_UNTIL="
 )
 
 rem the PC folder name becomes part of a path: letters, digits, underscore, dot and hyphen only, and no ".."
@@ -111,18 +118,21 @@ if defined PC if not defined TEST (
 for /f %%T in ('powershell -nologo -noprofile -command "Get-Date -Format yyyyMMdd_HHmmss"') do set "STAMP=%%T"
 set "LOG=%TEMP%\run_exhibition_data_%STAMP%.log"
 
+set "BASE_NOTE=(%LAPS_BASE% laps x 4 minutes)"
+if defined BASE_UNTIL set "BASE_NOTE=(up to %LAPS_BASE% laps x 4 minutes; until stops it earlier)"
+
 set /a TOTALMIN=0
-if defined DO_LAP set /a TOTALMIN+=LAPS*4*2
+if defined DO_LAP set /a TOTALMIN+=(LAPS_BASE+LAPS_MAPONLY)*4
 if defined DO_IDLE set /a TOTALMIN+=IDLEMIN
 
 call :say ""
 call :say "==== run_exhibition_data ===="
 call :say "Game: !EXE!"
 if defined TEST call :say "TEST MODE: short trial, nothing is copied"
-if defined DO_LAP call :say "[1] run_lap_variants.bat %LAPS% base x1 build:!DIR!   (about %LAPS% laps x 4 minutes)"
-if defined DO_LAP call :say "[2] run_lap_variants.bat %LAPS% maponly x1 build:!DIR!   (about %LAPS% laps x 4 minutes)"
+if defined DO_LAP call :say "[1] run_lap_variants.bat %LAPS_BASE% base!BASE_UNTIL! x1 build:!DIR!   !BASE_NOTE!"
+if defined DO_LAP call :say "[2] run_lap_variants.bat %LAPS_MAPONLY% maponly x1 build:!DIR!   (%LAPS_MAPONLY% laps x 4 minutes)"
 if defined DO_IDLE call :say "[3] run_idle.bat %IDLEMIN% base x1 build:!DIR!   (%IDLEMIN% minutes)"
-call :say "About %TOTALMIN% minutes in total, more if the FPS collapses and the laps slow down."
+call :say "At most about %TOTALMIN% minutes in total, more if the FPS collapses and the laps slow down."
 if defined DEST (call :say "After the runs, new run folders are copied to !DEST!") else (call :say "New run folders are not copied (add pc:NAME to copy them into PerfRecords).")
 call :say "Log: %LOG%"
 tasklist /fi "imagename eq Unity.exe" 2>nul | find /i "Unity.exe" >nul && call :say "WARNING: Unity Editor (Unity.exe) is running. It adds about 3.2 GB of VRAM and makes the records hard to compare. Close it first."
@@ -142,8 +152,8 @@ call :snapshot idle
 
 call :say "[%time%] start"
 if defined DO_LAP (
-  call :step "[1] lap base" run_lap_variants.bat "%LAPS% base x1"
-  call :step "[2] lap maponly" run_lap_variants.bat "%LAPS% maponly x1"
+  call :step "[1] lap base" run_lap_variants.bat "%LAPS_BASE% base!BASE_UNTIL! x1"
+  call :step "[2] lap maponly" run_lap_variants.bat "%LAPS_MAPONLY% maponly x1"
 )
 if defined DO_IDLE call :step "[3] idle base" run_idle.bat "%IDLEMIN% base x1"
 call :say "[%time%] all steps finished"
