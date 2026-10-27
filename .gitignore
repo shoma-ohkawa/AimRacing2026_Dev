@@ -1,0 +1,33 @@
+# Unity が作り直すフォルダ、またはこの PC だけの情報
+/Library/
+/Temp/
+/Obj/
+/Logs/
+/UserSettings/
+
+# ビルドの成果物(Build/run_game_perf.bat は Tools/PerfViewer のコピー)
+/Build/
+
+# Unity が作り直す Visual Studio のファイル(.vsconfig は管理に入れる)
+/*.csproj
+/*.slnx
+
+# 直下のログ(fmod_editor.log など。PerfRecords の中のログは対象外)
+/*.log
+
+# FMOD Studio の一時ファイル
+/FMOD_2024/.unsaved/
+
+# Claude Code の個人設定
+/.claude/settings.local.json
+
+# Python の実行時ファイル
+__pycache__/
+*.pyc
+
+# IDE・OS が作るもの
+.vs/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
