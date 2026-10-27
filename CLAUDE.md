@@ -100,6 +100,7 @@ Unity 公式プラグインを使う。
 | `Perf.md` | 計測機能(記録・周回・放置・集計・グラフ)と PDCA |
 | `PerfFindings.md` | 計測結果(3PC の実測)と課題の一覧 |
 | `CurrentStateAnalysis.md` | 改良・最適化の候補の現状分析(利点・欠点・問題点。ID は他の docs が参照) |
+| `VersionControl.md` | バージョン管理(Git・Git LFS)の準備。LFS の対象、管理に入れないもの、リポジトリの作り方 |
 
 - 読む順: 進行は `GameFlow.md` → `GameStates.md` → `TransitionEffects.md`。計測は `Perf.md` → `PerfFindings.md`。
 - ヘッダに `作成: 日付 / 作成者: 24CU0110 大川翔生` と対象パスを書く。
