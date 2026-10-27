@@ -132,6 +132,7 @@ Unity 公式プラグインを使う。
 | 開発用(Ryzen 5 5600X / RTX 3060 Ti) | `5600X_3060Ti` |
 | 開発用(i5-13600K / RTX 4070 Ti) | `13600K_4070Ti` |
 | 展示用(Core Ultra 9 285K / RTX 5060 Ti) | `Ultra9_5060Ti` |
+| 展示用(同じ PC。画面を 1920×1080 × 3 にした記録。`Ultra9_5060Ti` は 2560×1440 × 3 で、混ぜて比べない) | `Ultra9_5060Ti_1080p` |
 
 ```
 python Tools/PerfViewer/lap_report.py --root "PerfRecords/<PC>/perf"

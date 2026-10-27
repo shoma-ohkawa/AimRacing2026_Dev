@@ -25,6 +25,7 @@
 | 9 | `BlinkingUI` が `Update` で毎フレーム `AppLog.Log("afetsdgrhrtyhtry")` を呼ぶ(消し忘れとみられる。リリースでは除去される)。`goal_destroyAtEndScene` は、現行ビルドにない "End" シーンを待って、毎フレーム `SceneManager.GetActiveScene().name`(文字列の生成)を呼ぶ | R-3、R-2 | コード |
 | 10 | `GarageGlitchTitle` は `m_Volume.sharedProfile`(**アセットそのもの**)の Glitch の値を実行時に書き換える。Editor では `garage!move.asset` が変わってしまう。どのシーンにも配置されていない | R-1、V-6 | コード |
 | 11 | **周回でメモリと VRAM が増え、VRAM が上限に達すると FPS が崩れる。主因は DLSS のカメラの破棄**(3 台の PC の計測で確認)。`unloadoff`(破棄の前に DLSS を止める)は、展示用 PC で測定した(2026/10/22)。増加は +872 MB/周で、基準(+813〜+976)から減らなかった。他の 2 台は未測定 | S-6、UP-6 | 実測(`PerfFindings.md`) |
+| 11(追記 2026/10/27) | 展示用 PC を 1920×1080 × 3 にして、4 条件を 10 周ずつ測った。`base` の増加は +459 MB/周で、2560×1440 の約半分。`unloadoff` は +515 で、1080p でも効かなかった。`maponly` は +246、`nodlss` は +34(走行中 82 FPS で、50 FPS の下限を満たす)。展示の解像度で結論が変わる | S-6、UP-6 | 実測(`PerfFindings.md` の追記) |
 
 **解消済み**
 
