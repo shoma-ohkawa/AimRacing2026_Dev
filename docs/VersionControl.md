@@ -312,7 +312,7 @@ git mergetool
 
 | 項目 | 内容 |
 |---|---|
-| 作成 | 2026/10/23。ブランチ `main`。コミットは 5 つ(最初は `61dcfdb`「AimRacing2026 初回コミット」、最新は `6048fa2`「.gitignore を追加」) |
+| 作成 | 2026/10/23。ブランチ `main`。最初のコミットは `61dcfdb`「AimRacing2026 初回コミット」。以降のコミットは `git log` で見る |
 | リモート | `origin` = GitHub の `shoma-ohkawa/AimRacing2026_Dev`。`main` は `origin/main` を追跡する。push の状態は、`git status -sb` で見る(ローカルの記録を見るだけで、リモートには問い合わせない)。公開範囲は未確認 |
 | 場所 | この PC は `C:\Production\AimRacing2026_Dev`。本文の手順は `D:\AimRacing\AimRacing2026_Dev`(同じ PC かは未確認) |
 | 追跡するファイル | 5,928 個(`.gitignore` の追加後。追加前は 5,927 個)。うち LFS が 1,309 個・3,197.1 MB(本文と同じ単位。作業フォルダの実体の合計)。`Library`・`Build`・`UserSettings` は 0 個 |
