@@ -96,11 +96,11 @@
 |---|---|---|
 | 1 | ビルドを作る | Editor を閉じてから。Development Build は OFF |
 | 2 | zip に入れるものを決める | `PublicKey.txt`(WIZMO の公開鍵。ビルド時に出力へコピーされる: `文書`)、`nvngx_dlss.dll`(再配布してよいか)を確認する |
-| 3 | exe 名と zip 名を決める | README の下書きは `AimRacing2026_Unity6.3.exe`(`【要確認】`)。参考のリポジトリは `AimRacing2026.exe` |
+| 3 | exe 名と zip 名を決める | **決定済み(2026/11/08)**: exe は `AimRacing2026.exe`、zip は `AimRacing2026_Build.zip`。exe 名はビルドの保存名で決まる。`productName`(`AimRacing2026_Unity6.3`)は変えない(計測ツールの定数と、`LocalLow` の出力先がこの値に依存する)。ビルド時に保存名を合わせる |
 | 4 | GitHub で空のリポジトリを作る | 公開範囲を決める。README・ライセンスは付けない。`gh` がこの PC にないので、ブラウザで作る |
 | 5 | remote を登録して push する | ポートフォリオ用リポジトリ側で行う |
 | 6 | Releases で `v1.0.0` を作り、zip を添付する | |
-| 7 | `README.md` の `【要確認】`・`【準備中】` を解消する | ライセンスの記載、プレイ動画、ファイル名、UI の追加 |
+| 7 | `README.md` の `【要確認】`・`【準備中】` を解消する | 2026/11/08 に、ライセンス・UI・突入演出・ファイル名の `【要確認】` は解消。プレイ動画は 2026/11/08 に Google ドライブのリンクを入れた。残りは、下書きの注記、ビルドデータ(ビルドと Release の後) |
 | 8 | `AutoDemoDriver.cs` を `Source/` に入れるか決める | |
 
 ## 未確認
