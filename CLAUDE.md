@@ -78,10 +78,16 @@ int Set() { return ; }
 
 # プラグイン
 
-Unity 公式プラグインを使う。
+Unity 公式プラグイン(`unity@unity-agent-plugin`)を使う。
+
+- 設定は `.claude/settings.json` に書いてある(`extraKnownMarketplaces` と `enabledPlugins`)。Git でクローンした PC は、Claude Code を起動すると自動で取得される。初回は取得が終わるまでスキルの一覧に出ず、あとから出ることがある(2026/11/09、開発用 PC で実測)。
+- `.claude/` は Project Zip に入らない。Zip で配った PC では、次の 2 つを実行する。
 
 ```
 /plugin marketplace add Unity-Technologies/unity-agent-plugin
+```
+
+```
 /plugin install unity@unity-agent-plugin
 ```
 
@@ -172,7 +178,7 @@ PC ごとに違う設定を、次にそろえる。
 | 出力スタイル | `Concise` | アプリの Settings → Claude Code → Output style |
 | モデル | Sonnet 5.5(`claude-sonnet-5-5`) | モデル選択 |
 | 権限モード | `default` | 権限の設定 |
-| プラグイン | `unity@unity-agent-plugin` | 上の「プラグイン」 |
+| プラグイン | `unity@unity-agent-plugin` | `.claude/settings.json`(上の「プラグイン」) |
 
 - 全 PC に確実に届くのは、このファイルと `docs/` だけ。出力スタイル・モデル・権限モードは、PC ごとに手で合わせる。
 - メモリはプロジェクトのパスごとに保存される。パスが違う PC では、別のメモリになる。メモリには頼らない。
