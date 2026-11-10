@@ -1,58 +1,130 @@
 fileFormatVersion: 2
 guid: 1afc5be16cd268a4a957073e7e8161aa
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: //RootNode
-    100002: Asama_map_fence001
-    100004: Asama_map_fence002
-    100006: Asama_map_plane001
-    100008: Asama_map_plane002
-    100010: Asama_map_plane003
-    100012: Asama_map_plane004
-    400000: //RootNode
-    400002: Asama_map_fence001
-    400004: Asama_map_fence002
-    400006: Asama_map_plane001
-    400008: Asama_map_plane002
-    400010: Asama_map_plane003
-    400012: Asama_map_plane004
-    2100000: No Name
-    2100002: 'Material #0'
-    2300000: Asama_map_fence001
-    2300002: Asama_map_fence002
-    2300004: Asama_map_plane001
-    2300006: Asama_map_plane002
-    2300008: Asama_map_plane003
-    2300010: Asama_map_plane004
-    3300000: Asama_map_fence001
-    3300002: Asama_map_fence002
-    3300004: Asama_map_plane001
-    3300006: Asama_map_plane002
-    3300008: Asama_map_plane003
-    3300010: Asama_map_plane004
-    4300000: Asama_map_fence001
-    4300002: Asama_map_plane001
-    4300004: Asama_map_plane002
-    4300006: Asama_map_fence002
-    4300008: Asama_map_plane003
-    4300010: Asama_map_plane004
-    7400000: Take 001
-    9500000: //RootNode
+  serializedVersion: 24600
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: Asama_map_fence001
+  - first:
+      1: 100004
+    second: Asama_map_fence002
+  - first:
+      1: 100006
+    second: Asama_map_plane001
+  - first:
+      1: 100008
+    second: Asama_map_plane002
+  - first:
+      1: 100010
+    second: Asama_map_plane003
+  - first:
+      1: 100012
+    second: Asama_map_plane004
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: Asama_map_fence001
+  - first:
+      4: 400004
+    second: Asama_map_fence002
+  - first:
+      4: 400006
+    second: Asama_map_plane001
+  - first:
+      4: 400008
+    second: Asama_map_plane002
+  - first:
+      4: 400010
+    second: Asama_map_plane003
+  - first:
+      4: 400012
+    second: Asama_map_plane004
+  - first:
+      21: 2100000
+    second: No Name
+  - first:
+      21: 2100002
+    second: Material #0
+  - first:
+      23: 2300000
+    second: Asama_map_fence001
+  - first:
+      23: 2300002
+    second: Asama_map_fence002
+  - first:
+      23: 2300004
+    second: Asama_map_plane001
+  - first:
+      23: 2300006
+    second: Asama_map_plane002
+  - first:
+      23: 2300008
+    second: Asama_map_plane003
+  - first:
+      23: 2300010
+    second: Asama_map_plane004
+  - first:
+      33: 3300000
+    second: Asama_map_fence001
+  - first:
+      33: 3300002
+    second: Asama_map_fence002
+  - first:
+      33: 3300004
+    second: Asama_map_plane001
+  - first:
+      33: 3300006
+    second: Asama_map_plane002
+  - first:
+      33: 3300008
+    second: Asama_map_plane003
+  - first:
+      33: 3300010
+    second: Asama_map_plane004
+  - first:
+      43: 4300000
+    second: Asama_map_fence001
+  - first:
+      43: 4300002
+    second: Asama_map_plane001
+  - first:
+      43: 4300004
+    second: Asama_map_plane002
+  - first:
+      43: 4300006
+    second: Asama_map_fence002
+  - first:
+      43: 4300008
+    second: Asama_map_plane003
+  - first:
+      43: 4300010
+    second: Asama_map_plane004
+  - first:
+      74: 7400000
+    second: Take 001
+  - first:
+      95: 9500000
+    second: //RootNode
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
+    searchTexturesGlobally: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -74,25 +146,43 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    preBakeConvexCollisionMesh: 0
+    preBakeTriangleCollisionMesh: 0
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    importUVs: -1
+    importVertexColors: 1
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 1
-    hasPreviousCalculatedGlobalScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -101,10 +191,11 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+    calculateBlendshapeNormalsDeltaFromImportedNormals: 1
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -114,13 +205,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
