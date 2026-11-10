@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -102,10 +103,11 @@ public static class WindowsMonitorInfo
     }
 
     /// <summary>
-    /// Unityのディスプレイ番号の並び(メインモニターが先頭、残りはOSの列挙順)に合わせてモニターを取得します。
+    /// メインモニターを先頭に移し、残りはOSの列挙順のままモニターを取得します。
+    /// 残りの並びは、Unityのディスプレイ番号と一致するとは限りません(縦画面があると入れ替わることを2026/11/10のテストで確認)。
     /// Windows以外、またはAPI呼び出しに失敗した場合は空のリストを返します。
     /// </summary>
-    /// <returns>Unityのディスプレイ番号順のモニター情報のリスト</returns>
+    /// <returns>メインモニターが先頭のモニター情報のリスト</returns>
     public static List<WindowsMonitor> GetMonitorsInUnityOrder()
     {
         List<WindowsMonitor> monitors = GetMonitors();
@@ -139,9 +141,74 @@ public static class WindowsMonitorInfo
         }
     }
 
+    /// <summary>
+    /// このプロセスが持つ、表示中のUnityのウィンドウ(メインと、有効化した外部ディスプレイのもの)を取得します。
+    /// Unityのディスプレイ番号とモニターの対応を、ウィンドウが実際に載っているモニターから確かめるために使います。
+    /// Windows以外、またはAPI呼び出しに失敗した場合は空のリストを返します。
+    /// </summary>
+    /// <returns>ウィンドウハンドルのリスト</returns>
+    public static List<IntPtr> GetOwnUnityWindows()
+    {
+        List<IntPtr> windows = new List<IntPtr>();
+
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+        try
+        {
+            m_enumeratedWindows.Clear();
+            m_ownProcessId = (uint)System.Diagnostics.Process.GetCurrentProcess().Id;
+
+            //列挙に失敗した場合に結果を返さない処理
+            if (EnumWindows(m_enumWindowsProc, IntPtr.Zero)) { windows.AddRange(m_enumeratedWindows); }
+
+            m_enumeratedWindows.Clear();
+        }
+        catch (Exception exception)
+        {
+            AppLog.LogWarning($"[{nameof(WindowsMonitorInfo)}] ウィンドウの取得に失敗しました: {exception.Message}");
+        }
+#endif
+
+        return windows;
+    }
+
+    /// <summary>
+    /// ウィンドウが載っているモニターを取得します。
+    /// Windows以外、またはAPI呼び出しに失敗した場合はfalseを返します。
+    /// </summary>
+    /// <param name="_window">調べるウィンドウのハンドル</param>
+    /// <param name="_monitor">ウィンドウが載っているモニター</param>
+    /// <returns>取得できた場合はtrue</returns>
+    public static bool TryGetMonitorOfWindow(IntPtr _window, out WindowsMonitor _monitor)
+    {
+        _monitor = default;
+
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+        try
+        {
+            IntPtr hMonitor = MonitorFromWindow(_window, k_MonitorDefaultToNearest);
+            return hMonitor != IntPtr.Zero && TryCreateMonitor(hMonitor, out _monitor);
+        }
+        catch (Exception exception)
+        {
+            AppLog.LogWarning($"[{nameof(WindowsMonitorInfo)}] ウィンドウのモニターの取得に失敗しました: {exception.Message}");
+        }
+#endif
+
+        return false;
+    }
+
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
     //user32.dllのAPI名
     const string k_User32 = "user32.dll";
+
+    //Unityのウィンドウのクラス名の先頭(プレイヤーは"UnityWndClass"。Editorは"UnityContainerWndClass"のように、どちらも"Unity"で始まる)
+    const string k_UnityWindowClassPrefix = "Unity";
+
+    //GetClassNameで受け取るクラス名の最大文字数
+    const int k_ClassNameLength = 64;
+
+    //MONITOR_DEFAULTTONEAREST: ウィンドウがモニターに載っていない場合は、最も近いモニターを返す指定
+    const uint k_MonitorDefaultToNearest = 2;
 
     //MONITORINFOF_PRIMARY: メインモニターを示すフラグ
     const uint k_MonitorInfoFlagPrimary = 0x00000001;
@@ -167,9 +234,22 @@ public static class WindowsMonitorInfo
     //列挙コールバックが結果を溜めるリスト(メインスレッド専用)
     static readonly List<WindowsMonitor> m_enumeratedMonitors = new List<WindowsMonitor>();
 
+    //ウィンドウの列挙コールバックを保持してGC回収を避けるためのデリゲート
+    static readonly EnumWindowsProc m_enumWindowsProc = OnEnumWindow;
+
+    //ウィンドウの列挙コールバックが結果を溜めるリスト(メインスレッド専用)
+    static readonly List<IntPtr> m_enumeratedWindows = new List<IntPtr>();
+
+    //ウィンドウの列挙で、自分のプロセスのものだけを選ぶためのプロセス番号(メインスレッド専用)
+    static uint m_ownProcessId;
+
     //EnumDisplayMonitorsのコールバックの型
     [UnmanagedFunctionPointer(CallingConvention.Winapi)]
     delegate bool MonitorEnumProc(IntPtr _hMonitor, IntPtr _hdcMonitor, IntPtr _clipRect, IntPtr _data);
+
+    //EnumWindowsのコールバックの型
+    [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+    delegate bool EnumWindowsProc(IntPtr _hWnd, IntPtr _lParam);
 
     //RECT: 矩形(左上と右下の座標)
     [StructLayout(LayoutKind.Sequential)]
@@ -251,6 +331,26 @@ public static class WindowsMonitorInfo
     [DllImport(k_User32, CharSet = CharSet.Unicode, EntryPoint = "GetMonitorInfoW")]
     static extern bool GetMonitorInfo(IntPtr _hMonitor, ref NativeMonitorInfoEx _info);
 
+    //トップレベルのウィンドウを列挙し、ウィンドウごとにコールバックを呼ぶAPI
+    [DllImport(k_User32)]
+    static extern bool EnumWindows(EnumWindowsProc _callback, IntPtr _lParam);
+
+    //ウィンドウを作ったプロセスの番号を取得するAPI
+    [DllImport(k_User32)]
+    static extern uint GetWindowThreadProcessId(IntPtr _hWnd, out uint _processId);
+
+    //ウィンドウが表示中かどうかを取得するAPI
+    [DllImport(k_User32)]
+    static extern bool IsWindowVisible(IntPtr _hWnd);
+
+    //ウィンドウのクラス名を取得するAPI
+    [DllImport(k_User32, CharSet = CharSet.Unicode, EntryPoint = "GetClassNameW")]
+    static extern int GetClassName(IntPtr _hWnd, StringBuilder _className, int _maxCount);
+
+    //ウィンドウが載っているモニターのハンドルを取得するAPI
+    [DllImport(k_User32)]
+    static extern IntPtr MonitorFromWindow(IntPtr _hWnd, uint _flags);
+
     /// <summary>
     /// 表示デバイスの表示モード(解像度・位置など)を取得します。
     /// </summary>
@@ -280,6 +380,27 @@ public static class WindowsMonitorInfo
     {
         //情報を取得できたモニターだけを結果へ追加する処理
         if (TryCreateMonitor(_hMonitor, out WindowsMonitor monitor)) { m_enumeratedMonitors.Add(monitor); }
+
+        return true;
+    }
+
+    /// <summary>
+    /// EnumWindowsから呼ばれ、自分のプロセスの表示中のUnityのウィンドウだけをリストへ追加します。
+    /// </summary>
+    /// <param name="_hWnd">列挙されたウィンドウのハンドル</param>
+    /// <param name="_lParam">EnumWindowsへ渡された値</param>
+    /// <returns>列挙を続ける場合はtrue</returns>
+    [AOT.MonoPInvokeCallback(typeof(EnumWindowsProc))]
+    static bool OnEnumWindow(IntPtr _hWnd, IntPtr _lParam)
+    {
+        GetWindowThreadProcessId(_hWnd, out uint processId);
+        if (processId != m_ownProcessId || !IsWindowVisible(_hWnd)) { return true; }
+
+        StringBuilder className = new StringBuilder(k_ClassNameLength);
+        GetClassName(_hWnd, className, className.Capacity);
+
+        //Unityのウィンドウだけを結果へ追加する処理
+        if (className.ToString().StartsWith(k_UnityWindowClassPrefix, StringComparison.Ordinal)) { m_enumeratedWindows.Add(_hWnd); }
 
         return true;
     }
