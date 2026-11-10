@@ -1,9 +1,9 @@
 /*━━━━━━━━━
 @file    WindowsMonitorInfo.cs
-@brief   Windows APIでモニターの枚数・配置・メイン判定・現在の解像度を取得するユーティリティ
+@brief   Windows APIでモニターの枚数・配置・メイン判定・現在の解像度・縦画面判定を取得するユーティリティ
 @author  24CU0110 大川翔生
 @date    作成日   : 2026/09/27
-         最終更新日 : 2026/09/27
+         最終更新日 : 2026/11/10
 ━━━━━━━━━*/
 
 using System;
@@ -41,11 +41,17 @@ public readonly struct WindowsMonitor
     }
 
     /// <summary>
-    /// ログ出力用に、デバイス名・メイン判定・解像度と配置を文字列にします。
+    /// 縦画面のモニターかどうか。物理解像度の高さが幅より大きい場合に縦画面とみなします。
+    /// 縦向きに回転している場合も、もともと縦長のパネルの場合も含みます(正方形は縦画面にしません)。
+    /// </summary>
+    public bool IsPortrait => m_pixelRect.height > m_pixelRect.width;
+
+    /// <summary>
+    /// ログ出力用に、デバイス名・メイン判定・縦画面判定・解像度と配置を文字列にします。
     /// </summary>
     public override string ToString()
     {
-        return $"{m_deviceName} primary:{m_bIsPrimary} pixel:{FormatRect(m_pixelRect)} desktopRect:{FormatRect(m_desktopRect)}";
+        return $"{m_deviceName} primary:{m_bIsPrimary} portrait:{IsPortrait} pixel:{FormatRect(m_pixelRect)} desktopRect:{FormatRect(m_desktopRect)}";
     }
 
     //矩形を「幅x高さ@(左上X,左上Y)」の文字列にする関数

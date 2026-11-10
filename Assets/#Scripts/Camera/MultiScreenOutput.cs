@@ -16,6 +16,9 @@ public class MultiScreenOutput : SingletonMonoBehaviour<MultiScreenOutput>
     //出力に使用するモニター数の下限(シングルモニターでも起動できる枚数)
     const int k_MinDisplayCount = 1;
 
+    //メインモニターのUnityのディスプレイ番号(ゲームウィンドウの表示先で、描画対象から外せない)
+    const int k_MainDisplayIndex = 0;
+
     //モニターの解像度を検出できない場合に使用する横解像度
     const int k_FallbackWidth = 1920;
 
@@ -31,13 +34,16 @@ public class MultiScreenOutput : SingletonMonoBehaviour<MultiScreenOutput>
     //一台のモニターへ表示する縦解像度(メインモニターの物理解像度)
     int m_heightPerDisplay = k_FallbackHeight;
 
-    //Unityのディスプレイ番号ごとの、左右の物理配置に対応する映像番号(左端が0)
+    //映像を描画するモニターのUnityのディスプレイ番号(昇順。縦画面のモニターは含まない)
+    int[] m_renderDisplayIndices = { k_MainDisplayIndex };
+
+    //Unityのディスプレイ番号ごとの、左右の物理配置に対応する映像番号(左端が0。描画対象でないモニターは-1)
     int[] m_sliceIndexPerDisplay;
 
     //全モニター分の映像を横並びで保持するテクスチャ
     RenderTexture m_renderTexture;
 
-    //実際に接続されている出力対象モニター数
+    //映像を描画するモニター数(縦画面のモニターを除いた出力対象の枚数)
     int m_activeDisplayCount;
 
     //接続中のモニターをゲーム開始前に有効化する関数
@@ -97,49 +103,91 @@ public class MultiScreenOutput : SingletonMonoBehaviour<MultiScreenOutput>
         //Windows APIで取得したモニター情報をUnityのディスプレイ番号順で受け取る処理
         List<WindowsMonitor> monitors = WindowsMonitorInfo.GetMonitorsInUnityOrder();
 
-        m_activeDisplayCount = DecideActiveDisplayCount(monitors);
+        m_renderDisplayIndices = DecideRenderDisplayIndices(monitors, Display.displays.Length);
+        m_activeDisplayCount = m_renderDisplayIndices.Length;
         ApplyMainDisplayResolution(monitors);
 
-        //メイン以外のモニターを有効化する処理
-        for (int i = 1; i < m_activeDisplayCount; ++i)
+        //メイン以外の描画モニターを有効化する処理(縦画面のモニターは有効化しない)
+        foreach (int displayIndex in m_renderDisplayIndices)
         {
-            Display.displays[i].Activate();
-            LogDisplayState(i);
+            if (displayIndex == k_MainDisplayIndex) { continue; }
+
+            Display.displays[displayIndex].Activate();
+            LogDisplayState(displayIndex);
         }
 
         SetupSliceIndices(monitors);
     }
 
-    //Windows APIとUnityが認識しているモニター数から、出力枚数を決める関数(最低1枚)
-    int DecideActiveDisplayCount(List<WindowsMonitor> _monitors)
+    //Windows APIとUnityが認識しているモニターから、映像を描画するモニターのディスプレイ番号を決める関数(最低1枚)
+    //縦画面のモニターは描画モニターに換算しない(メインモニターだけは、ゲームウィンドウの表示先なので除外できない)
+    int[] DecideRenderDisplayIndices(List<WindowsMonitor> _monitors, int _unityCount)
     {
-        int unityCount = Display.displays.Length;
-
-        //Windows APIで取得できない場合はUnityが認識している台数を使用する処理
+        //Windows APIで取得できない場合は、縦画面かを判定できないためUnityが認識している台数をすべて使用する処理
         if (_monitors.Count == 0)
         {
             AppLog.LogWarning($"[{nameof(MultiScreenOutput)}] Windows APIでモニター情報を取得できませんでした。" +
-                "Unityのディスプレイ番号順に左から割り当てます。");
-            return Mathf.Max(k_MinDisplayCount, unityCount);
+                "Unityのディスプレイ番号順に左から割り当てます(縦画面の除外はできません)。");
+            return CreateSequentialIndices(Mathf.Max(k_MinDisplayCount, _unityCount));
         }
 
         //Windows APIとUnityで台数が食い違う場合に、確認を促した上で少ない方へ合わせる処理
-        if (_monitors.Count != unityCount)
+        if (_monitors.Count != _unityCount)
         {
-            AppLog.LogWarning($"[{nameof(MultiScreenOutput)}] モニター数がWindows API({_monitors.Count})とUnity({unityCount})で異なります。" +
+            AppLog.LogWarning($"[{nameof(MultiScreenOutput)}] モニター数がWindows API({_monitors.Count})とUnity({_unityCount})で異なります。" +
                 "少ない方の枚数で出力します。");
         }
 
-        int activeCount = Mathf.Max(k_MinDisplayCount, Mathf.Min(_monitors.Count, unityCount));
+        int connectedCount = Mathf.Max(k_MinDisplayCount, Mathf.Min(_monitors.Count, _unityCount));
+        List<int> renderIndices = new List<int>();
+
+        for (int i = 0; i < connectedCount; ++i)
+        {
+            if (_monitors[i].IsPortrait)
+            {
+                //メインモニターが縦画面の場合は除外できないため、警告して描画モニターに含める処理
+                if (i == k_MainDisplayIndex)
+                {
+                    AppLog.LogWarning($"[{nameof(MultiScreenOutput)}] メインモニター(Display[{i}] {_monitors[i].m_deviceName})が縦画面です。" +
+                        "ゲームウィンドウの表示先のため、除外せず描画モニターに含めます。");
+                }
+                else
+                {
+                    //縦画面のモニターを描画モニターに換算しない処理(有効化も映像の割り当てもしない)
+                    AppLog.Log($"[{nameof(MultiScreenOutput)}] Display[{i}] {_monitors[i].m_deviceName} は縦画面" +
+                        $"({_monitors[i].m_pixelRect.width}x{_monitors[i].m_pixelRect.height})のため、描画モニターに含めません。");
+                    continue;
+                }
+            }
+
+            renderIndices.Add(i);
+        }
 
         //1枚での起動は通常動作として記録する処理
-        if (activeCount == k_MinDisplayCount)
+        if (connectedCount == k_MinDisplayCount)
         {
             AppLog.Log($"[{nameof(MultiScreenOutput)}] シングルモニターで起動します。" +
                 "複数画面で出力する場合はWindowsの表示設定が「拡張」になっているか確認してください。");
         }
+        else if (renderIndices.Count == k_MinDisplayCount)
+        {
+            AppLog.Log($"[{nameof(MultiScreenOutput)}] 縦画面を除くと描画モニターは1枚です。シングルモニターで起動します。");
+        }
 
-        return activeCount;
+        return renderIndices.ToArray();
+    }
+
+    //0から_count-1までのディスプレイ番号を並べた配列を作成する関数
+    int[] CreateSequentialIndices(int _count)
+    {
+        int[] indices = new int[_count];
+
+        for (int i = 0; i < _count; ++i)
+        {
+            indices[i] = i;
+        }
+
+        return indices;
     }
 
     //メインモニターの物理解像度を取得し、ゲームウィンドウを全画面ウィンドウで合わせる関数
@@ -178,9 +226,14 @@ public class MultiScreenOutput : SingletonMonoBehaviour<MultiScreenOutput>
     //Unityのディスプレイ番号ごとに、左右の物理配置に対応する映像番号を決める関数
     void SetupSliceIndices(List<WindowsMonitor> _monitors)
     {
-        m_sliceIndexPerDisplay = new int[m_activeDisplayCount];
+        //描画対象でないモニター(縦画面)には映像番号を割り当てない(-1のまま)処理
+        m_sliceIndexPerDisplay = new int[Display.displays.Length];
+        for (int i = 0; i < m_sliceIndexPerDisplay.Length; ++i)
+        {
+            m_sliceIndexPerDisplay[i] = -1;
+        }
 
-        for (int i = 0; i < m_activeDisplayCount; ++i)
+        foreach (int i in m_renderDisplayIndices)
         {
             m_sliceIndexPerDisplay[i] = GetSliceIndex(_monitors, i);
 
@@ -200,7 +253,7 @@ public class MultiScreenOutput : SingletonMonoBehaviour<MultiScreenOutput>
         }
     }
 
-    //モニターの左右の位置関係から、左端を0とする映像番号を取得する関数
+    //描画モニターの左右の位置関係から、左端を0とする映像番号を取得する関数(縦画面のモニターは数えない)
     int GetSliceIndex(List<WindowsMonitor> _monitors, int _displayIndex)
     {
         //Windows APIで配置を取得できない場合はUnityのディスプレイ番号をそのまま左からの順序として使用する処理
@@ -209,8 +262,8 @@ public class MultiScreenOutput : SingletonMonoBehaviour<MultiScreenOutput>
         int sliceIndex = 0;
         int ownX = _monitors[_displayIndex].m_pixelRect.x;
 
-        //自分より左にあるモニターの枚数を数える処理(同じ位置の場合は番号の小さい方を左とみなす)
-        for (int i = 0; i < m_activeDisplayCount; ++i)
+        //自分より左にある描画モニターの枚数を数える処理(同じ位置の場合は番号の小さい方を左とみなす)
+        foreach (int i in m_renderDisplayIndices)
         {
             int otherX = _monitors[i].m_pixelRect.x;
             if (otherX < ownX || (otherX == ownX && i < _displayIndex)) { ++sliceIndex; }
@@ -290,10 +343,11 @@ public class MultiScreenOutput : SingletonMonoBehaviour<MultiScreenOutput>
             yield return null;
         }
 
-        for (int i = 0; i < m_activeDisplayCount; ++i)
+        //描画モニターにだけ表示用Canvasを作成する処理(縦画面のモニターには作らない)
+        foreach (int displayIndex in m_renderDisplayIndices)
         {
-            LogDisplayState(i);
-            CreateDisplayCanvas(i);
+            LogDisplayState(displayIndex);
+            CreateDisplayCanvas(displayIndex);
         }
     }
 
