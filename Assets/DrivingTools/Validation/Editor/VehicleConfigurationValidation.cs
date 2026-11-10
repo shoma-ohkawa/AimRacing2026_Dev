@@ -27,10 +27,10 @@ public static class VehicleConfigurationValidation
     public static void Run()
     {
         EditorSceneManager.OpenScene("Assets/!Scenes/Map.unity");
-        Car_Engine engine = UnityEngine.Object.FindFirstObjectByType<Car_Engine>(FindObjectsInactive.Include);
-        Transmission transmission = UnityEngine.Object.FindFirstObjectByType<Transmission>(FindObjectsInactive.Include);
-        Differential differential = UnityEngine.Object.FindFirstObjectByType<Differential>(FindObjectsInactive.Include);
-        VehicleController vehicle = UnityEngine.Object.FindFirstObjectByType<VehicleController>(FindObjectsInactive.Include);
+        Car_Engine engine = UnityEngine.Object.FindAnyObjectByType<Car_Engine>(FindObjectsInactive.Include);
+        Transmission transmission = UnityEngine.Object.FindAnyObjectByType<Transmission>(FindObjectsInactive.Include);
+        Differential differential = UnityEngine.Object.FindAnyObjectByType<Differential>(FindObjectsInactive.Include);
+        VehicleController vehicle = UnityEngine.Object.FindAnyObjectByType<VehicleController>(FindObjectsInactive.Include);
         Require(engine != null && transmission != null && differential != null && vehicle != null, "車両参照");
         engine.Initialize();
         CheckCountdownFreeRev(engine);
@@ -248,14 +248,14 @@ public static class VehicleConfigurationValidation
     //音量変換の単調性とNormalの即応性とTrackの短い応答遅れを本番コードで確認する関数
     static void CheckTrackAndTireSound()
     {
-        TireSound sound = UnityEngine.Object.FindFirstObjectByType<TireSound>(FindObjectsInactive.Include);
+        TireSound sound = UnityEngine.Object.FindAnyObjectByType<TireSound>(FindObjectsInactive.Include);
         Require(sound != null, "タイヤ音源参照");
         MethodInfo convert = typeof(TireSound).GetMethod("CalculateVolumeParameter", BindingFlags.Instance | BindingFlags.NonPublic);
         float silent = (float)convert.Invoke(sound, new object[] { 0f });
         float quarter = (float)convert.Invoke(sound, new object[] { 0.25f });
         float full = (float)convert.Invoke(sound, new object[] { 1f });
         Require(silent == 0f && quarter > 0.83f && quarter < 0.85f && full == 1f, "音量デシベル変換");
-        Steering steering = UnityEngine.Object.FindFirstObjectByType<Steering>(FindObjectsInactive.Include);
+        Steering steering = UnityEngine.Object.FindAnyObjectByType<Steering>(FindObjectsInactive.Include);
         Require(steering != null, "操舵参照");
         steering.VehicleSpeedKph = 100f;
         steering.SmoothInput = false;

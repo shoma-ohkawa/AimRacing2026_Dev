@@ -805,6 +805,8 @@ namespace UniGLTF
             }
 
             // Create or upate Main Asset
+            // ReplacePrefab / CreatePrefab は SaveAsPrefabAsset に置き換えられるが、サブアセットを持つ既存のプレハブを上書きしたときの動作を確認していないため、従来のまま警告だけを抑える
+#pragma warning disable 618
             if (prefabPath.IsFileExists)
             {
                 Debug.LogFormat("replace prefab: {0}", prefabPath);
@@ -816,6 +818,7 @@ namespace UniGLTF
                 Debug.LogFormat("create prefab: {0}", prefabPath);
                 PrefabUtility.CreatePrefab(prefabPath.Value, Root);
             }
+#pragma warning restore 618
             foreach (var x in paths)
             {
                 x.ImportAsset();

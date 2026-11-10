@@ -273,7 +273,10 @@ namespace UniGLTF
             {
                 var url = "file:///" + tmp.Replace("\\", "/");
                 Debug.LogFormat("UnityWebRequest: {0}", url);
+                // WWW は UnityWebRequestTexture に置き換えられるが、テクスチャの読み取り可否とミップマップの扱いを確認していないため、従来のまま警告だけを抑える
+#pragma warning disable 618
                 using (var m_uwr = new WWW(url))
+#pragma warning restore 618
                 {
                     yield return m_uwr;
 

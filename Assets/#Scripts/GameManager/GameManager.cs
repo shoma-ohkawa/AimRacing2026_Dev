@@ -364,7 +364,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
         if (m_g923FFBController == null)
         {
+            //Manager と Map の両方に G923_FFBController があり、FindAnyObjectByType では返る対象が不定になるため、従来どおり FindFirstObjectByType を使う
+#pragma warning disable 618
             m_g923FFBController = FindFirstObjectByType<G923_FFBController>();
+#pragma warning restore 618
         }
 
         if (m_g923FFBController != null)

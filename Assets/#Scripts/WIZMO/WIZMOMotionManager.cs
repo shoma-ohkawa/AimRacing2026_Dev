@@ -12,8 +12,6 @@ public class MenuMotionManager : MonoBehaviour
     // メニュー（-1f）状態からスタート
     private float m_currentHeave = 0f;
     private float m_heaveVelocity = 0f;
-    private float m_currentAxis = 0f;
-    private float m_axisVelocity = 0f;
 
     // インゲーム開始時の「0への復帰移動」が完了したかのフラグ
     private bool m_isInGameTransitionComplete = false;
@@ -83,7 +81,7 @@ public class MenuMotionManager : MonoBehaviour
         if (m_vehicleController != null) return true;
 
 #if UNITY_2023_1_OR_NEWER
-        m_vehicleController = FindFirstObjectByType<VehicleController>();
+        m_vehicleController = FindAnyObjectByType<VehicleController>();
 #else
         m_vehicleController = FindObjectOfType<VehicleController>();
 #endif

@@ -53,8 +53,8 @@ public class MeterUIManager : MonoBehaviour
     //メーター本体と制御参照をシーン内から補完する関数
     void ResolveReferences()
     {
-        if (m_meterController == null) { m_meterController = FindFirstObjectByType<MeterController>(FindObjectsInactive.Include); }
-        if (m_timer == null) { m_timer = FindFirstObjectByType<Timer>(FindObjectsInactive.Include); }
+        if (m_meterController == null) { m_meterController = FindAnyObjectByType<MeterController>(FindObjectsInactive.Include); }
+        if (m_timer == null) { m_timer = FindAnyObjectByType<Timer>(FindObjectsInactive.Include); }
         if (m_meter == null && m_meterController != null) { m_meter = m_meterController.gameObject; }
         if (m_meter != null) { m_meterCanvas = m_meter.GetComponentInParent<Canvas>(true); }
     }

@@ -10,7 +10,7 @@ using UnityEngine.InputSystem.Users;
 public static class MenuInputValidation
 {
     //実行中の実機診断は必要な時だけ有効化してログを増やさない
-    static bool diagnostics;
+    static bool diagnostics = false;
     //名前受信後の実シーン検査で使用する模擬キーボード
     static Keyboard testKeyboard;
     static double nameDeadline;
@@ -24,7 +24,7 @@ public static class MenuInputValidation
     {
         if (!diagnostics || !EditorApplication.isPlaying || EditorApplication.timeSinceStartup < next) { return; }
         next = EditorApplication.timeSinceStartup + 10;
-        foreach (var state in Object.FindObjectsByType<GameStateBindingBase>(FindObjectsSortMode.None))
+        foreach (var state in Object.FindObjectsByType<GameStateBindingBase>())
         {
             if (!(state is OpeningState) && !(state is MenuState)) { continue; }
             string values = "";
@@ -34,7 +34,7 @@ public static class MenuInputValidation
             }
             Debug.Log("[MenuInputValidation] " + state.GetType().Name + values);
         }
-        foreach (var input in Object.FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
+        foreach (var input in Object.FindObjectsByType<PlayerInput>())
         {
             Debug.Log($"[MenuInputValidation] {input.name} map={input.currentActionMap?.name} active={input.inputIsActive} devices={input.devices.Count}");
         }
@@ -138,9 +138,9 @@ public static class MenuInputValidation
         try
         {
             if (EditorApplication.timeSinceStartup > nameDeadline) { throw new System.Exception("名前受信後の進行が時間切れです"); }
-            var menu = Object.FindFirstObjectByType<MenuState>();
-            var runner = Object.FindFirstObjectByType<GameFlowRunner>();
-            var server = Object.FindFirstObjectByType<TcpServer>();
+            var menu = Object.FindAnyObjectByType<MenuState>();
+            var runner = Object.FindAnyObjectByType<GameFlowRunner>();
+            var server = Object.FindAnyObjectByType<TcpServer>();
             if (menu == null || runner == null || server == null || runner.CurrentId != GameStateId.Menu) { return; }
             var flags = BindingFlags.NonPublic | BindingFlags.Instance;
             if (namePhase == 0)

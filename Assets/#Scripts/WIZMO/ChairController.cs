@@ -99,11 +99,14 @@ public class ChairController : MonoBehaviour
 
     [SerializeField]
     private float m_shiftShockRatio = 0.5f;
+    //コードからは使っていないが、Map.unity に Inspector の値が保存されている調整値。削除は担当者の判断に任せ、警告だけを抑える(0414 は他の箇所にも同じ理由で付けている)
+#pragma warning disable 0414
     [SerializeField]
     private float m_pitchMagnification = 0.0f;
 
     [SerializeField, Range(0.01f, 1f)]
     private float m_accelSmoothing = 0f;
+#pragma warning restore 0414
 
     [SerializeField]
     private float m_forceSmoothTime = 0.1f;
@@ -112,8 +115,10 @@ public class ChairController : MonoBehaviour
 
     //private float m_VibrationMagnification = 0.0f;
 
+#pragma warning disable 0414
     [SerializeField]
     private float m_VibrationMagnificationMainas = 0.0f;
+#pragma warning restore 0414
 
     // ==============================
     // Shift
@@ -121,8 +126,10 @@ public class ChairController : MonoBehaviour
 
     [Header("---Shift---")]
 
+#pragma warning disable 0414
     [SerializeField]
     private float m_finalReductionRatio = 3.462f;
+#pragma warning restore 0414
 
     [SerializeField]
     private float m_driveWheelRadius = 0.3343f;
@@ -145,11 +152,13 @@ public class ChairController : MonoBehaviour
     [SerializeField]
     private float m_engineRatio = 1.0f;
 
+#pragma warning disable 0414
     [SerializeField]
     private float m_engineIdleRPM = 1000.0f;
 
     [SerializeField]
     private float m_engineLimitRPM = 10000.0f;
+#pragma warning restore 0414
 
     // ==============================
     // Smooth
@@ -315,7 +324,6 @@ public class ChairController : MonoBehaviour
     private float m_phase = 0.0f;
 
     private float m_startTime;
-    private bool m_changeVib = false;
 
     public float EngineRPM => m_engine.RPM;
 
@@ -327,9 +335,6 @@ public class ChairController : MonoBehaviour
     private float m_speedRatio = 0;
 
 
-    private bool m_pitchVib = false;
-
-
     //[SerializeField, Range(-1.0f, 1.0f)]
     private float m_pitchVibrationImpulse = 0.7f;
 
@@ -337,11 +342,10 @@ public class ChairController : MonoBehaviour
     private float m_ShiftShockimpulse = 2f;
 
 
+#pragma warning disable 0414
     [SerializeField]
     private float m_pitchVibrationTime = 0.0f;
-
-
-    private bool m_hasAppliedShiftShock = false;
+#pragma warning restore 0414
 
     private float vibrationPitch = 0;
 
@@ -361,9 +365,6 @@ public class ChairController : MonoBehaviour
     [SerializeField, Range(0.01f, 10.0f)]
     private float m_heaveVib = 2f;
 
-
-    //[SerializeField, Range(0.01f, 1.0f)]
-    private float m_pitchVibMin = 0.1f;
 
     [SerializeField, Range(0.01f, 1.0f)]
     private float m_heaveVibRatio = 0.03f;
@@ -597,7 +598,7 @@ public class ChairController : MonoBehaviour
         {
 #if UNITY_2023_1_OR_NEWER
 
-            m_vehicleController = FindFirstObjectByType<VehicleController>();
+            m_vehicleController = FindAnyObjectByType<VehicleController>();
 #else
             m_vehicleController = FindObjectOfType<VehicleController>();
 #endif
@@ -624,7 +625,7 @@ public class ChairController : MonoBehaviour
         if (m_wizmoController == null)
         {
 #if UNITY_2023_1_OR_NEWER
-            m_wizmoController = FindFirstObjectByType<WIZMOController>();
+            m_wizmoController = FindAnyObjectByType<WIZMOController>();
 #else
             m_wizmoController = FindObjectOfType<WIZMOController>();
 #endif
@@ -633,7 +634,7 @@ public class ChairController : MonoBehaviour
 
         if (m_engine == null)
         {
-            m_engine = FindFirstObjectByType<Car_Engine>();
+            m_engine = FindAnyObjectByType<Car_Engine>();
         }
     }
 
@@ -729,11 +730,6 @@ public class ChairController : MonoBehaviour
                 ApplyHeaveVibration(noiseDelta);
                 //AutoPitchVibrationImpulse(noiseDelta, isPitchTriggered);
             }
-        }
-
-        else
-        {
-            m_hasAppliedShiftShock = false;
         }
 
 
@@ -906,7 +902,6 @@ public class ChairController : MonoBehaviour
 
         return -centrifugal;
     }
-    private float m_prevAccelForce = 0f;
     public bool IsAccelerationEnding { get; private set; }
 
 
@@ -1151,8 +1146,6 @@ public class ChairController : MonoBehaviour
 
         }
     }
-
-    private Coroutine m_vibrationCoroutine = null;
 
     // 振動の倍率
     private void VibrationMagnification()

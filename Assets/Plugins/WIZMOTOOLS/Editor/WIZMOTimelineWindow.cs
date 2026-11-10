@@ -7,7 +7,6 @@ using UnityEditor.Timeline;
 
 public class WIZMOTimelineWindow : EditorWindow
 {
-    EditorWindow getWindow;
     static Rect rect = new Rect(10, 10, 100, 100);
 
     // Use this for initialization
@@ -45,9 +44,9 @@ public class WIZMOTimelineWindow : EditorWindow
 
     void OnGUI()
     {
-        getWindow.BeginWindows();
+        BeginWindows();
         rect = GUI.Window(1, rect, WindowCallback, "window");
-        getWindow.EndWindows();
+        EndWindows();
 
         var ev = Event.current;
         if (ev.type == EventType.ContextClick)

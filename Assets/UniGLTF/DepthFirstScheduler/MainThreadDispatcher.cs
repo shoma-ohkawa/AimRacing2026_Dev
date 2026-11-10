@@ -67,7 +67,7 @@ namespace DepthFirstScheduler
 
                 try
                 {
-                    dispatcher = GameObject.FindObjectOfType<MainThreadDispatcher>();
+                    dispatcher = GameObject.FindAnyObjectByType<MainThreadDispatcher>();
                 }
                 catch
                 {
@@ -132,7 +132,7 @@ namespace DepthFirstScheduler
         {
             if (instance == this)
             {
-                instance = GameObject.FindObjectOfType<MainThreadDispatcher>();
+                instance = GameObject.FindAnyObjectByType<MainThreadDispatcher>();
                 initialized = instance != null;
             }
 

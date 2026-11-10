@@ -5,7 +5,7 @@ using UnityEngine.Rendering.HighDefinition;
 
 namespace IE.RichFX
 {
-    [VolumeComponentEditor(typeof(Recolor))]
+    [CustomEditor(typeof(Recolor))]
     public sealed class RecolorEditor : VolumeComponentEditor
     {
         static class Labels

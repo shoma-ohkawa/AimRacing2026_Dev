@@ -163,7 +163,7 @@
 | C-2 | 低 | 起動直後と、初回の遷移が遅い | 開場前に1周通す運用 | 運用で対応 |
 | B-3 | 低 | 周期的なログ(ハンコン未検出、入力調査用、日付名付きの調査用ログ)が残っている。`[ChairController] Active:…` が残りの容量の大半 | 本番前に整理する | 未着手 |
 | E-2 | 低 | Unity 6.6 で `DEVELOPMENT_BUILD` の記号が非推奨(警告 UAC0009)。`AppLog.Log` の `Conditional` と、`MultiScreenOutput`・`WindowsMonitorInfo` の `#if` が使っている | `DEBUG`・`UNITY_ENABLE_CHECKS`・`UNITY_INCLUDE_INSTRUMENTATION`、または `Debug.isDebugBuild` のどれが合うかを調べる。今の 6000.6.5f1 では動く | 未着手 |
-| E-3 | 低 | `PerfAutoLapRunner.cs` の `FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)` が非推奨(警告 CS0618、2か所) | `FindObjectsByType<T>(FindObjectsInactive.Include)` に直す(並び順を使っていないので動作は同じ) | 未着手 |
+| E-3 | 低 | `PerfAutoLapRunner.cs` の `FindObjectsByType<T>(FindObjectsInactive, FindObjectsSortMode)` が非推奨(警告 CS0618、2か所) | `FindObjectsByType<T>(FindObjectsInactive.Include)` に直す(並び順を使っていないので動作は同じ) | 対応済み(2026/11/10。並び順の引数を外した。実際の箇所は 3 か所) |
 | D-5 | 低 | `try_racing`(`-perfscenario`)の記録が、現行のコードに該当の記述がない(`-perfautolap` より前の試作とみられる。推定) | 記録の扱いを決める | 未着手 |
 
 ### 実施済み

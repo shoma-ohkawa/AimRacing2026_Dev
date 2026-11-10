@@ -13,7 +13,7 @@ public static class VehicleHierarchySetup
     [MenuItem("Tools/Vehicle/Setup Vehicle Parts")]
     public static void SetupOpenScene()
     {
-        VehicleController vehicleController = UnityEngine.Object.FindFirstObjectByType<VehicleController>(FindObjectsInactive.Include);
+        VehicleController vehicleController = UnityEngine.Object.FindAnyObjectByType<VehicleController>(FindObjectsInactive.Include);
         if (vehicleController == null) { throw new InvalidOperationException("VehicleControllerが現在のSceneにありません。"); }
         SetupVehicleParts(vehicleController);
         EditorSceneManager.MarkSceneDirty(vehicleController.gameObject.scene);
@@ -25,7 +25,7 @@ public static class VehicleHierarchySetup
     public static void SetupMapSceneForBatch()
     {
         Scene mapScene = EditorSceneManager.OpenScene(MapScenePath, OpenSceneMode.Single);
-        VehicleController vehicleController = UnityEngine.Object.FindFirstObjectByType<VehicleController>(FindObjectsInactive.Include);
+        VehicleController vehicleController = UnityEngine.Object.FindAnyObjectByType<VehicleController>(FindObjectsInactive.Include);
         if (vehicleController == null) { throw new InvalidOperationException("Map.unityにVehicleControllerがありません。"); }
         SetupVehicleParts(vehicleController);
         EditorSceneManager.MarkSceneDirty(mapScene);

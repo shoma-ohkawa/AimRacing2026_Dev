@@ -36,7 +36,7 @@ public class LED_IndicatorController : MonoBehaviour
         ValidateThresholds();
         //========================
         //既存シーンへ手動で参照を追加しなくても車両の開始待機状態を取得する
-        if (m_vehicle == null) { m_vehicle = FindFirstObjectByType<VehicleController>(); }
+        if (m_vehicle == null) { m_vehicle = FindAnyObjectByType<VehicleController>(); }
         m_countdownBlinking = false;
         //========================
         if (m_LED_List == null) { return; }

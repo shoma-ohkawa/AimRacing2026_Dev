@@ -84,8 +84,6 @@ public class WIZMOController : MonoBehaviour
 
 
 
-    private float DebugTime = 0;
-
     public void Start()
     {
         //axisProcesser = false;

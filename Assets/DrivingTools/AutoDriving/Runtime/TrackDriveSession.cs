@@ -123,7 +123,7 @@ public static partial class TrackDriveSession
     static void UpdateRecheck()
     {
         if (!armed || !Application.isPlaying || IsDriverPaused) { return; }
-        var flow = UnityEngine.Object.FindFirstObjectByType<GameFlowRunner>();
+        var flow = UnityEngine.Object.FindAnyObjectByType<GameFlowRunner>();
         if (flow == null) { return; }
         if (flow.CurrentId != GameStateId.Racing) { return; }
         armed = false;
@@ -317,7 +317,7 @@ public static partial class TrackDriveSession
     //ゲーム側を書き換えずATとMTの選択受付開始を読み取る関数
     static bool IsTransmissionSelectionReady()
     {
-        var menu = UnityEngine.Object.FindFirstObjectByType<MenuState>();
+        var menu = UnityEngine.Object.FindAnyObjectByType<MenuState>();
         if (menu == null) { return false; }
         var flags = System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic;
         var field = typeof(MenuState).GetField("m_isEntryTransmissionActive", flags);
@@ -363,15 +363,15 @@ public static partial class TrackDriveSession
     public static void Start()
     {
         if (!Application.isPlaying || active) { return; }
-        vehicle = UnityEngine.Object.FindFirstObjectByType<VehicleController>();
+        vehicle = UnityEngine.Object.FindAnyObjectByType<VehicleController>();
         if (vehicle == null) { Debug.LogError("[Sep11Course] 車両の読み込み後に開始してください。"); return; }
         SplineContainer road = null;
         goal = null;
-        foreach (SplineContainer candidate in UnityEngine.Object.FindObjectsByType<SplineContainer>(FindObjectsSortMode.None))
+        foreach (SplineContainer candidate in UnityEngine.Object.FindObjectsByType<SplineContainer>())
         {
             if (candidate.name == "RoadSpline") { road = candidate; }
         }
-        foreach (Line_StartFinish candidate in UnityEngine.Object.FindObjectsByType<Line_StartFinish>(FindObjectsSortMode.None))
+        foreach (Line_StartFinish candidate in UnityEngine.Object.FindObjectsByType<Line_StartFinish>())
         {
             if (candidate.name == "GoalGate_AsamaOne") { goal = candidate; }
         }

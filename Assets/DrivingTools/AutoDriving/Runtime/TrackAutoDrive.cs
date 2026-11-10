@@ -247,7 +247,7 @@ public static partial class TrackDriveSession
     //結果画面と同じ時計を読み待機解除から計時開始までの差を除く関数
     static float ReadOfficialRaceSeconds()
     {
-        TimeKeeper timer = Object.FindFirstObjectByType<TimeKeeper>();
+        TimeKeeper timer = Object.FindAnyObjectByType<TimeKeeper>();
         if (timer == null) { return -1f; }
         string[] parts = timer.RetrieveSavedTotalTime().Split(':');
         if (parts.Length != 2) { return -1f; }

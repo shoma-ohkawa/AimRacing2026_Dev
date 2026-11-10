@@ -213,6 +213,8 @@ namespace UniHumanoid
             }
 
             // Create or upate Main Asset
+            // ReplacePrefab / CreatePrefab は SaveAsPrefabAsset に置き換えられるが、サブアセットを持つ既存のプレハブを上書きしたときの動作を確認していないため、従来のまま警告だけを抑える
+#pragma warning disable 618
             if (File.Exists(path))
             {
                 Debug.LogFormat("replace prefab: {0}", path);
@@ -224,6 +226,7 @@ namespace UniHumanoid
                 Debug.LogFormat("create prefab: {0}", path);
                 PrefabUtility.CreatePrefab(path, Root);
             }
+#pragma warning restore 618
 
             AssetDatabase.ImportAsset(path);
         }

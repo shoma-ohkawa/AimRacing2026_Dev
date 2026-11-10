@@ -116,7 +116,7 @@ namespace UnityFFB
                     }
                 }
             }
-            catch (DllNotFoundException e)
+            catch (DllNotFoundException)
             {
                 LogMissingRuntimeError();
             }
@@ -131,7 +131,7 @@ namespace UnityFFB
             {
                 UnityFFBNative.StopDirectInput();
             }
-            catch (DllNotFoundException e)
+            catch (DllNotFoundException)
             {
                 LogMissingRuntimeError();
             }
@@ -239,7 +239,7 @@ namespace UnityFFB
                     Debug.LogError($"[UnityFFB] 0x{hresult.ToString("x")} {WinErrors.GetSystemMessage(hresult)}");
                 }
             }
-            catch (DllNotFoundException e)
+            catch (DllNotFoundException)
             {
                 LogMissingRuntimeError();
             }
@@ -270,7 +270,7 @@ namespace UnityFFB
                 UnityFFBNative.StartAllFFBEffects();
                 constantForceEnabled = true;
             }
-            catch (DllNotFoundException e)
+            catch (DllNotFoundException)
             {
                 LogMissingRuntimeError();
             }
@@ -286,7 +286,7 @@ namespace UnityFFB
                 UnityFFBNative.StopAllFFBEffects();
                 constantForceEnabled = false;
             }
-            catch (DllNotFoundException e)
+            catch (DllNotFoundException)
             {
                 LogMissingRuntimeError();
             }

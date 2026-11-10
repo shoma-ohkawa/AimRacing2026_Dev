@@ -59,7 +59,7 @@ public class SwitchingCamera : MonoBehaviour
     void ResolveGameplayCameras()
     {
         CinemachineVirtualCameraBase[] sceneCameras =
-            FindObjectsByType<CinemachineVirtualCameraBase>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            FindObjectsByType<CinemachineVirtualCameraBase>(FindObjectsInactive.Include);
         List<CinemachineVirtualCameraBase> resolvedCameras = new List<CinemachineVirtualCameraBase>();
         string[] gameplayCameraNames = { "POV", "Bonnet", "Bumper" };
 

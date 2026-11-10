@@ -144,7 +144,7 @@ namespace CrossProjectRanking
             if (m_receiver == null)
             {
 #if UNITY_2023_1_OR_NEWER
-                m_receiver = FindFirstObjectByType<RankingUdpReceiver>();
+                m_receiver = FindAnyObjectByType<RankingUdpReceiver>();
 #else
                 m_receiver = FindObjectOfType<RankingUdpReceiver>();
 #endif

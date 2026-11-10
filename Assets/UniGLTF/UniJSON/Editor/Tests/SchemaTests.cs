@@ -48,13 +48,13 @@ namespace UniJSON
         class EnumStringTest
         {
             [JsonSchema(EnumSerializationType =EnumSerializationType.AsLowerString)]
-            public ProjectionType type;
+            public ProjectionType type = ProjectionType.Perspective;   //リフレクションでスキーマを作るためのフィールド。既定値のまま使う
         }
 
         class EnumIntTest
         {
             [JsonSchema(EnumSerializationType = EnumSerializationType.AsInt)]
-            public ProjectionType type;
+            public ProjectionType type = ProjectionType.Perspective;   //リフレクションでスキーマを作るためのフィールド。既定値のまま使う
         }
 
         [Test]

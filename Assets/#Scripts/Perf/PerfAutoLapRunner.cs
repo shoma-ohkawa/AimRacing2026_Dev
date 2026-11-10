@@ -401,7 +401,7 @@ public sealed class PerfAutoLapRunner : MonoBehaviour
         if (!GameFlowGraph.SceneGroups.TryGetValue(_to, out GameSceneGroup toGroup)) { return; }
 
         bool bReset = _kind == FlowTimingKind.Reset; //リセットは Manager 以外の全シーンを破棄する
-        HDAdditionalCameraData[] cameras = FindObjectsByType<HDAdditionalCameraData>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        HDAdditionalCameraData[] cameras = FindObjectsByType<HDAdditionalCameraData>(FindObjectsInactive.Include);
         int changed = 0;
 
         //離れるシーン(通常の遷移は今のグループにだけあるシーン、リセットは Manager 以外すべて)のカメラを、1台ずつ止める処理
@@ -447,7 +447,7 @@ public sealed class PerfAutoLapRunner : MonoBehaviour
     {
         if (m_config.m_bNoDlss || m_config.m_bDlssMapOnly)
         {
-            HDAdditionalCameraData[] cameras = FindObjectsByType<HDAdditionalCameraData>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            HDAdditionalCameraData[] cameras = FindObjectsByType<HDAdditionalCameraData>(FindObjectsInactive.Include);
             int changed = 0;
 
             //DLSS が有効なカメラを、1台ずつ止める処理(Map だけ残す指定のときは、Map シーンのカメラを飛ばす)
@@ -469,7 +469,7 @@ public sealed class PerfAutoLapRunner : MonoBehaviour
 
         if (m_config.m_bNoVideo)
         {
-            PlayableDirector[] directors = FindObjectsByType<PlayableDirector>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            PlayableDirector[] directors = FindObjectsByType<PlayableDirector>(FindObjectsInactive.Include);
             int changed = 0;
 
             //アセットを持つ Timeline を、1つずつ止めてアセットを外す処理(外すと、再生を始めても何も起きず、再生の時間も長さも 0 になる)

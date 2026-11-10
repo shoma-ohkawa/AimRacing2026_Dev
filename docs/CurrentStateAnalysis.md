@@ -150,7 +150,7 @@ Rich FX は 40 種類のうち、使用は 3 種類(Glitch、ChromaLines、HueSa
 | UP-1 外部プラグインの暫定修正 7 本 | 最小の修正でコンパイルと全アセットのインポートが通った。変更した 7 本の内容は、更新作業の中で記録した(作業記録のファイルは、現在 docs にない) | FMOD の Editor 用 5 本は、型名を位置指定で直した。FMOD のプラグインを直接書き換えているので、公式の更新版を入れると上書きされる。Editor 用のツール(イベントブラウザなど)の動作は未確認 | 実測 |
 | UP-2 Editor ツール 2 本 | `MouseNavigation` は、6.6 のライブラリで引数の型(`EntityId`)を確認してから直した | `MouseNavigation` は Unity の内部メソッドをリフレクションで呼ぶので、今後の更新でまた壊れうる | 実測 |
 | UP-3 古い形式の `.meta` | インポートは成功している | 警告が 1,019 行(PluginImporter v1 が主、TextureImporter v2〜9 もある)。再保存しないと警告が毎回出る。再保存すると多くの `.meta` が書き換わる | 実測 |
-| UP-4 廃止予定の API | Editor 専用の 4 件だけで、ゲーム本体にはない | `FindFirstObjectByType`(`FindAnyObjectByType` を勧められている)。将来のバージョンでエラーになりうる | 実測 |
+| UP-4 廃止予定の API | Editor 専用の 4 件だけで、ゲーム本体にはない | `FindFirstObjectByType`(`FindAnyObjectByType` を勧められている)。将来のバージョンでエラーになりうる。**2026/11/10 に、C# の警告 91 件(CS0618・CS0414・CS0168・CS0649)を整理した**: 約 40 か所を `FindAnyObjectByType` などに置き換え、未使用のフィールド 9 件を削除した。同じ型が複数あり、置き換えると返る対象が不定になる 2 か所(`GameManager` の `G923_FFBController`、`G923_FFBController` の `PlayerInput`)と、置き換えの動作を確認していない UniGLTF の 7 か所(`ReplacePrefab`・`CreatePrefab`・`WWW`)は、`#pragma warning disable` で警告だけを抑えた。`ChairController` の保存済みの調整値 7 件も、警告だけを抑えた | 実測(Unity 付属の Roslyn で 5 アセンブリをコンパイルし、CS の警告 0 件。Editor での確認は未) |
 | UP-5 パッケージのメジャー更新 | 本体のスクリプトはコンパイルが通った | Cinemachine・Timeline のバージョンの付け方が変わった(3.1.2 → 6.6.0、1.8.11 → 6.6.0)。Burst 2.0.0、Collections 6.6.0。R-1 の Cinemachine 拡張と、Timeline を使う `Opening` の挙動は、Editor での確認の対象 | 実測 |
 | UP-6 6.6 の新機能 | ― | 未調査。HDRP 17.6 のリリースノートを読んでいない(DLSS のメモリ増加の既知の問題の調査も、ここに当たる: `PerfFindings.md` の A-4) | 未確認 |
 

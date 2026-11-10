@@ -132,7 +132,7 @@ public class WheelController2024 : MonoBehaviour
     int m_raysNumber = 36;
     [SerializeField]
     float m_raysMaxAngle = 180;
-    float m_orgRadius;
+    float m_orgRadius = 0f;    //どこからも設定されず、常に0のまま使われている(旧版の挙動を変えないため、0と明示するだけにしている)
 
 
 	// 計算したMagicFormulaタイヤ力保存用

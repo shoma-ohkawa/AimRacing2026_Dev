@@ -181,7 +181,7 @@ public class ChairSafetyController : MonoBehaviour
         if (m_chairController == null)
         {
 #if UNITY_2023_1_OR_NEWER
-            m_chairController = FindFirstObjectByType<ChairController>();
+            m_chairController = FindAnyObjectByType<ChairController>();
 #else
             m_chairController = FindObjectOfType<ChairController>();
 #endif
@@ -190,7 +190,7 @@ public class ChairSafetyController : MonoBehaviour
         if (m_wizmoController == null)
         {
 #if UNITY_2023_1_OR_NEWER
-            m_wizmoController = FindFirstObjectByType<WIZMOController>();
+            m_wizmoController = FindAnyObjectByType<WIZMOController>();
 #else
             m_wizmoController = FindObjectOfType<WIZMOController>();
 #endif

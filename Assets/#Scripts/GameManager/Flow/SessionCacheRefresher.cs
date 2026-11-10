@@ -41,7 +41,7 @@ public static class SessionCacheRefresher
         {
             SoundManager.Instance.ResetFadeState(); //フェード関連フラグ・コルーチンをリセット
         }
-        DebugKey debugKey = UnityEngine.Object.FindFirstObjectByType<DebugKey>();
+        DebugKey debugKey = UnityEngine.Object.FindAnyObjectByType<DebugKey>();
         if (debugKey != null)
         {
             debugKey.ResetPauseState(); //m_bPauseとTime.timeScaleの不整合を防ぐ

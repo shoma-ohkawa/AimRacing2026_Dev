@@ -26,8 +26,8 @@ static class AimRacingPlayModeGuard
     static void MaintainKeyboardDebugTimeScale()
     {
         if (!EditorApplication.isPlaying || Time.timeScale > 0f) { return; }
-        bool isMapPlaying = Object.FindFirstObjectByType<IntroState>() != null ||
-            Object.FindFirstObjectByType<RacingState>() != null;
+        bool isMapPlaying = Object.FindAnyObjectByType<IntroState>() != null ||
+            Object.FindAnyObjectByType<RacingState>() != null;
         if (!isMapPlaying) { return; }
 
         //==========================

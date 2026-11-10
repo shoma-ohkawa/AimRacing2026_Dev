@@ -1123,7 +1123,7 @@ public class G923_FFBController : MonoBehaviour
         m_nextVehicleSearchTime = Time.unscaledTime + m_vehicleSearchInterval;
 
 #if UNITY_2023_1_OR_NEWER
-        m_vehicleController = FindFirstObjectByType<VehicleController>();
+        m_vehicleController = FindAnyObjectByType<VehicleController>();
 #else
         m_vehicleController = FindObjectOfType<VehicleController>();
 #endif
@@ -1766,7 +1766,10 @@ public class G923_FFBController : MonoBehaviour
         if (m_playerInput == null)
         {
 #if UNITY_2023_1_OR_NEWER
+            //Manager・Opening・Menu・Map に PlayerInput があり、Input Actions も異なる。FindAnyObjectByType では返る対象が不定になるため、従来どおり FindFirstObjectByType を使う
+#pragma warning disable 618
             m_playerInput = FindFirstObjectByType<PlayerInput>();
+#pragma warning restore 618
 #else
             m_playerInput = FindObjectOfType<PlayerInput>();
 #endif

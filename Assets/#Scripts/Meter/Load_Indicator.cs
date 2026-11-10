@@ -66,7 +66,7 @@ public class Load_Indicator : MonoBehaviour
             return;
         }
         //旧参照のないシーンでは車両が一台の場合だけ自動取得し、別車両への誤接続を防ぐ
-        WheelController2026[] candidates = FindObjectsByType<WheelController2026>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        WheelController2026[] candidates = FindObjectsByType<WheelController2026>(FindObjectsInactive.Include);
         if (candidates.Length == 1) { m_wheelController = candidates[0]; }
     }
 

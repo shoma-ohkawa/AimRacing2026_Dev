@@ -142,7 +142,7 @@ namespace AimRacing.Ranking
         {
             if (m_returnAction != null) { return; }
 
-            PlayerInput playerInput = FindFirstObjectByType<PlayerInput>(); //Manager常駐の入力管理
+            PlayerInput playerInput = FindAnyObjectByType<PlayerInput>(); //Manager常駐の入力管理
             if (playerInput == null || playerInput.actions == null) { return; }
 
             m_returnAction = playerInput.actions.FindAction(k_ReturnActionPath, false);
