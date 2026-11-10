@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/*━━━━━━━━━
+@file    MultiScreenSourceCamera.cs
+@brief   シーンのカメラを、出力元として MultiScreenOutput に登録する
+@author  24CU0110 大川翔生
+@date    作成日   : 2026/09/27
+         最終更新日 : 2026/09/29
+━━━━━━━━━*/
+
+using System.Collections;
 using UnityEngine;
 
 //シーンのカメラを複数モニター出力へ登録するクラス

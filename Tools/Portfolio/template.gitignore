@@ -1,0 +1,32 @@
+# ポートフォリオ用リポジトリの .gitignore(sync_portfolio.ps1 が、無いときだけ作る)
+
+# ビルド(Releases の zip に載せる。git には入れない)
+Build/
+*.zip
+*.exe
+
+# 計測の記録
+PerfRecords/
+perf_*.csv
+transitions.csv
+*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.slnx
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Claude Code
+.claude/settings.local.json

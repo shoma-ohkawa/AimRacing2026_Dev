@@ -1,4 +1,12 @@
-﻿using System.Collections;
+﻿/*━━━━━━━━━
+@file    MultiScreenOutput.cs
+@brief   接続されているモニターの数だけ横に並べた RenderTexture に映像を描き、モニターごとに該当部分を切り出して表示する
+@author  24CU0110 大川翔生
+@date    作成日   : 2026/09/27
+         最終更新日 : 2026/11/10
+━━━━━━━━━*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;

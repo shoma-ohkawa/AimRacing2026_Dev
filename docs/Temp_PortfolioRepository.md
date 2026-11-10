@@ -109,3 +109,52 @@
 - 参考のリポジトリの添付 3 件の中身。
 - 作り直したビルドが動くこと(ビルド自体が未開始)。
 - ポートフォリオ用リポジトリのクローンと、`.gitattributes` による改行の動作。
+
+## どの PC でも同じ手順(2026/11/10 追記)
+
+PC ごとの手作業(ファイルのコピー、`.gitignore` の書き直し)をなくすため、`Tools/Portfolio/` に書き出しのスクリプトを置いた。`AimRacing2026_Dev` の HEAD から書き出すので、どの PC でも同じ結果になる。
+
+| ファイル | 役割 |
+|---|---|
+| `manifest.txt` | 書き出すファイルの一覧(`.cs` 34 本と `Tools/PerfViewer/`)。入れる・外すはここで決める |
+| `sync_portfolio.bat` / `.ps1` | 書き出し。書き出し先に `.git` がなければ `git init`、GitHub に `main` があれば履歴を取り込む。`-Commit` でコミットまで |
+| `template.gitignore` / `.gitattributes` / `.README.md` | 書き出し先に無いときだけ作る(上書きしない。README は手で書き足していく) |
+
+手順:
+
+1. Dev の変更をコミットする。スクリプトは HEAD を書き出すので、未コミットの変更は入らない(入らないファイルは、実行時に黄色で出る)。
+2. 次を実行する。書き出し先は、既定で Dev の 1 つ上の `AimRacing2026_Portfolio`。変えるときは `-Target`。
+
+```
+Tools\Portfolio\sync_portfolio.bat -Commit
+```
+
+3. `README.md` の `【要確認】`・`【準備中】` を解消する(実行のたびに残り行数が出る)。
+4. 初回だけ: GitHub で空のリポジトリを作り(README・ライセンスなし)、書き出し先で `git push -u origin main`。
+5. ビルドを作り、Releases の `v1.0.0` に `AimRacing2026_Build.zip` を添付する。
+6. 別の PC では、1〜3 を同じように行う。GitHub に `main` があれば取り込み、新しいコミットがあれば止まる(先に `git pull`)。
+
+動作の決まり:
+
+- 作成者名は、新しく作ったリポジトリにだけ `大川翔生` を設定する(メールは各 PC の設定のまま)。
+- マニフェストにないファイルは、書き出し先の `Source/`・`Tools/` から消える(git で戻せる)。
+- push、GitHub のリポジトリ作成、Release は行わない(`gh` がない PC があるため)。
+
+確認(`実測`、2026/11/10。スクラッチのフォルダで実行):
+
+- 新規作成とコミット: 追跡ファイル 47 個(`.cs` 34 + `Tools/PerfViewer` 10 + `README.md`・`.gitignore`・`.gitattributes`)。上の「ポートフォリオ用リポジトリの現状」の 47 個と同じ。
+- 再実行: 差分なし。
+- ローカルの空リポジトリを GitHub の代わりにして、履歴の取り込み(`.git` のないフォルダ)と、新しいコミットがあるときの停止を確認した。
+- GitHub は `shoma-ohkawa/AimRacing2026_Portfolio` が 404 のため、「`main` がない」と表示する動作だけ確認した。
+- `.bat` から引数が `.ps1` に渡ることを確認した。
+- 未確認: 実際の GitHub への push、認証ありの接続、別の PC での実行。
+
+PC ごとの状態(`実測`、2026/11/10):
+
+| PC | `E:\AimRacing\AimRacing2026_Portfolio` |
+|---|---|
+| 11/07〜08 のメモを書いた PC | `.git` あり。コミット `585d098`、remote 未登録(メモのとおり。この PC では未確認) |
+| この PC(Dev は `D:\AimRacing\AimRacing2026_Dev`) | `.git` なし、`README.md` なし。`Source/` 34 本と `Tools/` 10 本だけ。スクリプトはまだ実行していない |
+
+- 履歴を 1 つにするため、**最初に push する PC を 1 台に決める**。ほかの PC で別に作ったリポジトリ(履歴が別)を push すると拒否される。その PC は、フォルダを退避してスクリプトを実行し直せば、GitHub の履歴を取り込める。
+- 「開発側との差」の `MultiScreenOutput.cs`・`MultiScreenSourceCamera.cs`(ヘッダだけの差)は、Dev 側にヘッダを足して解消した(2026/11/10。**Dev ではまだ未コミット**)。コミットするまでは、書き出し先にヘッダが入らない。

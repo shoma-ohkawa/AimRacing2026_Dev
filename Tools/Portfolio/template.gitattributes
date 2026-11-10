@@ -1,0 +1,8 @@
+# ポートフォリオ用リポジトリの .gitattributes(sync_portfolio.ps1 が、無いときだけ作る)
+* text=auto
+
+# Windows のバッチ・PowerShell は CRLF、シェルは LF に固定
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+*.sh text eol=lf

@@ -1,0 +1,58 @@
+# ポートフォリオ用リポジトリへ書き出すファイル(AimRacing2026_Dev の HEAD から)
+# 書式: 1 行に 1 つ。Dev のルートからのパス。# で始まる行は注釈。末尾が / なら、そのフォルダの追跡中のファイルすべて。
+# 書き出し先: Assets/#Scripts/<x> は Source/<x>、Tools/... は同じパス。それ以外のパスは書き出さない(スクリプトが止まる)。
+# 追加・削除したら、sync_portfolio.bat をもう一度実行する。マニフェストにないファイルは、書き出し先の Source/・Tools/ から消える。
+# 未決: AutoDemoDriver.cs(著者は自分。計測が CurrentLap を参照している)を入れるか。
+
+# --- Source/Camera
+Assets/#Scripts/Camera/MultiScreenOutput.cs
+Assets/#Scripts/Camera/MultiScreenSourceCamera.cs
+Assets/#Scripts/Camera/WindowsMonitorInfo.cs
+
+# --- Source/Editor
+Assets/#Scripts/Editor/CurveSignAdjustWindow.cs
+Assets/#Scripts/Editor/ProjectZipWhitelist.cs
+
+# --- Source/Effect/RacingEnter
+Assets/#Scripts/Effect/RacingEnter/RacingEnterBlurPass.cs
+Assets/#Scripts/Effect/RacingEnter/RacingEnterEffect.cs
+Assets/#Scripts/Effect/RacingEnter/RacingEnterEffectPattern.cs
+
+# --- Source/GameManager/Flow
+Assets/#Scripts/GameManager/Flow/FlowTiming.cs
+Assets/#Scripts/GameManager/Flow/GameFlowGraph.cs
+Assets/#Scripts/GameManager/Flow/GameFlowRunner.cs
+Assets/#Scripts/GameManager/Flow/GameSceneGroup.cs
+Assets/#Scripts/GameManager/Flow/GameStateBindingBase.cs
+Assets/#Scripts/GameManager/Flow/GameStateId.cs
+Assets/#Scripts/GameManager/Flow/IGameState.cs
+Assets/#Scripts/GameManager/Flow/SessionCacheRefresher.cs
+Assets/#Scripts/GameManager/Flow/TransitionFadeController.cs
+
+# --- Source/GameManager/GameStates
+Assets/#Scripts/GameManager/GameStates/IntroState.cs
+Assets/#Scripts/GameManager/GameStates/LoadState.cs
+Assets/#Scripts/GameManager/GameStates/MenuState.cs
+Assets/#Scripts/GameManager/GameStates/OpeningState.cs
+Assets/#Scripts/GameManager/GameStates/RacingState.cs
+Assets/#Scripts/GameManager/GameStates/ResultState.cs
+Assets/#Scripts/GameManager/GameStates/SplashState.cs
+
+# --- Source/Perf
+Assets/#Scripts/Perf/PerfAutoLapRunner.cs
+Assets/#Scripts/Perf/PerfCsvFormat.cs
+Assets/#Scripts/Perf/PerfCsvRecorder.cs
+Assets/#Scripts/Perf/PerfNativeMetrics.cs
+Assets/#Scripts/Perf/PerfTransitionRecorder.cs
+
+# --- Source/UI
+Assets/#Scripts/UI/Loading/LoadingScreenController.cs
+Assets/#Scripts/UI/Loading/TitleLogoOverlay.cs
+Assets/#Scripts/UI/TimeRemainingCountdown.cs
+
+# --- Source/Utility
+Assets/#Scripts/Utility/AppLog.cs
+Assets/#Scripts/Utility/SingletonMonoBehaviour.cs
+
+# --- Tools/PerfViewer(計測ツール。フォルダごと)
+Tools/PerfViewer/
