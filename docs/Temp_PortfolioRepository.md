@@ -116,7 +116,7 @@ PC ごとの手作業(ファイルのコピー、`.gitignore` の書き直し)�
 
 | ファイル | 役割 |
 |---|---|
-| `manifest.txt` | 書き出すファイルの一覧(`.cs` 34 本と `Tools/PerfViewer/`)。入れる・外すはここで決める |
+| `manifest.txt` | 書き出すファイルの一覧(`.cs` 35 本と `Tools/PerfViewer/`。2026/11/10 に `MultiScreenTargetSelector.cs` を足した)。入れる・外すはここで決める |
 | `sync_portfolio.bat` / `.ps1` | 書き出し。書き出し先に `.git` がなければ `git init`、GitHub に `main` があれば履歴を取り込む。`-Commit` でコミットまで |
 | `template.gitignore` / `.gitattributes` / `.README.md` | 書き出し先に無いときだけ作る(上書きしない。README は手で書き足していく) |
 
