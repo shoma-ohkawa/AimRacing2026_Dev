@@ -2,7 +2,7 @@
 # 書式: 1 行に 1 つ。Dev のルートからのパス。# で始まる行は注釈。末尾が / なら、そのフォルダの追跡中のファイルすべて。
 # 書き出し先: Assets/#Scripts/<x> は Source/<x>、Tools/... は同じパス。それ以外のパスは書き出さない(スクリプトが止まる)。
 # 追加・削除したら、sync_portfolio.bat をもう一度実行する。マニフェストにないファイルは、書き出し先の Source/・Tools/ から消える。
-# 未決: AutoDemoDriver.cs(著者は自分。計測が CurrentLap を参照している)を入れるか。
+# 決定(2026/11/10): AutoDemoDriver.cs は入れない(著者は自分。計測が CurrentLap を参照しているが、公開する Source には含めない)。
 
 # --- Source/Camera
 Assets/#Scripts/Camera/MultiScreenOutput.cs

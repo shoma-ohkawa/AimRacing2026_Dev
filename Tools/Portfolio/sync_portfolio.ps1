@@ -7,7 +7,8 @@
 param(
   [string]$Target = '',        # ポートフォリオ用リポジトリの場所。省略すると、このリポジトリの 1 つ上の AimRacing2026_Portfolio
   [string]$Remote = 'https://github.com/shoma-ohkawa/AimRacing2026_Portfolio.git',  # GitHub 側の場所
-  [string]$AuthorName = '大川翔生',   # 新しく作ったリポジトリにだけ設定するコミットの作成者名(メールは各 PC の設定のまま)
+  [string]$AuthorName = '大川翔生',   # 新しく作ったリポジトリにだけ設定するコミットの作成者名
+  [string]$AuthorEmail = '219362269+shoma-ohkawa@users.noreply.github.com',   # 同じく作成者のメール(GitHub の noreply。push すると公開されるので、各 PC の本物のメールは使わない)
   [switch]$Commit,             # 書き出したあと、差分があればコミットする
   [string]$Message = ''        # コミットメッセージ。省略すると「AimRacing2026_Dev <hash> から同期」
 )
@@ -91,6 +92,7 @@ if (-not (Test-Path (Join-Path $Target '.git'))) {
   Invoke-Git $Target @('init', '-b', 'main') | Out-Null
   Invoke-Git $Target @('remote', 'add', 'origin', $Remote) | Out-Null
   Invoke-Git $Target @('config', 'user.name', $AuthorName) | Out-Null
+  Invoke-Git $Target @('config', 'user.email', $AuthorEmail) | Out-Null
   $remoteState = Get-RemoteState $Target
   if ($remoteState -eq 'has-main') {
     # GitHub の main を履歴として取り込む。作業ツリーのファイルはそのまま残す(無いファイルだけ戻す)
