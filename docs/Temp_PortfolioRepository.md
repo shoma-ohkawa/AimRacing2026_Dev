@@ -231,3 +231,48 @@ PC ごとの状態(`実測`、2026/11/10):
 - 再配布の条件は、まだ `未確認`。公開前に、NVIDIA の DLSS SDK のライセンスで、同梱時に必要な表記(著作権表示・ライセンス文書)がないか確認する。必要なら zip と README に入れる。
 - Release の本文の下書きに、「DLSS 用の NVIDIA のライブラリ(`nvngx_dlss.dll`)を含みます」を足した(`Tools/Portfolio/release_v1.0.0.md`)。
 - 条件が分かって、再配布できないと分かったときは、zip から外して、DLL なしで起動するかを試す。
+
+## 状況の更新(2026/11/12 Release v1.0.0 を公開)
+
+追記: この節は、上の記録を書き換えず、その後の変化だけを示す。確認は `実測`(コマンドの出力、GitHub のページと API の表示。2026/11/12)。手順の詳細と数値は `Tools/Portfolio/release_v1.0.0.md` の「実施の記録」。
+
+| 項目 | 結果 |
+|---|---|
+| Release | **公開済み**。タグ `v1.0.0`、タイトル `AimRacing2026 Portfolio Build`、Latest(pre-release ではない)。公開は 2026/11/12 01:20(JST。API の `published_at` は 2026-11-11 16:20:19 UTC) |
+| タグの指す先 | `main` の `9d503cc`(「AimRacing2026_Dev 238a986 から同期」)。下の README の修正より前 |
+| 添付 | `AimRacing2026_Build.zip` の 1 つ(1,271,372,698 バイト = 1.18 GiB)。GitHub が記録した SHA-256 は、ローカルの zip と一致 |
+| 本文 | `release_v1.0.0.md` の貼り付け用と同じ(`nvngx_dlss.dll` を含む旨の行を含む) |
+| README | 実行データの `【準備中】` を解消した(`d8f1ef1`、`main` に push 済み)。`d8f1ef1` 時点の README に `【準備中】`・`【要確認】` は 0 件 |
+| Dev との同期 | GitHub の `main` の Source は「Dev `238a986` から同期」。以降の Dev の変更(`8275310`)は `HDRenderPipelineGlobalSettings.asset` だけで、`manifest.txt` の対象に変更はない(`git diff --name-only 238a986 HEAD`)。GitHub の Source は Dev の HEAD と同じ内容とみられる(`推定`。ファイルごとの突き合わせは未実施) |
+
+ビルドと zip:
+
+| 項目 | 結果 |
+|---|---|
+| ビルド | `E:\Build`(プロジェクトの `Build\` ではない)。作成の方法(コマンドか Editor か)と日時は未記録 |
+| 中身 | exe の ProductVersion は `6000.6.5f1`。`AimRacing2026_Data` に `level0`〜`level8`(9 シーン分)。`MonoBleedingEdge` がある(Mono)。`boot.config` にデバッグ接続の指定がなく、Development Build OFF とみられる(`推定`。Editor の設定は未確認) |
+| zip | `E:\Build_Release\AimRacing2026_Build.zip`(ローカルに残してある)。`PublicKey.txt` と、`AimRacing2026_BackUpThisFolder_ButDontShipItWithYourGame`(0.2 MB)を除いた。exe は zip の直下に入っている(展開用のフォルダはない) |
+| 解凍の照合 | 別のフォルダへ解凍し、246 ファイル(3,097.1 MB)すべてが、元と SHA-256 で一致した。除外した 2 つは含まれていない。照合用のフォルダは、確認のあとで削除した |
+
+「残っていること」の表との対応:
+
+| 順 | 状況 |
+|---|---|
+| 1 | 済(ビルドは `E:\Build`) |
+| 2 | 済。`PublicKey.txt` は入れず、`nvngx_dlss.dll` は入れた。`nvngx_dlss.dll` の再配布の条件は未確認のまま |
+| 3 | 済(`AimRacing2026.exe`、`AimRacing2026_Build.zip`) |
+| 4・5 | 済(2026/11/10) |
+| 6 | 済(上の「Release」) |
+| 7 | 済(`【準備中】` を解消) |
+| 8 | 済(入れないと決定。2026/11/10) |
+
+未確認:
+
+- 公開した zip の起動(Opening から Result まで通ること)。`PublicKey.txt` がない状態での動作。ログインしていないブラウザでのダウンロード。
+- `nvngx_dlss.dll` の再配布の条件(NVIDIA の DLSS SDK のライセンス)。zip に入れたのはビルドの中身そのままで、ライセンス文書は足していない。
+- ビルドの Development Build の設定(Editor)と、ビルドが Dev の `main` のどのコミットか。
+- タグ `v1.0.0` は、README の修正前の `9d503cc` のまま。zip の内容には関係ない。
+
+この PC(Dev は `E:\AimRacing\AimRacing2026_Dev`)の `E:\AimRacing\AimRacing2026_Portfolio` は、GitHub の `main` と履歴が別(remote なし、コミットは `585d098` の 1 つだけ、`README.md` に未コミットの変更。`実測`)。ここから push はできない。以降の同期は、このフォルダを退避して `sync_portfolio.bat` を実行し、GitHub の履歴を取り込む(上の「どの PC でも同じ手順」)。
+
+このメモは、公開が終わったら削除する(冒頭)。起動の確認と `nvngx_dlss.dll` の確認が残っているので、削除はそのあとにする。
