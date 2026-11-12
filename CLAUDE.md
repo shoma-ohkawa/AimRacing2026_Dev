@@ -114,6 +114,14 @@ Unity 公式プラグイン(`unity@unity-agent-plugin`)を使う。
 - 日付つきの実測(`PerfFindings.md` の記録など)は書き換えず、追記で変化を示す。それ以外は、状況が変わったら更新する。
 - 節の見出しを、他の docs とコードが参照している。節は末尾に足し、既存の見出しは変えない。変えたら参照元も直す。参照元は、`GameFlowRunner.cs`・`SessionCacheRefresher.cs` のコメント(`Perf.md` の「transitions.csv」の節)。
 
+# 進行中の作業(一時)
+
+再構築・再作成の作業中。どの PC でも同じ位置から続けるため、作業を始める前に `git pull` をして、`docs/Temp_RebuildProgress.md` を読む。
+
+- 「現在位置」から続ける。作業の区切りで、進捗表と作業ログを更新し、コミット・プッシュする。
+- 計画(対象の一覧と、守ること)は `docs/Temp_RebuildTargets.md`。
+- 終わったら、この節と、2 つの `Temp_Rebuild*.md` を削除する。
+
 # 計測記録
 
 - 計測は、Development Build を OFF にしたリリースビルドで行う。計測の前に Unity Editor を閉じる(開いたままだと VRAM が約 3.2 GB 増える)。起動時に Editor が動いていても中断はせず、`meta.json` の `editor_running` と開始時の VRAM(`start_vram_mb`)に記録する。
