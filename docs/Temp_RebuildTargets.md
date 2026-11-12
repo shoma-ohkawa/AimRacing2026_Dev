@@ -10,7 +10,7 @@
 - **範囲(2026/11/12 に変更)**: 自作スクリプトは**すべて**再構築・再作成する。「自作」は、先頭のヘッダに `@author 24CU0110 大川翔生` があるもの(`CLAUDE.md` の規約)。`コード`で数えて 36 本・8,093 行(行数は 2026/11/12 の値)。
 - 後半の「自作でないもの」は、再構築・再作成の目的(カメラ構成、Opening と Map の GPU 負荷)で必要になるもの。
 - 影響の範囲は、docs の記述から挙げた。アセットの中身と、他メンバーのコードは読んでいない(`未確認`)。
-- この一覧は案。着手前に、区分と順を直す。
+- この一覧は案。2026/11/12 に、方式は**全面刷新**(ファイル名・構成も変える)、**API も変える**と決めた(`Temp_RebuildProgress.md` の「2」)。区分は、作り直しの大きさの目安で、ファイルの行は設計のあとで作り直す。
 
 ## 範囲の判定
 
@@ -50,7 +50,7 @@
 
 | ファイル | 行 | 区分 | 備考 |
 |---|---|---|---|
-| `GameManager/Flow/GameStateId.cs` | 18 | 再作成 | **値を変えない**。`Intro = 4` と欠番 `3`。Inspector に整数で保存されている |
+| `GameManager/Flow/GameStateId.cs` | 18 | 再作成 | 全面刷新では値を変えてよい。ただし、計測の `state` 列の番号と State の対応は、過去の記録と同じにする(変えるなら、計測の側で変換する) |
 | `GameManager/Flow/IGameState.cs` | 22 | 再作成 | `Id` / `Enter` / `Tick` / `Exit` |
 | `GameManager/Flow/GameSceneGroup.cs` | 34 | 再作成 | 並びは「共有シーン → 主シーン」 |
 | `GameManager/Flow/GameFlowGraph.cs` | 47 | 再作成 | State とシーン、次の State の唯一の定義箇所 |
@@ -103,17 +103,16 @@
 | `Editor/ProjectZipWhitelist.cs` | 1,040 | 再作成 | ホワイトリスト方式の Project Zip。標準の圧縮 API を使わず、ZIP を自前で組み立てている(理由は未記録: S-9) |
 | `Editor/CurveSignAdjustWindow.cs` | 735 | 再作成 | `Map` のカーブ標識の `InPoint` / `OutPoint` を、道路に沿ってずらす(2026/10/27 作成) |
 
-### 再作成で守ること
+### 全面刷新で、控えるもの・取り直すもの・引き継ぐもの(2026/11/12 に方針を変更)
 
-| 項目 | 内容 |
+| 区分 | 内容 |
 |---|---|
-| 参照の維持 | ファイル名(クラス名)と `.meta` の GUID を変えずに書き換えると、シーン・Prefab の参照が残る。別名で作るなら、`Manager`・`Load`・`Splash`・`Opening`・`Menu`・`Map`・`Result`・`Loading` のシーンで、コンポーネントを張り直す(`文書`: `GameFlow.md`) |
-| Inspector の値 | シリアライズされたフィールド名を変えない(変えるなら `FormerlySerializedAs`)。`TransitionFadeController.m_stateFadeSettings`、`LoadingScreenController.m_fadeSettings`・`m_splashToOpeningBgmKeepOverrides`、`OpeningState`・`MenuState` の秒数と範囲。`GameStateId` の整数が保存されている(`m_leavingState`、`m_state`) |
-| 構成の前提 | `Intro` と `Racing` は同じ GameObject。`Manager` は先に読み込まれていること。遷移中の `AdvanceToNext` は無視される(`GameFlow.md`) |
-| 外部が呼ぶ API | `GameFlowRunner` の `CurrentId`・`OnStateFadeInComplete`・`AdvanceToNext`・`EmergencyReset`。呼ぶのは、下の「2-D」の他メンバーのファイル |
-| 計測との対応 | `transitions.csv` のステップ名は、`GameFlowRunner.cs`・`SessionCacheRefresher.cs` の定数と一致させる。両ファイルのコメントが、`Perf.md` の「transitions.csv」の節を参照している。CSV の列は、`lap_report.py`・`server.py`・`viewer.html` が読む |
+| 控える(フェーズ 1) | 現行の Inspector の値: `TransitionFadeController.m_stateFadeSettings`、`LoadingScreenController.m_fadeSettings`・`m_splashToOpeningBgmKeepOverrides`(BGM のクリップ名の文字列一致)、`OpeningState`・`MenuState` の秒数と範囲、`GameStateId` の整数(`m_leavingState`、`m_state`)。シーンの配線(`Manager`・`Load`・`Splash`・`Opening`・`Menu`・`Map`・`Result`・`Loading` の 8 シーン。`文書`: `GameFlow.md`)。呼び出し側(下の「2-D」と、`GameFlowRunner` を参照する他メンバーのファイル) |
+| 取り直す | シーン・Prefab の参照(`.meta` の GUID も変わる)、Inspector の値、`GameStateId` の値、構成の前提(`Intro` と `Racing` が同じ GameObject、`Manager` を先に読み込む、など。`GameFlow.md`)。設計で決め直す |
+| 引き継ぐ | 計測の形式: `perf_*.csv` の列(`schema` 2)、`transitions.csv` のステップ名(`GameFlowRunner.cs`・`SessionCacheRefresher.cs` の定数と一致させる。両ファイルのコメントが `Perf.md` の「transitions.csv」の節を参照している)、`state` 列の番号と State の対応(Splash 0、Opening 1、Menu 2、Intro 4、Racing 5、Result 6、Load 7)。展示の流れ(Load → Splash → Opening → Menu → Intro → Racing → Result → Load)と、控えた秒数 |
+| 外部が呼ぶ API | 変えてよい。呼び出し側(「2-D」の他メンバーのファイル)も直す。直す箇所を示して、担当者へ確認する |
 | docs | 作り直したら、`GameFlow.md`・`GameStates.md`・`TransitionEffects.md`・`MultiScreenOutput.md`・`CommonFoundation.md`・`Perf.md` を直す。節の見出しは、他の docs とコードが参照しているので変えない |
-| 規約 | ヘッダ、`m_` / `m_p` / `k_`、`{ }` の改行、`return` の書き方(`CLAUDE.md`)。`MultiScreenOutput` 系は、現状ほぼ規約と差がある(S-6) |
+| 規約・書式 | ヘッダ、`m_` / `m_p` / `k_`、`return` の書き方、コメントは `CLAUDE.md` どおり。波括弧は、既存の自作ファイルに合わせる(Allman、スペース 4) |
 
 ## 2. 自作でないもの(必要なもの)
 
@@ -150,7 +149,7 @@
 | `Assets/##Rendering/HDRPDefaultResources/DefaultSettingsVolumeProfile.asset` | V-3 | Rich FX の全 40 種を持つ。83 個がどのリストにも載っていない。`Map`・`Opening` の Static Lighting Sky も指す(消すときの影響範囲) |
 | `Assets/##Rendering/HDRPDefaultResources/HDRenderPipelineAsset.asset` | H-1 | DLSS・動的解像度・影の設定。Lit シェーダーモードが Both(目的が未確認) |
 | `Assets/##Rendering/HDRPDefaultResources/HDRenderPipelineGlobalSettings.asset` | H-2、V-10 | Rich FX の登録が 2 系統(新形式に使用中の ChromaLines がなく、未使用の Slice・Underwater が入っている) |
-| `Assets/##Rendering/garage!move.asset` | V-6 | `GarageGlitchTitle` と一緒に削除する |
+| `Assets/##Rendering/garage!move.asset` | V-6 | `Map.unity` の `Glitch` という Volume(Global、weight 1)が使っている(`Temp_RebuildSnapshot.md` の「6」)。未参照ではない。消すなら、`GarageGlitchTitle` と、この Volume を外してから |
 | `Assets/##Rendering/HDRPDefaultResources/DefaultLookDevProfile.asset` | V-8 | LookDev(Editor)用。ゲームの実行には影響しない。不要 |
 | `ProjectSettings/HDRPProjectSettings.asset`、`GraphicsSettings.asset`、`QualitySettings.asset` | H-3 | 内容は未精査(割り当ての確認のみ) |
 | `Assets/##Rendering/LightingData/Setting/Map/Opening2024.lighting`、`Okutama.lighting` | L-3 | 名前が 2024 年版のまま。現行の構成に合っているか未確認 |
@@ -168,7 +167,7 @@
 | `Assets/###Map2026/###Map2025/op/chu~car~jo~.prefab` | `Opening` の Prefab。23 灯(L-1) |
 | `Assets/###Map2026/###Map2025/Menu/CinemaCamera.prefab` | Menu のカメラ。カメラ構成の対象 |
 
-### 2-D 自作が呼ぶ、他メンバーのモジュール(API を守る・合わせる)
+### 2-D 自作が呼ぶ、他メンバーのモジュール(API を変えるので、呼び出し側を直す。担当者へ確認)
 
 | ファイル | 呼ぶ側と内容 |
 |---|---|
