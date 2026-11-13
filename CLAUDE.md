@@ -119,8 +119,8 @@ Unity 公式プラグイン(`unity@unity-agent-plugin`)を使う。
 再構築・再作成の作業中。どの PC でも同じ位置から続けるため、作業を始める前に `git pull` をして、`docs/Temp_RebuildProgress.md` を読む。
 
 - 「現在位置」から続ける。作業の区切りで、進捗表と作業ログを更新し、コミット・プッシュする。
-- 計画(対象の一覧と、守ること)は `docs/Temp_RebuildTargets.md`。
-- 終わったら、この節と、2 つの `Temp_Rebuild*.md` を削除する。
+- 計画(対象の一覧と、守ること)は `docs/Temp_RebuildTargets.md`、設計は `docs/Temp_RebuildDesign.md`、全面刷新の前の控えは `docs/Temp_RebuildSnapshot.md`。
+- 終わったら、この節と、`docs/Temp_Rebuild*.md` の 4 つを削除する。
 
 # 計測記録
 
